@@ -39,7 +39,7 @@ export default {
           this.player.play();
           console.log(name);
 
-          var file = JSON.stringify({ userName: name });
+          var file = JSON.stringify({ username: name });
 
           fetch("http://localhost:3000/main/", {
             method: "POST",
@@ -49,8 +49,9 @@ export default {
             body: file,
           })
             .then((response) => response.json())
-            .then((data) => {console.log(data)
-            this.$cookies.set("userid", data.userid);
+            .then((data) => {
+              console.log(data);
+              this.$cookies.set("userid", data.userid);
             });
           this.$emit("ToFirstScene");
         } else {
