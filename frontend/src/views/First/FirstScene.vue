@@ -25,7 +25,7 @@
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger4">
-            편안한 상태에서 당신은 <br />
+            편안한 상태에서 당신은<br />
             서서히 상상에 빠져듭니다.
           </p>
         </transition>
@@ -152,14 +152,14 @@ export default {
 }
 .first-text {
   display: inline-block;
-
   position: absolute;
   margin-left: auto;
   margin-right: auto;
-  left: 0;
+  left: 10px;
+  top: 55%;
   right: 0;
-  text-align: center;
-  top: 20%;
+  text-align: left;
+  color: #fff;
 }
 .touch-text {
   color: #dededeb9;
@@ -169,7 +169,7 @@ export default {
   left: 0;
   right: 0;
   text-align: center;
-  bottom: 20%;
+  top: 10%;
   font-size: 17px;
   animation: blinker 2s linear infinite;
 }
@@ -185,7 +185,7 @@ export default {
   opacity: 0%;
 }
 .texts {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 .fade-enter-from {
   opacity: 0;
