@@ -41,7 +41,7 @@ export default {
 
           var file = JSON.stringify({ userName: name });
 
-          fetch("http://localhost:3000/file", {
+          fetch("http://localhost:3000/main/", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -49,7 +49,9 @@ export default {
             body: file,
           })
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => {console.log(data)
+            this.$cookies.set("userid", data.userid);
+            });
           this.$emit("ToFirstScene");
         } else {
           console.log(name);
