@@ -112,17 +112,15 @@
       </div>
     </div>
   </transition>
-  <ResultData v-bind:data="data" v-if="data"></ResultData>
-  <loading-page v-else></loading-page>
+  <loading-page v-if="showLoading" v-bind:data="data"></loading-page>
 </template>
 
 <script>
 import LoadingPage from "@/components/LoadingPage.vue";
-import ResultData from "../Result/ResultData.vue";
 
 export default {
   name: "PaintingPageSecond",
-  components: { LoadingPage, ResultData },
+  components: { LoadingPage },
   props: ["isPlaying"],
   data() {
     return {
@@ -134,6 +132,7 @@ export default {
       showModal: false,
       data: "",
       showPaint: true,
+      showLoading: false,
     };
   },
   methods: {
@@ -145,7 +144,10 @@ export default {
 
       var canvasContents = this.$refs.jsCanvas.toDataURL();
       var cookie_userid = this.$cookies.get("userid");
-      var file = JSON.stringify({ 'image': canvasContents , 'userid' : cookie_userid});
+      var file = JSON.stringify({
+        image: canvasContents,
+        userid: cookie_userid,
+      });
       fetch("http://localhost:3000/home/", {
         method: "POST",
         headers: {
@@ -154,12 +156,15 @@ export default {
         body: file,
       })
         .then((response) => response.json())
-        .then((response_json) => {console.log(response_json)
-          this.data = "1"
+        .then((response_json) => {
+          console.log(response_json);
+          this.data = "1";
         });
 
       this.showModal = false; //모달 닫기
-      this.showPaint = false; //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
+      this.showPaint = false;
+      this.showLoading = true;
+      //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {
       const x = event.offsetX;

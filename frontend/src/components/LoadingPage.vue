@@ -1,5 +1,6 @@
 <template>
-  <div class="loading-page">
+  <ResultData v-if="data" v-bind:data="data"></ResultData>
+  <div v-else class="loading-page">
     <div class="loading-text">
       <p>'마음 스케치' 프로젝트는 20대 청년들의 심리적인 문제를 해결하기...</p>
       <p class="member-text">
@@ -9,13 +10,16 @@
         AI: 이수민, 이겸희 <br />Design: 이가윤
       </p>
     </div>
-    <p class="touch-text">잠시만 기다려주세요...</p>
+    <p class="touch-text1">잠시만 기다려주세요...</p>
   </div>
 </template>
 
 <script>
+import ResultData from "../views/Result/ResultData.vue";
 export default {
   name: "LoadingPage",
+  components: { ResultData },
+  props: ["data"],
   data() {
     return {};
   },
@@ -46,5 +50,17 @@ export default {
 .member-text {
   padding-top: 150px;
   font-size: 20px;
+}
+.touch-text1 {
+  color: #dededeb9;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  bottom: 20%;
+  font-size: 17px;
+  animation: blinker 2s linear infinite;
 }
 </style>

@@ -29,7 +29,6 @@
           화면을 터치하세요
         </p>
       </transition>
-
       <div
         v-if="timedTrigger1.Trigger8"
         @click="moveToSecondPaint"
