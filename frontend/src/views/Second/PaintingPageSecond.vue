@@ -144,8 +144,9 @@ export default {
       this.$emit("turnOffSound");
 
       var canvasContents = this.$refs.jsCanvas.toDataURL();
-      var file = JSON.stringify({ Image1: canvasContents });
-      fetch("http://localhost:3000/file", {
+      var cookie_userid = this.$cookies.get("userid");
+      var file = JSON.stringify({ 'image': canvasContents , 'userid' : cookie_userid});
+      fetch("http://localhost:3000/home/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -153,7 +154,9 @@ export default {
         body: file,
       })
         .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then((response_json) => {console.log(response_json)
+          this.data = "1"
+        });
 
       this.showModal = false; //모달 닫기
       this.showPaint = false; //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
