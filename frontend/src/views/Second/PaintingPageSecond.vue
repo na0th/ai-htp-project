@@ -141,7 +141,9 @@ export default {
     }, //확인 모달 창
     onClickSecond() {
       this.$emit("turnOffSound");
-
+      this.showModal = false; //모달 닫기
+      this.showPaint = false;
+      this.showLoading = true;
       var canvasContents = this.$refs.jsCanvas.toDataURL();
       var cookie_userid = this.$cookies.get("userid");
       var file = JSON.stringify({
@@ -161,9 +163,6 @@ export default {
           this.data = "1";
         });
 
-      this.showModal = false; //모달 닫기
-      this.showPaint = false;
-      this.showLoading = true;
       //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {
