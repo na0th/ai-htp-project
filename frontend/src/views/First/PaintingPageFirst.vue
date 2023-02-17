@@ -3,7 +3,11 @@
     <div class="painting-page">
       <div class="painting-content">
         <div id="canvas_Wrapper">
-          <canvas ref="jsCanvas" id="jsCanvas" class="canvas"></canvas>
+          <canvas
+            ref="jsCanvas"
+            id="jsCanvas"
+            class="canvas"
+          ></canvas>
         </div>
         <div class="controls">
           <div class="controls-container">
@@ -35,13 +39,10 @@
               @click="$emit('toggleSound1')"
               class="sound-btn1"
             >
-              <img class="icon-sound1" src="../../assets/images/volumeon.png" />
+              <img class="icon-sound1" src="../assets/images/volumeon.png" />
             </button>
             <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
-              <img
-                class="icon-sound1"
-                src="../../assets/images/volumeoff.png"
-              />
+              <img class="icon-sound1" src="../assets/images/volumeoff.png" />
             </button>
           </div>
           <div class="controls__colors" id="jsColors" ref="jsColors">
@@ -134,9 +135,72 @@ export default {
       size: 2.5,
       color: "#2c2c2c",
       showModal: false,
-      device: null,
+      device: null
     };
   },
+  setup() {},
+  created() {
+
+  },
+  mounted() {
+    this.checkMobile();
+    // this.ctx = this.$refs.jsCanvas.getContext("2d");
+    // this.ctx.fillStyle = "white";
+    // this.ctx.fillRect(0, 0, 700, 700);
+
+    // this.ctx.strokeStyle = "#2c2c2c";
+    // this.ctx.fillStyle = "#2c2c2c";
+    // this.ctx.lineWidth = 2.5;
+
+    // this.$refs.jsCanvas.addEventListener("mousemove", this.onMouseMove);
+    // this.$refs.jsCanvas.addEventListener("mousedown", this.onMouseDown);
+    // this.$refs.jsCanvas.addEventListener("mouseup", this.onMouseUp);
+
+    if (this.device === "mobile") {
+      // 모바일 버전
+      this.$refs.jsCanvas.width=310;
+      this.$refs.jsCanvas.height=465.3;
+
+      this.ctx = this.$refs.jsCanvas.getContext('2d');
+      this.ctx.fillStyle = "white";
+      this.ctx.fillRect(0, 0, 700, 700);
+
+      this.ctx.strokeStyle = "#2c2c2c";
+      this.ctx.fillStyle = "#2c2c2c";
+      this.ctx.lineWidth = 2.5;
+
+      this.$refs.jsCanvas.addEventListener("touchmove", this.touchMove, false);
+      this.$refs.jsCanvas.addEventListener(
+        "touchstart",
+        this.touchStart,
+        false
+      );
+      this.$refs.jsCanvas.addEventListener("touchend", this.touchEnd, false);
+    }else{
+      this.$refs.jsCanvas.width=700;
+      this.$refs.jsCanvas.height=700;
+
+      this.ctx = this.$refs.jsCanvas.getContext('2d');
+      this.ctx.fillStyle = "white";
+      this.ctx.fillRect(0, 0, 700, 700);
+
+      this.ctx.strokeStyle = "#2c2c2c";
+      this.ctx.fillStyle = "#2c2c2c";
+      this.ctx.lineWidth = 2.5;
+
+      this.$refs.jsCanvas.addEventListener("mousemove", this.onMouseMove);
+      this.$refs.jsCanvas.addEventListener("mousedown", this.onMouseDown);
+      this.$refs.jsCanvas.addEventListener("mouseup", this.onMouseUp);
+
+      //아이패드는 크기는 크지만 모바일취급이 되어서, PC로 분류 하게끔 그냥 바꿨습니다.
+      this.$refs.jsCanvas.addEventListener("touchmove", this.touchMove, false);
+      this.$refs.jsCanvas.addEventListener("touchstart", this.touchStart, false);
+      this.$refs.jsCanvas.addEventListener("touchend", this.touchEnd, false);
+
+
+    }
+  },
+  unmounted() {},
   methods: {
     toggleModal() {
       this.showModal = !this.showModal;
@@ -145,18 +209,19 @@ export default {
       this.$emit("turnOffSound");
 
       var canvasContents = this.$refs.jsCanvas.toDataURL();
-      var file = JSON.stringify({ Image1: canvasContents });
-      fetch("http://localhost:3000/file", {
-        method: "POST",
-        headers: {
+      var cookie_userid = this.$cookies.get("userid");
+      var file = JSON.stringify({'image':canvasContents, 'userid':cookie_userid});
+      fetch('http://localhost:3000/tree',{
+      method: 'POST',
+      headers: {
           "Content-Type": "application/json",
-        },
-        body: file,
+      },
+      body: file
       })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+          .then((response) => response.json())
+          .then((data) => console.log(data))
 
-      this.$emit("ToSecondScene");
+      this.$router.push({ name: "second" });
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {
       const x = event.offsetX;
@@ -180,15 +245,15 @@ export default {
       this.painting = false;
     },
     checkMobile() {
-      if (
-        /iP(hone|od)|Android.*Mobile|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g.test(
-          navigator.userAgent
-        )
-      ) {
-        this.device = "mobile";
-      } else {
+
+      if
+      ((/iP(hone|od)|Android.*Mobile|BlackBerry|IEMobile|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune|Lumia/g).test(navigator.userAgent)) {    this.device = "mobile";
+      console.log(navigator.userAgent);
+    }
+      else {
         this.device = "etc";
       }
+
     },
     resetCanvas() {
       this.ctx = this.$refs.jsCanvas.getContext("2d");
@@ -198,11 +263,12 @@ export default {
     },
     getTouchPos(e) {
       return {
-        x: e.targetTouches[0].clientX - e.target.offsetLeft,
+        x: (e.targetTouches[0].clientX - e.target.offsetLeft),
         y:
-          e.targetTouches[0].clientY -
-          e.target.offsetTop +
-          document.documentElement.scrollTop,
+          (e.targetTouches[0].clientY -
+            e.target.offsetTop +
+            document.documentElement.scrollTop)
+          ,
       };
     },
     touchStart(e) {
@@ -242,68 +308,6 @@ export default {
       this.ctx.strokeStyle = this.color;
     },
   },
-
-  mounted() {
-    this.checkMobile();
-    // this.ctx = this.$refs.jsCanvas.getContext("2d");
-    // this.ctx.fillStyle = "white";
-    // this.ctx.fillRect(0, 0, 700, 700);
-
-    // this.ctx.strokeStyle = "#2c2c2c";
-    // this.ctx.fillStyle = "#2c2c2c";
-    // this.ctx.lineWidth = 2.5;
-
-    // this.$refs.jsCanvas.addEventListener("mousemove", this.onMouseMove);
-    // this.$refs.jsCanvas.addEventListener("mousedown", this.onMouseDown);
-    // this.$refs.jsCanvas.addEventListener("mouseup", this.onMouseUp);
-
-    if (this.device === "mobile") {
-      // 모바일 버전
-      this.$refs.jsCanvas.width = 310;
-      this.$refs.jsCanvas.height = 465.3;
-
-      this.ctx = this.$refs.jsCanvas.getContext("2d");
-      this.ctx.fillStyle = "white";
-      this.ctx.fillRect(0, 0, 700, 700);
-
-      this.ctx.strokeStyle = "#2c2c2c";
-      this.ctx.fillStyle = "#2c2c2c";
-      this.ctx.lineWidth = 2.5;
-
-      this.$refs.jsCanvas.addEventListener("touchmove", this.touchMove, false);
-      this.$refs.jsCanvas.addEventListener(
-        "touchstart",
-        this.touchStart,
-        false
-      );
-      this.$refs.jsCanvas.addEventListener("touchend", this.touchEnd, false);
-    } else {
-      this.$refs.jsCanvas.width = 700;
-      this.$refs.jsCanvas.height = 700;
-
-      this.ctx = this.$refs.jsCanvas.getContext("2d");
-      this.ctx.fillStyle = "white";
-      this.ctx.fillRect(0, 0, 700, 700);
-
-      this.ctx.strokeStyle = "#2c2c2c";
-      this.ctx.fillStyle = "#2c2c2c";
-      this.ctx.lineWidth = 2.5;
-
-      this.$refs.jsCanvas.addEventListener("mousemove", this.onMouseMove);
-      this.$refs.jsCanvas.addEventListener("mousedown", this.onMouseDown);
-      this.$refs.jsCanvas.addEventListener("mouseup", this.onMouseUp);
-
-      //아이패드는 크기는 크지만 모바일취급이 되어서, PC로 분류 하게끔 그냥 바꿨습니다.
-      this.$refs.jsCanvas.addEventListener("touchmove", this.touchMove, false);
-      this.$refs.jsCanvas.addEventListener(
-        "touchstart",
-        this.touchStart,
-        false
-      );
-      this.$refs.jsCanvas.addEventListener("touchend", this.touchEnd, false);
-    }
-  },
-
   // size 변경을 감지하면 양방향 데이터 바인딩을 통해 사이즈 변경 값으로 선 굵기 변경
   watch: {
     size() {
@@ -514,7 +518,7 @@ body {
   margin-bottom: 30px;
 }
 html {
-  cursor: url("../../assets/images/cursor.png") 0 32, auto;
+  cursor: url("../assets/images/cursor.png") 0 32, auto;
 }
 .sound-btn1 {
   color: #ffffff;
@@ -597,10 +601,10 @@ html {
 }
 .modal-btn {
   border-radius: 0 0 10px 0;
-  color: #5490ff;
+  color: #000000;
   background-color: #fff;
   border: 0;
-  font-size: 1rem;
+  /* font-size: 1rem; */
   cursor: pointer;
   outline: none;
   min-height: 50px;
