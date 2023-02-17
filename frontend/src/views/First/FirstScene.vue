@@ -20,16 +20,21 @@
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger3">
-            벽 난로에는 장작이 타고 있으며 <br />당신의 몸을 따뜻하게 녹여
-            줍니다.
+            벽 난로에는 장작이 타고 있으며 <br />당신을 따뜻하게 녹여 줍니다.
+          </p>
+        </transition>
+        <transition name="fade">
+          <p class="texts" v-if="timedTrigger.Trigger4">
+            편안한 상태에서 당신은 <br />
+            서서히 상상에 빠져듭니다.
           </p>
         </transition>
       </div>
       <transition>
-        <p v-if="timedTrigger.Trigger4" class="touch-text">화면을 터치하세요</p>
+        <p v-if="timedTrigger.Trigger5" class="touch-text">화면을 터치하세요</p>
       </transition>
       <div
-        v-if="timedTrigger.Trigger4"
+        v-if="timedTrigger.Trigger5"
         @click="moveToFirstNext"
         class="touch-screen"
       ></div>
@@ -57,6 +62,7 @@ export default {
       Trigger2: false,
       Trigger3: false,
       Trigger4: false,
+      Trigger5: false,
     });
     setTimeout(() => {
       timedTrigger.value.Trigger1 = true;
@@ -70,6 +76,9 @@ export default {
     setTimeout(() => {
       timedTrigger.value.Trigger4 = true;
     }, 7000);
+    setTimeout(() => {
+      timedTrigger.value.Trigger5 = true;
+    }, 9000);
     return { timedTrigger };
   },
   created() {

@@ -10,17 +10,22 @@
       <div class="first-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger1.Trigger5">
-            그리고 당신은 깊은 <br />상상에 빠져듭니다.
+            상상 속에서 당신은 길을 걷고 있습니다.
           </p>
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger1.Trigger6">
-            상상 속 당신이 본 <br />나무를 그려주세요.
+            길을 걷다가 저 멀리 희미하게 나무가 보입니다.
+          </p>
+        </transition>
+        <transition name="fade">
+          <p class="texts" v-if="timedTrigger1.Trigger7">
+            상상 속 당신의 나무를 그려주세요.
           </p>
         </transition>
       </div>
       <transition enter-active-class="animate__animated animate__flash">
-        <p v-if="timedTrigger1.Trigger7" class="touch-text">
+        <p v-if="timedTrigger1.Trigger8" class="touch-text">
           화면을 터치하세요
         </p>
       </transition>
@@ -69,6 +74,7 @@ export default {
       Trigger5: false,
       Trigger6: false,
       Trigger7: false,
+      Trigger8: false,
     });
     setTimeout(() => {
       timedTrigger1.value.Trigger5 = true;
@@ -79,6 +85,9 @@ export default {
     setTimeout(() => {
       timedTrigger1.value.Trigger7 = true;
     }, 6000);
+    setTimeout(() => {
+      timedTrigger1.value.Trigger8 = true;
+    }, 8000);
     return { timedTrigger1 };
   },
   data() {

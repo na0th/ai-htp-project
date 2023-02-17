@@ -23,12 +23,18 @@
             창문 밖에는 귀뚜라미 <br />소리가 들립니다.
           </p>
         </transition>
+        <transition name="fade">
+          <p class="texts" v-if="timedTrigger.Trigger4">
+            또 다시 당신은 <br />
+            서서히 상상에 빠져듭니다.
+          </p>
+        </transition>
       </div>
       <transition enter-active-class="animate__animated animate__flash">
-        <p v-if="timedTrigger.Trigger4" class="touch-text">화면을 터치하세요</p>
+        <p v-if="timedTrigger.Trigger5" class="touch-text">화면을 터치하세요</p>
       </transition>
       <div
-        v-if="timedTrigger.Trigger4"
+        v-if="timedTrigger.Trigger5"
         @click="moveToSecondNext"
         class="touch-screen"
       ></div>
@@ -56,6 +62,7 @@ export default {
       Trigger2: false,
       Trigger3: false,
       Trigger4: false,
+      Trigger5: false,
     });
     setTimeout(() => {
       timedTrigger.value.Trigger1 = true;
@@ -69,6 +76,9 @@ export default {
     setTimeout(() => {
       timedTrigger.value.Trigger4 = true;
     }, 7000);
+    setTimeout(() => {
+      timedTrigger.value.Trigger5 = true;
+    }, 9000);
     return { timedTrigger };
   },
   created() {
