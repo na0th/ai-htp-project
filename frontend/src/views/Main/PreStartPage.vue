@@ -1,22 +1,28 @@
 <template>
   <div class="prepage">
-    <!-- <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
-      <img class="icon-sound" src="../assets/images/volumeon.png" />
+    <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
+      <img class="icon-sound" src="../../assets/images/volumeon.png" />
     </button>
     <button v-else @click="toggleSound" class="sound-btn">
-      <img class="icon-sound" src="../assets/images/volumeoff.png" />
-    </button> -->
+      <img class="icon-sound" src="../../assets/images/volumeoff.png" />
+    </button>
 
     <form method="post" class="name-form">
       <label class="name-label">시작하기 전, <br />이름을 입력해주세요:</label>
       <input class="name-input" type="text" required v-model="name" />
-    </form>
-    <div class="text1">
-      <p>
-        ※ 몰입감 있는 경험을 <br />위해 소리를 높여주세요
-        <font-awesome-icon icon="fa-solid fa-volume-high" />
+      <p class="prestart-text">
+        이 테스트는 HTP 검사를 기반으로 하였으며 그림에 대한 해석은 전문 심리
+        도서를 참고하였습니다. 따라서, 다양한 사람에 대한 포괄적인 해석이므로,
+        모두에게 적용되지 않을 수 있습니다. 보다 정확한 해석을 위해서는 임상
+        소견의 고려가 필요하므로, 전문적인 상담은 심리 전문가를 찾아주세요.
       </p>
-    </div>
+      <div class="text1">
+        <p>
+          ※ 몰입감 있는 경험을 위해 소리를 높여주세요
+          <font-awesome-icon icon="fa-solid fa-volume-high" />
+        </p>
+      </div>
+    </form>
     <button type="submit" @click="onClickNext" class="start-btn">NEXT</button>
   </div>
 </template>
@@ -24,6 +30,7 @@
 <script>
 export default {
   name: "PreStartPage",
+  props: ["isPlaying"],
   methods: {
     onClickNext() {
       let name = this.name;
@@ -32,37 +39,28 @@ export default {
           this.player.play();
           console.log(name);
 
-          var file = JSON.stringify({'username':name});
-          // this.$cookies.set("test", "testValue");
-          // const cookie = this.$cookies.get("test");
-          // console.log("cookie: ",cookie); //testValue
-          fetch('http://localhost:3000/main',{
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json",
+          var file = JSON.stringify({ userName: name });
 
-          },
-          body: file,
-        })
-            .then((response) => {
-              return response.json();
-            })
-            .then((data) => {
-              console.log(data)
-              this.$cookies.set("userid", data.userid);
-            })
-          this.$router.push({ name: "first" });
+          fetch("http://localhost:3000/file", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: file,
+          })
+            .then((response) => response.json())
+            .then((data) => console.log(data));
+          this.$emit("ToFirstScene");
         } else {
           console.log(name);
-          this.$router.push({ name: "first" });
+          this.$emit("ToFirstScene");
         }
       } else {
-        // alert 창 어떻게 할까?
         alert("이름을 입력해주세요");
       }
     },
     toggleSound() {
-      this.isPlaying = !this.isPlaying;
+      this.$emit("toggleSound");
     }, //음소거
   },
   data() {
@@ -70,11 +68,11 @@ export default {
       name: "",
       current: {},
       index: 0,
-      isPlaying: true,
+
       sounds: [
         {
           title: "MainSound",
-          src: require("../assets/audio/click.mp3"),
+          src: require("../../assets/audio/click.mp3"),
         },
       ],
       player: new Audio(),
@@ -96,11 +94,11 @@ export default {
 .text1 {
   text-align: left;
   display: inline-block;
-
-  font-size: 15px;
+  font-size: 13px;
   font-family: korFont2;
-  margin-top: 150px;
+  margin-top: 30px;
   color: #ddd;
+  line-height: 1.5;
 }
 .next-btn {
   font-family: korFontLight;
@@ -134,13 +132,13 @@ export default {
   color: #fff;
 }
 .name-form {
-  width: 250px;
+  width: 280px;
   margin: auto;
   background: transparent;
   text-align: left;
   border-radius: 10px;
   display: inline-block;
-  margin-top: 150px;
+  margin-top: 50px;
 }
 .name-label {
   color: #fff;
@@ -152,11 +150,11 @@ export default {
   font-weight: bold;
   font-family: korFont2;
   font-size: 18px;
-  line-height: 2;
+  line-height: 1.5;
 }
 .name-input {
   display: inline-block;
-  padding: 10px 6px;
+  padding: 6px 6px;
   width: 100%;
   box-sizing: border-box;
   border: none;
@@ -165,5 +163,10 @@ export default {
   font-family: korFont2;
   background: transparent;
   font-size: 20px;
+}
+.prestart-text {
+  margin-top: 30px;
+  font-size: 16px;
+  line-height: 2;
 }
 </style>
