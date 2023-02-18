@@ -2,10 +2,7 @@
   <div v-if="showMain" class="main">
     <div class="title">
       <img class="title-image" src="../../assets/images/icon5.png" />
-      <p class="title-text">
-        <!-- <span style="color: #eba090">마음 </span> -->
-        마음스케치
-      </p>
+      <p class="title-text"><span style="color: #eba090">마음</span>스케치</p>
       <p class="title-subtext">내가 그린 그림으로 확인해보는 나의 심리</p>
     </div>
     <button
@@ -104,14 +101,14 @@ export default {
   left: 0;
   right: 0;
   text-align: center;
-  top: 30%;
+  top: 28%;
 }
 .title-image {
-  width: 85px;
+  width: 115px;
   margin-bottom: 20px;
 }
 .title-subtext {
-  font-size: 17px;
+  font-size: 15px;
   font-family: korFont1;
   margin-top: 10px;
 }

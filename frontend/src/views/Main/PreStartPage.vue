@@ -23,6 +23,9 @@
         </p>
       </div>
     </form>
+    <div class="prestart-img-box">
+      <img src="../../assets/images/heart.png" />
+    </div>
     <button type="submit" @click="onClickNext" class="next-btn">NEXT</button>
   </div>
 </template>
@@ -97,14 +100,14 @@ export default {
 .text1 {
   text-align: left;
   display: inline-block;
-  font-size: 13px;
-  font-family: korFont2;
+  font-size: 16px;
+  font-family: korFont3;
   margin-top: 30px;
   color: #ddd;
   line-height: 1.5;
 }
 .next-btn {
-  font-family: korFontLight;
+  font-family: korFont1;
   font-size: 25px;
   position: absolute;
   margin-left: auto;
@@ -151,7 +154,7 @@ export default {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
-  font-family: korFont2;
+  font-family: korFont3;
   font-size: 18px;
   line-height: 1.5;
 }
@@ -167,9 +170,18 @@ export default {
   background: transparent;
   font-size: 20px;
 }
+.perstart-image {
+  width: 65px;
+  display: inline-block;
+}
+.prestart-img-box {
+  text-align: center;
+  display: block;
+}
 .prestart-text {
   margin-top: 30px;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 2;
+  font-family: korFont3;
 }
 </style>
