@@ -90,6 +90,11 @@ export default {
   },
   mounted() {
     window.addEventListener("beforeunload", this.leave);
+    //나중에 아래 코드를 로딩이 완료 된 후에 실행되는 것으로 변환
+    setTimeout(() => {
+      this.mobile = false;
+      this.showMain = true;
+    }, 1000);
   },
 
   beforeUnmount() {

@@ -78,7 +78,7 @@ export default {
 
 <style>
 .main {
-  background-image: url("../../assets/images/example.jpg");
+  background-image: url("../../assets/images/mainpage1.jpg");
   height: calc(var(--vh, 1vh) * 100);
   color: #3c3c3c;
   overflow: hidden;

@@ -1,15 +1,28 @@
 <template>
   <div class="preloading-page">
     <div class="preloading-content">
-      <img class="preloading-image" src="../assets/images/5.jpg" />
+      <img class="animating-image" :src="imageUrl" />
       <img class="preloading-image" src="../assets/images/maintext.jpg" />
-      <p class="preloading-text">로딩중...</p>
+      <!-- <p class="preloading-text">로딩중...</p> -->
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      images: [
+        "/img/1.c1354fe1.jpg",
+        "/img/2.c09e09c6.jpg",
+        "/img/3.9149482e.jpg",
+        "/img/4.871feae0.jpg",
+        "/img/5.8cb242f4.jpg",
+        "/img/6.a6db9552.jpg",
+      ],
+      imageIndex: 0,
+    };
+  },
   setup() {
     const setScreenSize = function () {
       let vh = window.innerHeight * 0.01;
@@ -17,6 +30,17 @@ export default {
     };
     setScreenSize();
     window.addEventListener("resize", () => setScreenSize());
+    setInterval(() => {});
+  },
+  computed: {
+    imageUrl() {
+      return this.images[this.imageIndex % this.images.length];
+    },
+  },
+  mounted() {
+    setInterval(() => {
+      this.imageIndex++;
+    }, 400);
   },
 };
 </script>
@@ -41,7 +65,7 @@ export default {
   margin-right: auto;
   left: 0;
   right: 0;
-  top: 40%;
+  top: 55%;
   text-align: center;
   background: none;
   color: inherit;
@@ -63,6 +87,11 @@ export default {
 }
 .preloading-image {
   width: 100px;
+}
+.animating-image {
+  width: 100px;
+  position: absolute;
+  top: -100px;
 }
 
 @keyframes blinker {
