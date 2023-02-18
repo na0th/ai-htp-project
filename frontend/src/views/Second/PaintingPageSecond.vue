@@ -589,7 +589,7 @@ html {
 .modal-container {
   display: inline-block;
   position: fixed;
-  width: 250px;
+  width: 220px;
   background-color: #fff;
   border-radius: 10px;
   text-align: center;
@@ -607,7 +607,7 @@ html {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 .modal-container p {
-  margin: 30px;
+  margin: 20px;
 }
 .modal-content {
   border-bottom: 1px solid #d0d0d0;
@@ -620,13 +620,13 @@ html {
 }
 .modal-btn {
   border-radius: 0 0 10px 0;
-  color: #5490ff;
+  color: #333333;
   background-color: #fff;
   border: 0;
   font-size: 1rem;
   cursor: pointer;
   outline: none;
-  min-height: 50px;
+  min-height: 45px;
   font-weight: 1000;
 }
 .modal-btn.left {

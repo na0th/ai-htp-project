@@ -23,7 +23,7 @@
         </p>
       </div>
     </form>
-    <button type="submit" @click="onClickNext" class="start-btn">NEXT</button>
+    <button type="submit" @click="onClickNext" class="next-btn">NEXT</button>
   </div>
 </template>
 
@@ -105,14 +105,14 @@ export default {
 }
 .next-btn {
   font-family: korFontLight;
-  font-size: 30px;
+  font-size: 25px;
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
   text-align: center;
-  bottom: 6%;
+  bottom: 8%;
   background: none;
   color: inherit;
   border: none;

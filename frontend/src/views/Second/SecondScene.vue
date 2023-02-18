@@ -10,7 +10,8 @@
       <div class="first-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger1">
-            시간이 지나고 당신은 자리에서 일어났습니다.
+            시간이 지나고 당신은 <br />
+            자리에서 일어났습니다.
           </p>
         </transition>
         <transition name="fade">
@@ -25,7 +26,7 @@
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger4">
-            당신은 또 다시 서서히 상상에 빠져듭니다.
+            당신은 또 다시 상상에 빠져듭니다.
           </p>
         </transition>
       </div>
