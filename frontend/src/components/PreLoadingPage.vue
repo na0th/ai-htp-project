@@ -1,16 +1,73 @@
 <template>
   <div class="preloading-page">
-    <h1>Preloading-page</h1>
+    <div class="preloading-content">
+      <img class="preloading-image" src="../assets/images/5.jpg" />
+      <img class="preloading-image" src="../assets/images/maintext.jpg" />
+      <p class="preloading-text">로딩중...</p>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  setup() {
+    const setScreenSize = function () {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`); //핸드폰 화면에 맞게 vh 새로 설정
+    };
+    setScreenSize();
+    window.addEventListener("resize", () => setScreenSize());
+  },
+};
 </script>
 
 <style>
 .preloading-page {
   height: calc(var(--vh, 1vh) * 100);
-  background: black;
+  background: #fff;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+.preloading-content {
+  font-family: korFont2;
+  font-size: 30px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 40%;
+  text-align: center;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: inherit;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.preloading-text {
+  color: #3b3b3bb9;
+  margin-top: 20px;
+  font-size: 17px;
+  animation: blinker 1.5s linear infinite;
+  margin-left: 10px;
+}
+.preloading-image {
+  width: 100px;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 </style>

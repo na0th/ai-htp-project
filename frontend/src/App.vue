@@ -1,10 +1,11 @@
 <template>
   <desktop-scene v-if="desktop"></desktop-scene>
+  <PreLoadingPage v-if="mobile"></PreLoadingPage>
   <MainPage
     @ToFirstScene="ToFirstScene"
     @toggleSound="toggleSound"
     v-bind:isPlaying="isPlaying"
-    v-if="mobile"
+    v-if="showMain"
   ></MainPage>
 
   <FirstScene
@@ -23,17 +24,25 @@
 
 <script>
 import DesktopScene from "./components/DesktopScene.vue";
+import PreLoadingPage from "./components/PreLoadingPage.vue";
 import MainPage from "./views/Main/MainPage.vue";
 import FirstScene from "./views/First/FirstScene.vue";
 import SecondScene from "./views/Second/SecondScene.vue";
 
 export default {
   name: "App",
-  components: { DesktopScene, MainPage, FirstScene, SecondScene },
+  components: {
+    DesktopScene,
+    MainPage,
+    FirstScene,
+    SecondScene,
+    PreLoadingPage,
+  },
   data() {
     return {
       mobile: true,
       desktop: false,
+      showMain: false,
       showFirst: false,
       showSecond: false,
       isPlaying: true,
