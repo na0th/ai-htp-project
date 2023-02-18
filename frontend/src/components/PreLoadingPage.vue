@@ -13,12 +13,11 @@ export default {
   data() {
     return {
       images: [
-        "/img/1.c1354fe1.jpg",
-        "/img/2.c09e09c6.jpg",
-        "/img/3.9149482e.jpg",
-        "/img/4.871feae0.jpg",
-        "/img/5.8cb242f4.jpg",
-        "/img/6.a6db9552.jpg",
+        "../assets/images/icon1.png",
+        "../assets/images/icon2.png",
+        "../assets/images/icon3.png",
+        "../assets/images/icon4.png",
+        "../assets/images/icon5.png",
       ],
       imageIndex: 0,
     };

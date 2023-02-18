@@ -21,12 +21,14 @@
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger3">
-            창문 밖에는 귀뚜라미 소리가 들립니다.
+            창문 밖에는 귀뚜라미<br />
+            소리가 들립니다.
           </p>
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger4">
-            당신은 또 다시 상상에 빠져듭니다.
+            그리고 또 다시 당신은<br />
+            상상에 빠져듭니다.
           </p>
         </transition>
       </div>

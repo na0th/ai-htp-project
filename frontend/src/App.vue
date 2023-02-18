@@ -247,12 +247,16 @@ html {
 }
 
 @font-face {
-  font-family: korFontLight;
-  src: url(./assets/fonts/SCDreamExtraLight.otf);
+  font-family: korFont3;
+  src: url(./assets/fonts/human.ttf);
 }
 @font-face {
-  font-family: korFontRegular;
-  src: url(./assets/fonts/SCDreamRegular.otf);
+  font-family: korFont1;
+  src: url(./assets/fonts/uhbee.ttf);
+}
+@font-face {
+  font-family: korFont1Bold;
+  src: url(./assets/fonts/uhbeebold.ttf);
 }
 @font-face {
   font-family: korFont2;

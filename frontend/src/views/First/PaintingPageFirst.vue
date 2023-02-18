@@ -608,7 +608,6 @@ html {
   cursor: pointer;
   outline: none;
   min-height: 45px;
-  font-weight: 1000;
 }
 .modal-btn.left {
   border-radius: 0 0 0 10px;
