@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     ToFirstScene() {
-      this.mobile = false;
+      this.showMain = false;
       this.showFirst = true;
     },
     ToSecondScene() {
