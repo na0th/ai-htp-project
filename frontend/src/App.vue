@@ -94,7 +94,7 @@ export default {
     setTimeout(() => {
       this.mobile = false;
       this.showMain = true;
-    }, 1000);
+    }, 5000);
   },
 
   beforeUnmount() {
