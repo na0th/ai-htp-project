@@ -30,14 +30,17 @@
           </p>
         </transition>
       </div>
-      <transition>
+      <!-- <transition>
         <p v-if="timedTrigger.Trigger5" class="touch-text">화면을 터치하세요</p>
+      </transition> -->
+      <transition name="fade">
+        <img
+          v-if="timedTrigger.Trigger5"
+          @click="moveToFirstNext"
+          class="touch-screen"
+          src="../../assets/images/next.png"
+        />
       </transition>
-      <div
-        v-if="timedTrigger.Trigger5"
-        @click="moveToFirstNext"
-        class="touch-screen"
-      ></div>
     </div>
   </transition>
   <FirstSceneNext
@@ -172,7 +175,7 @@ export default {
   text-align: center;
   top: 50%;
   font-size: 17px;
-  animation: blinker 2s linear infinite;
+  animation: blinker 3s linear infinite;
 }
 @keyframes blinker {
   50% {
@@ -181,9 +184,10 @@ export default {
 }
 
 .touch-screen {
-  height: 100vh;
-  background-color: white;
-  opacity: 0%;
+  position: absolute;
+  height: 50px;
+  right: 20px;
+  bottom: 20px;
 }
 .texts {
   margin-top: 20px;

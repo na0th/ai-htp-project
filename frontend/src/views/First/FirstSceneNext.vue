@@ -27,17 +27,14 @@
           </p>
         </transition>
       </div>
-      <transition enter-active-class="animate__animated animate__flash">
-        <p v-if="timedTrigger1.Trigger8" class="touch-text">
-          화면을 터치하세요
-        </p>
+      <transition name="fade">
+        <img
+          v-if="timedTrigger1.Trigger8"
+          @click="moveToFirstPaint"
+          class="touch-screen"
+          src="../../assets/images/next.png"
+        />
       </transition>
-
-      <div
-        v-if="timedTrigger1.Trigger7"
-        @click="moveToFirstPaint"
-        class="touch-screen"
-      ></div>
     </div>
   </transition>
   <PaintingPageFirst
