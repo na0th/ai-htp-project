@@ -1,8 +1,6 @@
 from flask import Flask
 from db_connect import db
-from flask_cors import CORS, cross_origin
-from flask_jwt_extended import *
-import logging
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app, resources={r"*": {"origins": "http://localhost:8080"}})

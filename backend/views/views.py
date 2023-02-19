@@ -1,13 +1,7 @@
-from flask import Blueprint, escape, request, g, session, make_response, jsonify
-import json
+from flask import Blueprint, request, g, session, jsonify
 from db_connect import db
-from werkzeug.utils import redirect
 import base64
-from flask_cors import CORS, cross_origin
-from flask_jwt_extended import *
-import jwt
-import datetime
-from functools import wraps
+from flask_cors import CORS
 
 '''
 JWT Token 사용 version
@@ -17,27 +11,6 @@ from models import User
 
 bp = Blueprint('views', __name__, url_prefix='/')
 CORS(bp)
-
-# token 유효성 검사
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = None
-
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
-
-        if not token:
-            return jsonify({'message' : 'Token is missing!'}), 401
-
-        try: 
-            data = jwt.decode(token)
-            g.user = User.query.filter_by(userid=data['userid']).first()
-        except:
-            return jsonify({'message' : 'Token is invalid!'}), 401
-
-        return None
-    return decorated
 
 def convertToBinaryData(filename):
     # Convert digital data to binary format
@@ -55,11 +28,11 @@ def showMain():
         '''
         # 세션 구현 해야함
         params = request.get_json()
-        session['username'] = params['username']
+        session['username'] = params['userName']
         # print(params['username'])
 
         # insert
-        user = User(username=params['username'])
+        user = User(username=params['userName'])
         db.session.add(user)
         db.session.commit()
 
