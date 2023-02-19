@@ -156,10 +156,13 @@ def showSecond():
 
     
 def callModel(binaryimg):
-    detection(binaryimg) #경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것
+    detection(binaryimg) # 경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것
     user = User.query.filter_by(userid=session['userid']).first()
     result = classification('tree_type', user.crop1_1004)
     return result
+
+def resultMatching():
+    
 
 # detection function
 def detection(binaryimg):

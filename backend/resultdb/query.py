@@ -15,7 +15,7 @@ save_result(EntireTree, entireTree_rlabel)
 save_result(Root, root_rlabel)
 
 ##가지 모델
-# branch_rlabel 결과라벨 => [0,0,0,0,0,0] 형식 출력
+    # branch_rlabel 결과라벨 => [0,0,0,0,0,0] 형식 출력
 branch_rlabel=[0,0,0,0,0,0]
 for i in range(0,len(branch_rlabel),2): # index 0, 2, 4만 탐색하도록
     if branch_rlabel[i] == 1:
