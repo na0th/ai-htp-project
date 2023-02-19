@@ -141,7 +141,9 @@ export default {
     }, //확인 모달 창
     onClickSecond() {
       this.$emit("turnOffSound");
-
+      this.showModal = false; //모달 닫기
+      this.showPaint = false;
+      this.showLoading = true;
       var canvasContents = this.$refs.jsCanvas.toDataURL();
       var cookie_userid = this.$cookies.get("userid");
       var file = JSON.stringify({
@@ -161,9 +163,6 @@ export default {
           this.data = "1";
         });
 
-      this.showModal = false; //모달 닫기
-      this.showPaint = false;
-      this.showLoading = true;
       //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {
@@ -590,7 +589,7 @@ html {
 .modal-container {
   display: inline-block;
   position: fixed;
-  width: 250px;
+  width: 220px;
   background-color: #fff;
   border-radius: 10px;
   text-align: center;
@@ -608,7 +607,7 @@ html {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 .modal-container p {
-  margin: 30px;
+  margin: 20px;
 }
 .modal-content {
   border-bottom: 1px solid #d0d0d0;
@@ -621,13 +620,13 @@ html {
 }
 .modal-btn {
   border-radius: 0 0 10px 0;
-  color: #5490ff;
+  color: #333333;
   background-color: #fff;
   border: 0;
   font-size: 1rem;
   cursor: pointer;
   outline: none;
-  min-height: 50px;
+  min-height: 45px;
   font-weight: 1000;
 }
 .modal-btn.left {

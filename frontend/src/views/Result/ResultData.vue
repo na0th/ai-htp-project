@@ -3,7 +3,7 @@
     <h1 class="userName">{{ name }}님의 결과입니다.</h1>
     <div class="first-result"></div>
     <p>{{ name }}님의 나무 그림</p>
-    <img class="first-image" src="../../assets/images/window.png" />
+    <img class="first-image" src="../../assets/images/example.jpg" />
     <p class="first-result-text">
       {{ firstResultText }}
     </p>

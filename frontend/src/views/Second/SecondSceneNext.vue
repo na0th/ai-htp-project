@@ -10,7 +10,7 @@
       <div class="first-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger1.Trigger5">
-            길을 계속 걷다 보니 어느새 <br />길의 끝이 보입니다.
+            길을 계속 걷다 보니 <br />어느새 길의 끝이 보입니다.
           </p>
         </transition>
         <transition name="fade">

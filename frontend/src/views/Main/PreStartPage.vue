@@ -23,7 +23,10 @@
         </p>
       </div>
     </form>
-    <button type="submit" @click="onClickNext" class="start-btn">NEXT</button>
+    <div class="prestart-img-box">
+      <img src="../../assets/images/heart.png" />
+    </div>
+    <button type="submit" @click="onClickNext" class="next-btn">NEXT</button>
   </div>
 </template>
 
@@ -39,7 +42,7 @@ export default {
           this.player.play();
           console.log(name);
 
-          var file = JSON.stringify({ userName: name });
+          var file = JSON.stringify({ username: name });
 
           fetch("http://localhost:3000/main/", {
             method: "POST",
@@ -49,8 +52,9 @@ export default {
             body: file,
           })
             .then((response) => response.json())
-            .then((data) => {console.log(data)
-            this.$cookies.set("userid", data.userid);
+            .then((data) => {
+              console.log(data);
+              this.$cookies.set("userid", data.userid);
             });
           this.$emit("ToFirstScene");
         } else {
@@ -96,22 +100,22 @@ export default {
 .text1 {
   text-align: left;
   display: inline-block;
-  font-size: 13px;
-  font-family: korFont2;
+  font-size: 16px;
+  font-family: korFont3;
   margin-top: 30px;
   color: #ddd;
   line-height: 1.5;
 }
 .next-btn {
-  font-family: korFontLight;
-  font-size: 30px;
+  font-family: korFont1;
+  font-size: 25px;
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
   text-align: center;
-  bottom: 6%;
+  bottom: 8%;
   background: none;
   color: inherit;
   border: none;
@@ -150,7 +154,7 @@ export default {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
-  font-family: korFont2;
+  font-family: korFont3;
   font-size: 18px;
   line-height: 1.5;
 }
@@ -166,9 +170,18 @@ export default {
   background: transparent;
   font-size: 20px;
 }
+.perstart-image {
+  width: 65px;
+  display: inline-block;
+}
+.prestart-img-box {
+  text-align: center;
+  display: block;
+}
 .prestart-text {
   margin-top: 30px;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 2;
+  font-family: korFont3;
 }
 </style>

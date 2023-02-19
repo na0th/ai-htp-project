@@ -10,17 +10,20 @@
       <div class="first-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger1.Trigger5">
-            상상 속에서 당신은 길을 걷고 있습니다.
+            상상 속에서 당신은<br />
+            길을 걷고 있습니다.
           </p>
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger1.Trigger6">
-            길을 걷다가 저 멀리 희미하게 나무가 보입니다.
+            길을 걷다가 저 멀리 <br />
+            희미하게 나무가 보입니다.
           </p>
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger1.Trigger7">
-            상상 속 당신의 나무를 그려주세요.
+            상상 속 당신의 <br />
+            나무를 그려주세요.
           </p>
         </transition>
       </div>

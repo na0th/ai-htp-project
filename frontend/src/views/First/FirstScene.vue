@@ -160,6 +160,7 @@ export default {
   right: 0;
   text-align: left;
   color: #fff;
+  font-size: 16px;
 }
 .touch-text {
   color: #dededeb9;
@@ -169,7 +170,7 @@ export default {
   left: 0;
   right: 0;
   text-align: center;
-  top: 10%;
+  top: 50%;
   font-size: 17px;
   animation: blinker 2s linear infinite;
 }

@@ -1,11 +1,9 @@
 <template>
   <div v-if="showMain" class="main">
     <div class="title">
-      <p class="texts">마음 스케치</p>
-      <p class="texts">
-        내가 그린 그림으로 <br />
-        확인해보는 심리 테스트
-      </p>
+      <img class="title-image" src="../../assets/images/icon5.png" />
+      <p class="title-text"><span style="color: #eba090">마음</span>스케치</p>
+      <p class="title-subtext">내가 그린 그림으로 확인해보는 나의 심리</p>
     </div>
     <button
       type="button"
@@ -78,7 +76,7 @@ export default {
 
 <style>
 .main {
-  background-image: url("../../assets/images/example.jpg");
+  background-image: url("../../assets/images/mainPage.png");
   height: calc(var(--vh, 1vh) * 100);
   color: #3c3c3c;
   overflow: hidden;
@@ -93,8 +91,8 @@ export default {
   text-align: left;
   display: inline-block;
   padding-right: 20px;
-  font-size: 30px;
-  font-family: korFontRegular;
+  font-size: 38px;
+  font-family: korFont3;
   margin-top: 50px;
   font-weight: 1000;
   position: absolute;
@@ -103,14 +101,19 @@ export default {
   left: 0;
   right: 0;
   text-align: center;
-  top: 15%;
+  top: 28%;
 }
-.title :nth-child(2) {
-  font-size: 20px;
-  font-family: korFontLight;
+.title-image {
+  width: 115px;
+  margin-bottom: 20px;
+}
+.title-subtext {
+  font-size: 15px;
+  font-family: korFont1;
+  margin-top: 10px;
 }
 .start-btn {
-  font-family: korFont2;
+  font-family: korFont1;
   font-size: 30px;
   position: absolute;
   margin-left: auto;

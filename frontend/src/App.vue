@@ -1,10 +1,11 @@
 <template>
   <desktop-scene v-if="desktop"></desktop-scene>
+  <PreLoadingPage v-if="mobile"></PreLoadingPage>
   <MainPage
     @ToFirstScene="ToFirstScene"
     @toggleSound="toggleSound"
     v-bind:isPlaying="isPlaying"
-    v-if="mobile"
+    v-if="showMain"
   ></MainPage>
 
   <FirstScene
@@ -23,17 +24,25 @@
 
 <script>
 import DesktopScene from "./components/DesktopScene.vue";
+import PreLoadingPage from "./components/PreLoadingPage.vue";
 import MainPage from "./views/Main/MainPage.vue";
 import FirstScene from "./views/First/FirstScene.vue";
 import SecondScene from "./views/Second/SecondScene.vue";
 
 export default {
   name: "App",
-  components: { DesktopScene, MainPage, FirstScene, SecondScene },
+  components: {
+    DesktopScene,
+    MainPage,
+    FirstScene,
+    SecondScene,
+    PreLoadingPage,
+  },
   data() {
     return {
       mobile: true,
       desktop: false,
+      showMain: false,
       showFirst: false,
       showSecond: false,
       isPlaying: true,
@@ -41,7 +50,7 @@ export default {
   },
   methods: {
     ToFirstScene() {
-      this.mobile = false;
+      this.showMain = false;
       this.showFirst = true;
     },
     ToSecondScene() {
@@ -81,6 +90,11 @@ export default {
   },
   mounted() {
     window.addEventListener("beforeunload", this.leave);
+    //나중에 아래 코드를 로딩이 완료 된 후에 실행되는 것으로 변환
+    setTimeout(() => {
+      this.mobile = false;
+      this.showMain = true;
+    }, 5000);
   },
 
   beforeUnmount() {
@@ -233,12 +247,16 @@ html {
 }
 
 @font-face {
-  font-family: korFontLight;
-  src: url(./assets/fonts/SCDreamExtraLight.otf);
+  font-family: korFont3;
+  src: url(./assets/fonts/human.ttf);
 }
 @font-face {
-  font-family: korFontRegular;
-  src: url(./assets/fonts/SCDreamRegular.otf);
+  font-family: korFont1;
+  src: url(./assets/fonts/uhbee.ttf);
+}
+@font-face {
+  font-family: korFont1Bold;
+  src: url(./assets/fonts/uhbeebold.ttf);
 }
 @font-face {
   font-family: korFont2;
