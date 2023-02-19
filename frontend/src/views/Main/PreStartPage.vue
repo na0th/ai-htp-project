@@ -4,7 +4,7 @@
       <img class="icon-sound" src="../../assets/images/volumeon.png" />
     </button>
     <button v-else @click="toggleSound" class="sound-btn">
-      <img class="icon-sound" src="../../assets/images/volumeoff.png" />
+      <img class="icon-sound1" src="../../assets/images/volumeoff.png" />
     </button>
 
     <form method="post" class="name-form">
@@ -137,6 +137,11 @@ export default {
   top: 3%;
   right: 5%;
 }
+.icon-sound1 {
+  height: 40px;
+  color: #fff;
+}
+
 .icon-sound {
   height: 30px;
   color: #fff;

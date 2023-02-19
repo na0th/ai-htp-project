@@ -5,7 +5,7 @@
         <img class="icon-sound" src="../../assets/images/volumeon.png" />
       </button>
       <button v-else @click="toggleSound" class="sound-btn">
-        <img class="icon-sound" src="../../assets/images/volumeoff.png" />
+        <img class="icon-sound1" src="../../assets/images/volumeoff.png" />
       </button>
       <div class="first-text">
         <transition name="fade">

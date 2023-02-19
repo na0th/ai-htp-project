@@ -9,6 +9,7 @@
           <div class="controls-container">
             <div class="controls__range">
               <input
+                class="range-btn"
                 type="range"
                 id="jsRange"
                 min="0.1"
@@ -44,79 +45,80 @@
               </button>
               <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
                 <img
-                  class="icon-sound1"
+                  class="icon-sound2"
                   src="../../assets/images/volumeoff.png"
                 />
               </button>
             </div>
-            <img
-              src="../../assets/images/next.png"
-              class="painting-next"
-              @click="toggleModal"
-            />
           </div>
-          <div class="controls__colors" id="jsColors" ref="jsColors">
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintBlack.png"
-              style="color: #3c3c3c"
-            />
+          <div class="colors-container">
+            <div class="controls__colors" id="jsColors" ref="jsColors">
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintBlack.png"
+                style="color: #3c3c3c"
+              />
 
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintRed.png"
-              style="color: #ff3b30"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintOrange.png"
-              style="color: #ff9500"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintYellow.png"
-              style="color: #ffcc00"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintGreen.png"
-              style="color: #4cd963"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintBlue2.png"
-              style="color: #5ac8fa"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintBlue.png"
-              style="color: #0579ff"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintPurple.png"
-              style="color: #5856d6"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintBrown.png"
-              style="color: #884d1d"
-            />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintRed.png"
+                style="color: #ff3b30"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintOrange.png"
+                style="color: #ff9500"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintYellow.png"
+                style="color: #ffcc00"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintGreen.png"
+                style="color: #4cd963"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintBlue2.png"
+                style="color: #5ac8fa"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintBlue.png"
+                style="color: #0579ff"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintPurple.png"
+                style="color: #5856d6"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintBrown.png"
+                style="color: #884d1d"
+              />
+            </div>
           </div>
         </div>
       </div>
+      <img
+        src="../../assets/images/next.png"
+        class="painting-next"
+        @click="toggleModal"
+      />
     </div>
   </transition>
-
   <transition name="zoom">
     <div v-show="showModal" class="overlay">
       <div v-show="showModal" class="modal-container">
@@ -504,8 +506,11 @@ body {
   align-items: center;
 }
 .controls-container {
+  position: relative;
+  width: 310px;
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 }
 
 .controls .controls__colors {
@@ -518,10 +523,22 @@ body {
   border-radius: 25px;
   cursor: pointer;
 }
-.controls .controls__btns {
-  margin-bottom: 30px;
+.controls__btns {
+  position: relative;
+  margin-top: -10px;
+  right: -40px;
 }
-
+.range-btn {
+  position: relative;
+  left: 0;
+  margin-top: 15px;
+}
+.colors-container {
+  position: relative;
+}
+.controls__colors {
+  margin-top: 8px;
+}
 .controls__btns button {
   all: unset;
   cursor: pointer;
@@ -534,7 +551,6 @@ body {
 }
 
 .controls .controls__range {
-  margin-bottom: 30px;
 }
 html {
   cursor: url("../../assets/images/cursor.png") 0 32, auto;
@@ -551,25 +567,17 @@ html {
 .icon-sound1 {
   height: 40px;
   color: #fff;
+  margin-top: 10px;
 }
-.button-next {
-  font-family: korFont2;
-  font-size: 30px;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  outline: inherit;
-  width: 80px;
-  top: 13px;
+.icon-sound2 {
+  height: 50px;
+  color: #fff;
 }
 .painting-next {
+  cursor: pointer;
+  outline: inherit;
   height: 45px;
+  margin-top: 10px;
 }
 .reset-btn {
   border: none;
@@ -577,6 +585,7 @@ html {
   margin: 0;
   display: inline-block;
   background: transparent;
+  z-index: 5;
 }
 .reset-icon {
   color: #ffffff;
@@ -672,15 +681,7 @@ html {
   .controls {
     margin-top: 10px;
   }
-  .controls .controls__range {
-    margin-bottom: 10px;
-  }
-  .controls .controls__btns {
-    margin-bottom: 10px;
-  }
-  .controls .controls__colors {
-    display: flex;
-  }
+
   .controls__colors .controls__color {
     width: 36px;
     height: 40px;

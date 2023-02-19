@@ -37,7 +37,7 @@
             <img class="icon-sound1" src="../../assets/images/volumeon.png" />
           </button>
           <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
-            <img class="icon-sound1" src="../../assets/images/volumeoff.png" />
+            <img class="icon-sound2" src="../../assets/images/volumeoff.png" />
           </button>
         </div>
         <div class="controls__colors" id="jsColors" ref="jsColors">
@@ -478,6 +478,10 @@ body {
 }
 .icon-sound1 {
   height: 40px;
+  color: #fff;
+}
+.icon-sound2 {
+  height: 50px;
   color: #fff;
 }
 .controls {
