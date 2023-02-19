@@ -27,11 +27,6 @@ import os
 import numpy as np
 import pandas as pd
 
-def setGUser(userid):
-    session['user'] = db.session.query(User).filter(User.userid == userid).first()
-    if session['user'] == None:
-        return 404
-
 bp = Blueprint('views', __name__, url_prefix='/')
 CORS(bp)
 
@@ -50,7 +45,6 @@ def showMain():
             ex) {"username": "yang"}
         '''
         params = request.get_json()
-        # session['username'] = params['username']
 
         # insert
         user = User(username=params['username'])
@@ -78,8 +72,6 @@ def showFirst():
         if userid == None:
             return redirect(url_for('views.showMain'))
         
-        # setGUser(userid)
-
         imgstr = params['image'][22:] 
         print(params['image'])
 
@@ -95,7 +87,7 @@ def showFirst():
         # print(type(picture))
 
         # 모델 넣을 자리
-        resultText = callModel(binaryimg)
+        resultText = callTreeModel(binaryimg)
 
         # user = User.query.filter_by(userid).first()
         user = db.session.query(User).filter(User.userid == userid).first()
@@ -117,8 +109,6 @@ def showSecond():
         if userid == None:
             return redirect(url_for('views.showMain'))
         
-        setGUser(userid)
-
         imgstr = params['image'][22:]
 
         imgdata = base64.b64decode(imgstr)
@@ -155,13 +145,30 @@ def showSecond():
         }), 200
 
     
-def callModel(binaryimg):
+def callTreeModel(binaryimg):
     detection(binaryimg) # 경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것
     user = User.query.filter_by(userid=session['userid']).first()
     result = classification('tree_type', user.crop1_1004)
-    return result
+    
+    # resultStr = [] # 결과 list
 
-def resultMatching():
+    '''
+    1. tree_type 나무 전체 => 0 1 2 3 4 중에 하나 
+        ex)     result = classification('tree_type', user.crop1_1004)
+    2. branch 가지 => [0, 0, 0]
+    3. leap 잎, 열매 => [0, 0, 0, 0]
+    4. stem 줄기 => [0, 0, 0]
+    5. root 뿌리 => 1 2 3 4 5 중에 하나
+    '''
+    return result
+    # return resultStr
+
+
+# def save_result(table, findId): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
+#     resultData = db.session.query(table).filter(table.id == findId).first()
+#     if resultData.result is not None:
+#         resultStr.append(resultData.result)
+#     return 
     
 
 # detection function
