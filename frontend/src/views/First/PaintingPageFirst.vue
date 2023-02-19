@@ -20,8 +20,9 @@
             </div>
             <div class="controls__btns">
               <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
+                class="eraser"
+                id="eraser"
+                @click="handleEraserClick"
                 src="../../assets/images/paintEraser.png"
                 style="color: #fff"
               />
@@ -150,6 +151,7 @@ export default {
       color: "#2c2c2c",
       showModal: false,
       device: null,
+      mode : null
     };
   },
   methods: {
@@ -233,11 +235,34 @@ export default {
     },
     touchMove(e) {
       if (!this.painting) return;
-      const { x, y } = this.getTouchPos(e);
-      this.ctx.lineTo(x, y);
-      this.ctx.stroke();
-      this.startX = x;
-      this.startY = y;
+      if(this.mode === "eraser"){
+        this.ctx.beginPath();
+        const { x, y } = this.getTouchPos(e);
+        this.startX = x;
+        this.startY = y;
+        this.ctx.arc(
+          this.startX,
+          this.startY,
+          40 / 2,
+          0,
+          2 * Math.PI
+        );
+        this.ctx.fillStyle = this.ctx.strokeStyle;
+        this.ctx.fill();
+        // 사각형으로 지우기
+        // const { x, y } = this.getTouchPos(e);
+        // this.ctx.lineTo(x, y);
+        // this.ctx.stroke();
+        // this.ctx.clearRect(x-10, y-10, 20, 20);
+      }
+      else{
+        const { x, y } = this.getTouchPos(e);
+        this.ctx.lineTo(x, y);
+        this.ctx.stroke();
+        this.startX = x;
+        this.startY = y;
+      }
+
     },
     touchEnd(e) {
       if (!this.painting) return;
@@ -257,9 +282,15 @@ export default {
       this.painting = false;
     },
     handleColorClick(e) {
+      this.mode = "draw";
       this.color = e.target.style.color;
       this.ctx.strokeStyle = this.color;
     },
+    handleEraserClick(e){
+      this.mode = "eraser";
+      this.color = e.target.style.color;
+      this.ctx.strokeStyle = this.color;
+    }
   },
 
   mounted() {
@@ -551,6 +582,7 @@ body {
 }
 
 .controls .controls__range {
+
 }
 html {
   cursor: url("../../assets/images/cursor.png") 0 32, auto;
