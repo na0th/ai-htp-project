@@ -4,7 +4,7 @@
       <img class="icon-sound" src="../../assets/images/volumeon.png" />
     </button>
     <button v-else @click="toggleSound" class="sound-btn">
-      <img class="icon-sound" src="../../assets/images/volumeoff.png" />
+      <img class="icon-sound1" src="../../assets/images/volumeoff.png" />
     </button>
 
     <form method="post" class="name-form">
@@ -24,7 +24,7 @@
       </div>
     </form>
     <div class="prestart-img-box">
-      <img src="../../assets/images/heart.png" />
+      <img class="prestart-image" src="../../assets/images/heart.png" />
     </div>
     <button type="submit" @click="onClickNext" class="next-btn">NEXT</button>
   </div>
@@ -37,32 +37,36 @@ export default {
   methods: {
     onClickNext() {
       let name = this.name;
-      if (name.length > 0) {
-        if (this.isPlaying === true) {
-          this.player.play();
-          console.log(name);
-
-          var file = JSON.stringify({ username: name });
-
-          fetch("http://localhost:3000/main/", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: file,
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              this.$cookies.set("userid", data.userid);
-            });
-          this.$emit("ToFirstScene");
-        } else {
-          console.log(name);
-          this.$emit("ToFirstScene");
-        }
+      if (name.length > 50) {
+        alert("이름을 50자 이하로 입력해주세요");
       } else {
-        alert("이름을 입력해주세요");
+        if (name.length > 0) {
+          if (this.isPlaying === true) {
+            this.player.play();
+            console.log(name);
+
+            var file = JSON.stringify({ username: name });
+
+            fetch("http://localhost:3000/main/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: file,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+                this.$cookies.set("userid", data.userid);
+              });
+            this.$emit("ToFirstScene");
+          } else {
+            console.log(name);
+            this.$emit("ToFirstScene");
+          }
+        } else {
+          alert("이름을 입력해주세요");
+        }
       }
     },
     toggleSound() {
@@ -133,6 +137,11 @@ export default {
   top: 3%;
   right: 5%;
 }
+.icon-sound1 {
+  height: 40px;
+  color: #fff;
+}
+
 .icon-sound {
   height: 30px;
   color: #fff;
@@ -170,9 +179,10 @@ export default {
   background: transparent;
   font-size: 20px;
 }
-.perstart-image {
-  width: 65px;
+.prestart-image {
+  width: 45px;
   display: inline-block;
+  margin-top: 30px;
 }
 .prestart-img-box {
   text-align: center;
