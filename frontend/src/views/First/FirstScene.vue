@@ -151,7 +151,7 @@ export default {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  opacity: 1;
+  /* opacity: 1; */
 }
 .first-text {
   display: inline-block;
@@ -163,7 +163,8 @@ export default {
   right: 0;
   text-align: left;
   color: #fff;
-  font-size: 16px;
+  font-size: 19px;
+  font-family: korFont3;
 }
 .touch-text {
   color: #dededeb9;

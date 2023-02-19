@@ -18,89 +18,102 @@
               />
             </div>
             <div class="controls__btns">
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintEraser.png"
+                style="color: #fff"
+              />
               <button
                 type="button"
                 class="reset-btn"
                 id="jsReset"
                 @click="resetCanvas"
               >
-                <font-awesome-icon
-                  class="reset-icon"
-                  icon="fa-solid fa-rotate-right"
+                <img class="reset-icon" src="../../assets/images/reset.png" />
+              </button>
+              <button
+                v-if="isPlaying"
+                @click="$emit('toggleSound1')"
+                class="sound-btn1"
+              >
+                <img
+                  class="icon-sound1"
+                  src="../../assets/images/volumeon.png"
+                />
+              </button>
+              <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
+                <img
+                  class="icon-sound1"
+                  src="../../assets/images/volumeoff.png"
                 />
               </button>
             </div>
-            <button
-              v-if="isPlaying"
-              @click="$emit('toggleSound1')"
-              class="sound-btn1"
-            >
-              <img class="icon-sound1" src="../../assets/images/volumeon.png" />
-            </button>
-            <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
-              <img
-                class="icon-sound1"
-                src="../../assets/images/volumeoff.png"
-              />
-            </button>
+            <img
+              src="../../assets/images/next.png"
+              class="painting-next"
+              @click="toggleModal"
+            />
           </div>
           <div class="controls__colors" id="jsColors" ref="jsColors">
-            <div
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: #2c2c2c"
-            ></div>
-            <div
+              src="../../assets/images/paintBlack.png"
+              style="color: #3c3c3c"
+            />
+
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: white"
-            ></div>
-            <div
+              src="../../assets/images/paintRed.png"
+              style="color: #ff3b30"
+            />
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: #ff3b30"
-            ></div>
-            <div
+              src="../../assets/images/paintOrange.png"
+              style="color: #ff9500"
+            />
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: #ff9500"
-            ></div>
-            <div
+              src="../../assets/images/paintYellow.png"
+              style="color: #ffcc00"
+            />
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: #ffcc00"
-            ></div>
-            <div
+              src="../../assets/images/paintGreen.png"
+              style="color: #4cd963"
+            />
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: #4cd963"
-            ></div>
-            <div
+              src="../../assets/images/paintBlue2.png"
+              style="color: #5ac8fa"
+            />
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: #5ac8fa"
-            ></div>
-            <div
+              src="../../assets/images/paintBlue.png"
+              style="color: #0579ff"
+            />
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: #0579ff"
-            ></div>
-            <div
+              src="../../assets/images/paintPurple.png"
+              style="color: #5856d6"
+            />
+            <img
               class="controls__color jsColor"
               @click="handleColorClick"
-              style="background-color: #5856d6"
-            ></div>
-            <div
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              style="background-color: #884d1d"
-            ></div>
+              src="../../assets/images/paintBrown.png"
+              style="color: #884d1d"
+            />
           </div>
         </div>
       </div>
-      <button type="button-next" @click="toggleModal" class="button-next">
-        NEXT
-      </button>
     </div>
   </transition>
 
@@ -242,7 +255,7 @@ export default {
       this.painting = false;
     },
     handleColorClick(e) {
-      this.color = e.target.style.backgroundColor;
+      this.color = e.target.style.color;
       this.ctx.strokeStyle = this.color;
     },
   },
@@ -464,7 +477,14 @@ body {
 .painting-page {
   height: calc(var(--vh, 1vh) * 100);
   position: relative;
-  background-color: #121212;
+  background-image: url("../../assets/images/paintBackground.png");
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
 .painting-content {
   padding-top: 30px;
@@ -497,7 +517,6 @@ body {
   height: 50px;
   border-radius: 25px;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 .controls .controls__btns {
   margin-bottom: 30px;
@@ -548,6 +567,9 @@ html {
   outline: inherit;
   width: 80px;
   top: 13px;
+}
+.painting-next {
+  height: 45px;
 }
 .reset-btn {
   border: none;
@@ -658,7 +680,6 @@ html {
   }
   .controls .controls__colors {
     display: flex;
-    width: 90%;
   }
   .controls__colors .controls__color {
     width: 36px;
