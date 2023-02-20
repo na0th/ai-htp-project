@@ -3,7 +3,7 @@
     <button v-if="isPlaying" @click="toggleSound" class="sound-btn">
       <img class="icon-sound" src="../../assets/images/volumeon.png" />
     </button>
-    <button v-else @click="toggleSound" class="sound-btn">
+    <button v-else @click="toggleSound" class="sound-btn1">
       <img class="icon-sound1" src="../../assets/images/volumeoff.png" />
     </button>
 
@@ -135,6 +135,16 @@ export default {
   background: none;
   position: absolute;
   top: 3%;
+  right: 5%;
+}
+.sound-btn1 {
+  color: #ffffff;
+  border: none;
+  padding: 0;
+  display: inline-block;
+  background: none;
+  position: absolute;
+  top: 2.3%;
   right: 5%;
 }
 .icon-sound1 {

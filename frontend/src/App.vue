@@ -94,9 +94,21 @@ export default {
     //나중에 아래 코드를 로딩이 완료 된 후에 실행되는 것으로 변환
     if (this.device === "mobile") {
       setTimeout(() => {
-        this.mobile = false;
-        this.showMain = true;
+        if (document.readyState === "complete") {
+          this.mobile = false;
+          this.showMain = true;
+        } else {
+          window.addEventListener("load", () => {
+            this.mobile = false;
+            this.showMain = true;
+          });
+        }
       }, 1000);
+
+      // window.onload = () => {
+      //   this.mobile = false;
+      //   this.showMain = true;
+      // };
     } //모바일일때만 해당 코드 실행
   },
 
