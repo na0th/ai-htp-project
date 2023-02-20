@@ -61,40 +61,13 @@ def detection(img):
         class_id = result['detection_classes'][0, i]
 
         crop_img = draw_img[int(top):int(bottom),int(left):int(right)] #detection 하여 그린 박스만큼 이미지 크롭
-        
-        ###########추가
-        if labels_to_names[class_id] == '1004':
-            tree_height = bottom-top
-            tree_width = right-left
-            tree_size, location = tree_size_loc(height, width, top, bottom, left, right)
-            print('location',location)
-        elif labels_to_names[class_id] == '1002':
-            stem_height = bottom-top
-            stem_width = right-left
-        ###########
-
         cv2.imwrite('./image/'+labels_to_names[class_id]+'.png',cv2.cvtColor(crop_img, cv2.COLOR_RGB2BGR)) #크롭하여 로컬에 저장 (저장 안 하는 방식으로 수정?)
 
         print('class_id', class_id)
 
         caption = "{}: {:.4f}".format(labels_to_names[class_id], score)
         print(caption)  #score 콘솔에서 확인
-    
-    ################
-    stem_size = 0 #보통이다
-    if stem_height > tree_height * (1/2):
-        stem_size = 2 #길다
-    elif stem_height < tree_height * (1/6):
-        stem_size = 1  #짧다
 
-    stem_thickness = 0 #보통이다
-    if stem_width  < tree_width/10:
-        stem_thickness = 1 #얇다
-    elif stem_width > tree_width * 0.23:
-        stem_thickness = 2 #굵다
-
-    ##########    
-    
 #classification funcation
 def classification(model_file_name, img_path):
     #예시: 나무 타입 분류
@@ -109,26 +82,6 @@ def classification(model_file_name, img_path):
     prediction = treeType_model.predict(test_image) #추론
     tree_type = np.argmax(prediction) #결과 확인. 0: 상록수
     return str(tree_type)
-
-def tree_size_loc(height, width, top, bottom, left, right):##새로 생성
-  img_size = height*width
-  tree_size = (bottom-top)*(right-left) #트리 크기
-  img_center = width / 2 #그림 중앙 좌표
-  tree_center = left + ((right-left)/2) #트리 중앙 좌표
-
-  tree_size_flag = 0 #보통, 크다
-
-  if tree_size < img_size / 4:
-    tree_size_flag = 1 #작다
-
-  if tree_center < img_center / 2:
-    tree_location = 0 #left
-  elif tree_center > img_center * 1.5:
-    tree_location = 2 #right
-  else:
-    tree_location = 1 #center
-  return tree_size_flag, tree_location
-
 
 
 
