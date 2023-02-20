@@ -1,6 +1,6 @@
 SET foreign_key_checks = 0;
 drop table if exists User;
-create table User (
+create table user (
 	userid integer primary key auto_increment,
     username varchar(50) not null,
     image1 LONGBLOB,
@@ -8,14 +8,18 @@ create table User (
     crop1_1002 LONGBLOB,
     crop1_1003 LONGBLOB,
     crop1_1004 LONGBLOB,
+    entiretree TEXT,
+    treeroot TEXT, 
+    treebranch TEXT,
+    treeleap TEXT,
+    treestem TEXT, 
+    treesize TEXT,
     image2 LONGBLOB,
     crop2_1001 LONGBLOB,
     crop2_1002 LONGBLOB,
     crop2_1003 LONGBLOB,
-    crop2_1004 LONGBLOB,
-    result1 TEXT,
-    result2 TEXT
-)
+    crop2_1004 LONGBLOB
+)	
 
 select * from User;
 

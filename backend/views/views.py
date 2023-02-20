@@ -2,7 +2,7 @@ from flask import Blueprint, request, session, jsonify, redirect, url_for
 from db_connect import db
 import base64
 from flask_cors import CORS
-from models import User
+from models import User, EntireTree, TreeRoot, TreeBranch, TreeLeap, TreeStem, TreeSize
 
 import numpy as np
 import tensorflow as tf
@@ -95,7 +95,35 @@ def showFirst():
         user.result1 = resultText
         db.session.commit()
 
-        return jsonify({'message': 'The image is saved.'}), 200
+        # return jsonify({'message': 'The image is saved.'}), 200
+
+        ## TEST ##
+        str_base641 = base64.b64encode(user.image1)
+        base64_str1 = str_base641.decode('utf-8')
+
+
+        # return jsonify({
+        #     "username": user.username,
+        #     "image1": base64_str1,
+        #     "entiretree": user.entiretree,
+        #     "treeroot": user.treeroot,
+        #     "treebranch": user.treebranch,
+        #     "treeleap": user.treeleap,
+        #     "treestem": user.treestem,
+        #     "treesize": user.treesize
+        # }), 200
+
+        return jsonify({
+            "username": user.username,
+            "image1": base64_str1,
+            "entiretree": user.entiretree,
+            "treeroot": user.treeroot,
+            "treebranch": user.treebranch,
+            "treeleap": user.treeleap,
+            "treestem": user.treestem,
+            "treesize": user.treesize
+        }), 200
+
 
 @bp.route('/home/', methods=['POST', 'GET'])
 def showSecond():
@@ -146,33 +174,36 @@ def showSecond():
 
     
 def callTreeModel(binaryimg):
-    detection(binaryimg) # 경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것
-    user = User.query.filter_by(userid=session['userid']).first()
-    result = classification('tree_type', user.crop1_1004)
-    
-    # resultStr = [] # 결과 list
+    user = db.session.query(User).filter(User.userid == session['userid']).first()
 
-    '''
-    1. tree_type 나무 전체 => 0 1 2 3 4 중에 하나 
-        ex)     result = classification('tree_type', user.crop1_1004)
-    2. branch 가지 => [0, 0, 0]
-    3. leap 잎, 열매 => [0, 0, 0, 0]
-    4. stem 줄기 => [0, 0, 0]
-    5. root 뿌리 => 1 2 3 4 5 중에 하나
-    '''
-    return result
+    # 0. tree_size_location
+    treesizeResult = detection(binaryimg) # 경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것    
+    user.treesize = save_result(EntireTree, treesizeResult)
+    # 1. tree_type 나무 전체 => 0 1 2 3 4 중에 하나 
+    entiretreeResult = classification('tree_type', user.crop1_1004)
+    user.entiretree = save_result(TreeSize, entiretreeResult)
+    # 2. branch 가지 => [0, 0, 0]
+    # 3. leap 잎, 열매 => [0, 0, 0, 0]
+    # 4. stem 줄기 => [0, 0, 0]
+    # 5. root 뿌리 => 1 2 3 4 5 중에 하나
+    
+    db.session.commit()
+    # return result
     # return resultStr
 
-
-# def save_result(table, findId): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
-#     resultData = db.session.query(table).filter(table.id == findId).first()
-#     if resultData.result is not None:
-#         resultStr.append(resultData.result)
-#     return 
+def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
+    print(result)
+    resultStr = ''
+    for index in result:
+        resultData = db.session.query(table).filter(table.id == index).first()
+        if resultData is not None:
+            resultStr += resultData.result
+    return resultStr
     
 
 # detection function
 def detection(binaryimg):
+    resultlist = []
     
     encoded_img = np.fromstring(binaryimg, dtype = np.uint8)
     img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
@@ -222,11 +253,23 @@ def detection(binaryimg):
         # str -> numpy
         # nparr = np.array(str)
 
+        ########### 추가
+        if labels_to_names[class_id] == '1004': # 1004면
+            tree_height = bottom-top
+            tree_width = right-left
+            resultlist.extend(tree_size_loc(height, width, top, bottom, left, right))
+            # print('location',location)
+        elif labels_to_names[class_id] == '1002':
+            stem_height = bottom-top
+            stem_width = right-left
+        ###########
+
         npImage = Image.fromarray(crop_img)
         img_byte_arr = io.BytesIO()
         npImage.save(img_byte_arr, format='jpeg')
         img_byte_arr = img_byte_arr.getvalue()
 
+        # crop한 이미지 db에 저장한다.
         cropimgToDB(class_id, img_byte_arr)
         # cv2.imwrite('./image/'+labels_to_names[class_id]+'.png',cv2.cvtColor(crop_img, cv2.COLOR_RGB2BGR)) #크롭하여 로컬에 저장 (저장 안 하는 방식으로 수정?)
 
@@ -234,10 +277,32 @@ def detection(binaryimg):
 
         caption = "{}: {:.4f}".format(labels_to_names[class_id], score)
         print(caption)  #score 콘솔에서 확인
+    
+    ################
+    # 줄기 사이즈
+    # stem_size = 0 #보통이다
+    if stem_height > tree_height * (1/2):
+        # stem_size = 2 #길다
+        resultlist.append(4)
+    elif stem_height < tree_height * (1/6):
+        stem_size = 1  #짧다
+        resultlist.append(5)
+
+    # 줄기 굵기
+    stem_thickness = 0 #보통이다
+    if stem_width  < tree_width/10:
+        stem_thickness = 1 # 얇다
+        resultlist.append(7)
+    elif stem_width > tree_width * 0.23:
+        stem_thickness = 2 # 굵다
+        resultlist.append(6)
+    ##########    
+    return resultlist
 
 def cropimgToDB(class_id, npbinary):
     userid = session['userid']
     user = db.session.query(User).filter(User.userid == userid).first()
+    # 이거 있는지 업는지 확인해야돼
     if session['step'] == 1:
         if class_id == 1.0:
             user.crop1_1001 = npbinary
@@ -282,3 +347,31 @@ def classification(model_file_name, binaryimg):
     prediction = treeType_model.predict(test_image) #추론
     tree_type = np.argmax(prediction) #결과 확인. 0: 상록수
     return str(tree_type)
+
+def tree_size_loc(height, width, top, bottom, left, right): ## 새로 생성
+    # tree_size, tree_location
+
+    treesizeResult = []
+
+    img_size = height*width
+    tree_size = (bottom-top)*(right-left) # 트리 크기
+    img_center = width / 2 # 그림 중앙 좌표
+    tree_center = left + ((right-left)/2) # 트리 중앙 좌표
+
+    # tree size: 0 1
+    # tree_size_flag = 0 # 보통, 크다
+
+    if tree_size < img_size / 4:
+        treesizeResult.append(0)
+    
+    # tree location: 0 1 2
+    if tree_center < img_center / 2:
+        # tree_location = 0 # left
+        treesizeResult.append(1)
+    elif tree_center > img_center * 1.5:
+        tree_location = 2 # right
+        treesizeResult.append(3)
+    else:
+        tree_location = 1 # center
+        treesizeResult.append(2)
+    return treesizeResult
