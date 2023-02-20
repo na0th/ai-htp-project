@@ -151,7 +151,7 @@ export default {
       color: "#2c2c2c",
       showModal: false,
       device: null,
-      mode : null
+      mode: null,
     };
   },
   methods: {
@@ -235,18 +235,12 @@ export default {
     },
     touchMove(e) {
       if (!this.painting) return;
-      if(this.mode === "eraser"){
+      if (this.mode === "eraser") {
         this.ctx.beginPath();
         const { x, y } = this.getTouchPos(e);
         this.startX = x;
         this.startY = y;
-        this.ctx.arc(
-          this.startX,
-          this.startY,
-          40 / 2,
-          0,
-          2 * Math.PI
-        );
+        this.ctx.arc(this.startX, this.startY, 40 / 2, 0, 2 * Math.PI);
         this.ctx.fillStyle = this.ctx.strokeStyle;
         this.ctx.fill();
         // 사각형으로 지우기
@@ -254,15 +248,13 @@ export default {
         // this.ctx.lineTo(x, y);
         // this.ctx.stroke();
         // this.ctx.clearRect(x-10, y-10, 20, 20);
-      }
-      else{
+      } else {
         const { x, y } = this.getTouchPos(e);
         this.ctx.lineTo(x, y);
         this.ctx.stroke();
         this.startX = x;
         this.startY = y;
       }
-
     },
     touchEnd(e) {
       if (!this.painting) return;
@@ -286,11 +278,11 @@ export default {
       this.color = e.target.style.color;
       this.ctx.strokeStyle = this.color;
     },
-    handleEraserClick(e){
+    handleEraserClick(e) {
       this.mode = "eraser";
       this.color = e.target.style.color;
       this.ctx.strokeStyle = this.color;
-    }
+    },
   },
 
   mounted() {
@@ -581,9 +573,6 @@ body {
   transform: scale(0.98);
 }
 
-.controls .controls__range {
-
-}
 html {
   cursor: url("../../assets/images/cursor.png") 0 32, auto;
 }
@@ -617,7 +606,6 @@ html {
   margin: 0;
   display: inline-block;
   background: transparent;
-  z-index: 5;
 }
 .reset-icon {
   color: #ffffff;

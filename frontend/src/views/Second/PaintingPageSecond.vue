@@ -18,99 +18,101 @@
             />
           </div>
           <div class="controls__btns">
-          <img
-          class="eraser"
-          id="eraser"
-          @click="handleEraserClick"
-          src="../../assets/images/paintEraser.png"
-          style="color: #fff"
-          />
-
+            <img
+              class="eraser"
+              id="eraser"
+              @click="handleEraserClick"
+              src="../../assets/images/paintEraser.png"
+              style="color: #fff"
+            />
             <button
               type="button"
               class="reset-btn"
               id="jsReset"
               @click="resetCanvas"
             >
-            <img class="reset-icon" src="../../assets/images/reset.png" />
+              <img class="reset-icon" src="../../assets/images/reset.png" />
+            </button>
+            <button
+              v-if="isPlaying"
+              @click="$emit('toggleSound1')"
+              class="sound-btn1"
+            >
+              <img class="icon-sound1" src="../../assets/images/volumeon.png" />
+            </button>
+            <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
+              <img
+                class="icon-sound2"
+                src="../../assets/images/volumeoff.png"
+              />
             </button>
           </div>
-          <button
-            v-if="isPlaying"
-            @click="$emit('toggleSound1')"
-            class="sound-btn1"
-          >
-            <img class="icon-sound1" src="../../assets/images/volumeon.png" />
-          </button>
-          <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
-            <img class="icon-sound2" src="../../assets/images/volumeoff.png" />
-          </button>
         </div>
         <div class="colors-container">
-        <div class="controls__colors" id="jsColors" ref="jsColors">
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintBlack.png"
-            style="color: #3c3c3c"
+          <div class="controls__colors" id="jsColors" ref="jsColors">
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintBlack.png"
+              style="color: #3c3c3c"
             />
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintRed.png"
-            style="color: #ff3b30"
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintRed.png"
+              style="color: #ff3b30"
             />
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintOrange.png"
-            style="color: #ff9500"
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintOrange.png"
+              style="color: #ff9500"
             />
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintYellow.png"
-            style="color: #ffcc00"
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintYellow.png"
+              style="color: #ffcc00"
             />
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintGreen.png"
-            style="color: #4cd963"
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintGreen.png"
+              style="color: #4cd963"
             />
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintBlue2.png"
-            style="color: #5ac8fa"
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintBlue2.png"
+              style="color: #5ac8fa"
             />
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintBlue.png"
-            style="color: #0579ff"
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintBlue.png"
+              style="color: #0579ff"
             />
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintPurple.png"
-            style="color: #5856d6"
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintPurple.png"
+              style="color: #5856d6"
             />
-          <img
-            class="controls__color jsColor"
-            @click="handleColorClick"
-            src="../../assets/images/paintBrown.png"
-            style="color: #884d1d"
+            <img
+              class="controls__color jsColor"
+              @click="handleColorClick"
+              src="../../assets/images/paintBrown.png"
+              style="color: #884d1d"
             />
+          </div>
         </div>
       </div>
-    </div>
     </div>
     <img
       src="../../assets/images/next.png"
       class="painting-next"
       @click="toggleModal"
-      />
+    />
   </div>
 
   <transition name="zoom">
@@ -147,7 +149,7 @@ export default {
       data: "",
       showPaint: true,
       showLoading: false,
-      mode : null
+      mode: null,
     };
   },
   methods: {
@@ -237,18 +239,12 @@ export default {
     },
     touchMove(e) {
       if (!this.painting) return;
-      if(this.mode === "eraser"){
+      if (this.mode === "eraser") {
         this.ctx.beginPath();
         const { x, y } = this.getTouchPos(e);
         this.startX = x;
         this.startY = y;
-        this.ctx.arc(
-        this.startX,
-        this.startY,
-        40 / 2,
-        0,
-        2 * Math.PI
-        );
+        this.ctx.arc(this.startX, this.startY, 40 / 2, 0, 2 * Math.PI);
         this.ctx.fillStyle = this.ctx.strokeStyle;
         this.ctx.fill();
         // 사각형으로 지우기
@@ -256,14 +252,13 @@ export default {
         // this.ctx.lineTo(x, y);
         // this.ctx.stroke();
         // this.ctx.clearRect(x-10, y-10, 20, 20);
-        }
-        else{
+      } else {
         const { x, y } = this.getTouchPos(e);
         this.ctx.lineTo(x, y);
         this.ctx.stroke();
         this.startX = x;
         this.startY = y;
-        }
+      }
     },
     touchEnd(e) {
       if (!this.painting) return;
@@ -287,11 +282,11 @@ export default {
       this.color = e.target.style.color;
       this.ctx.strokeStyle = this.color;
     },
-    handleEraserClick(e){
+    handleEraserClick(e) {
       this.mode = "eraser";
       this.color = e.target.style.color;
       this.ctx.strokeStyle = this.color;
-      }
+    },
   },
   mounted() {
     this.checkMobile();
@@ -527,7 +522,6 @@ body {
 .controls-container {
   position: relative;
   width: 310px;
-
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -542,24 +536,22 @@ body {
   height: 50px;
   border-radius: 25px;
   cursor: pointer;
-
 }
 .controls__btns {
-position: relative;
-margin-top: -10px;
-right: -40px;
+  position: relative;
+  margin-top: -10px;
+  right: -40px;
 }
 .range-btn {
-position: relative;
-left: 0;
-margin-top: 15px;
+  position: relative;
+  left: 0;
+  margin-top: 15px;
 }
 .colors-container {
-position: relative;
+  position: relative;
 }
 .controls__colors {
-margin-top: 8px;
-
+  margin-top: 8px;
 }
 
 .controls__btns button {
@@ -573,53 +565,44 @@ margin-top: 8px;
   transform: scale(0.98);
 }
 
-.controls .controls__range {
-
-}
 html {
   cursor: url("../../assets/images/cursor.png") 0 32, auto;
 }
 .sound-btn1 {
-color: #ffffff;
-
-border: none;
-padding: 0;
-display: inline-block;
-background: none;
-margin-top: -10px;
-padding-left: 5px;
+  color: #ffffff;
+  border: none;
+  padding: 0;
+  display: inline-block;
+  background: none;
+  margin-top: -10px;
+  padding-left: 5px;
 }
 .icon-sound1 {
-height: 40px;
-color: #fff;
-margin-top: 10px;
+  height: 40px;
+  color: #fff;
+  margin-top: 10px;
 }
 .icon-sound2 {
-height: 50px;
-color: #fff;
+  height: 50px;
+  color: #fff;
 }
 .painting-next {
-
-cursor: pointer;
-outline: inherit;
-height: 45px;
-margin-top: 10px;
-
+  cursor: pointer;
+  outline: inherit;
+  height: 45px;
+  margin-top: 10px;
 }
-
 .reset-btn {
   border: none;
   padding: 0;
   margin: 0;
   display: inline-block;
   background: transparent;
-  z-index: 5;
 }
 .reset-icon {
   color: #ffffff;
   height: 30px;
 }
-
 .overlay {
   position: fixed; /* Positioning and size */
   top: 0;
@@ -668,7 +651,6 @@ margin-top: 10px;
   cursor: pointer;
   outline: none;
   min-height: 45px;
-
 }
 .modal-btn.left {
   border-radius: 0 0 0 10px;
@@ -701,23 +683,22 @@ margin-top: 10px;
 
 /* 핸드폰 사이즈*/
 @media screen and (max-width: 450px) {
-body {
-align-items: center;
-background-color: #333333;
-}
-.canvas {
-width: 310px;
-height: 465.3px;
-}
-.controls {
-margin-top: 10px;
-}
+  body {
+    align-items: center;
+    background-color: #333333;
+  }
+  .canvas {
+    width: 310px;
+    height: 465.3px;
+  }
+  .controls {
+    margin-top: 10px;
+  }
 
-.controls__colors .controls__color {
-width: 36px;
-height: 40px;
-border-radius: 0px;
-
-}
+  .controls__colors .controls__color {
+    width: 36px;
+    height: 40px;
+    border-radius: 0px;
+  }
 }
 </style>
