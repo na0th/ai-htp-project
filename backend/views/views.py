@@ -3,7 +3,7 @@ from db_connect import db
 import base64
 from flask_cors import CORS
 from models import User, EntireTree, TreeRoot, TreeBranch, TreeLeap, TreeStem, TreeSize
-from model_predict import classification, classification_multi, detection #여기에 함수 다 넣음
+from model_predict import classification, detection #여기에 함수 다 넣음
 
 import numpy as np
 import tensorflow as tf
@@ -114,15 +114,19 @@ def showFirst():
         #     "treesize": user.treesize
         # }), 200
 
+        # response = jsonify({'username':'choigeon', 'test1' : {'image1':'1','tree':'xxx'},'test2' : {'image2': '2', 'home' : 'xxx'}})
+
         return jsonify({
             "username": user.username,
-            "image1": base64_str1,
-            "entiretree": user.entiretree,
-            "treeroot": user.treeroot,
-            "treebranch": user.treebranch,
-            "treeleap": user.treeleap,
-            "treestem": user.treestem,
-            "treesize": user.treesize
+            "test1": {
+                "image1": base64_str1,
+                "entiretree": user.entiretree,
+                "treeroot": user.treeroot,
+                "treebranch": user.treebranch,
+                "treeleap": user.treeleap,
+                "treestem": user.treestem,
+                "treesize": user.treesize
+            }
         }), 200
 
 
@@ -189,19 +193,23 @@ def callTreeModel(binaryimg):
     # 0. tree_size_location
     treesizeResult = detection(binaryimg) # 경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것    
     user.treesize = save_result(EntireTree, treesizeResult)
+
     # 1. tree_type 나무 전체 => 0 1 2 3 4 중에 하나 
-    entiretreeResult = classification('tree_type', user.crop1_1004)
+    entiretreeResult = classification('tree_type', user.crop1_1004, 300)
     user.entiretree = save_result(TreeSize, entiretreeResult)
     # 2. branch 가지 => [0, 0, 0]
+
     # 3. leap 잎, 열매 => [0, 0, 0, 0]
     leapResult = []
-    result_flower = classification('flower', './image/1001.png', 300) #꽃 유무. 없다 0, 있다 1 
-    result_fruit = classification('fruit', './image/1001.png', 300) #열매 유무. 없다 0, 있다 1
+    result_flower = classification('flower', user.crop1_1001, 300) #꽃 유무. 없다 0, 있다 1 
+    result_fruit = classification('fruit', user.crop1_1001, 300) #열매 유무. 없다 0, 있다 1
     leapResult.append(result_flower)
     leapResult.append(result_fruit)
     # 인덱스로 변환해서 들어가야 됨
-    user.treeleap = save_result(TreeLeap, leapResult)
+    # user.treeleap = save_result(TreeLeap, leapResult)
+
     # 4. stem 줄기 => [0, 0, 0]
+
     # 5. root 뿌리 => 1 2 3 4 5 중에 하나
     
     db.session.commit()
