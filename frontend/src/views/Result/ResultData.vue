@@ -7,6 +7,48 @@
       <img width="200" height="300" :src="data.image1" alt="image" />
       <p>{{ username }}님의 집 그림</p>
       <img width="200" height="300" :src="data.image2" alt="image" />
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
 
       <div v-for="(value, key) in tree" :key="key">
         <p>{{ key }}를 그린 것으로 판단되었습니다.:{{ value }}</p>
@@ -53,12 +95,16 @@ export default {
 
 <style>
 .results-data {
-  height: 100%;
   display: inline-block;
   font-family: korFont2;
-  background-image: url("../../assets/images/background1.jpg");
+  background-image: url("../../assets/images/ResultBody.jpg");
+  /*
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;*/
   color: black;
   font-family: korFont1;
+  width: 100%;
 }
 .userName {
   font-size: 25px;
