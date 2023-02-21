@@ -2,7 +2,12 @@
   <ResultData v-if="data" v-bind:data="data"></ResultData>
   <div v-else class="loading-page">
     <div class="loading-text">
-      <p>'마음 스케치' 프로젝트는 20대 청년들의 심리적인 문제를 해결하기...</p>
+      <p>
+        '마음 스케치' 프로젝트는 유저가 직접 그린 그림에 AI 기술을 더하여 본인의
+        심리 및 정서 상태를 파악할 수 있도록 돕고자 제작되었습니다. 본인의
+        상태가 심각하다고 판단되거나, 보다 정확한 해석을 알기 위해서는 전문
+        의료진을 찾아주세요.
+      </p>
       <p class="member-text">
         프로젝트 참여 인원: <br /><br />
         Front-End: 이윤영, 최건 <br />
@@ -30,7 +35,7 @@ export default {
 <style>
 .loading-page {
   height: calc(var(--vh, 1vh) * 100);
-  background: #4d4d4d;
+  background-image: url("../assets/images/night.jpg");
   font-family: korFont2;
 }
 .loading-text {
