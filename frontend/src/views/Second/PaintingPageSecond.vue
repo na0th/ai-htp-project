@@ -146,7 +146,7 @@ export default {
       size: 2.5,
       color: "#2c2c2c",
       showModal: false,
-      data: "",
+      data: null,
       showPaint: true,
       showLoading: false,
       mode: null,
@@ -176,8 +176,7 @@ export default {
       })
         .then((response) => response.json())
         .then((response_json) => {
-          console.log(response_json);
-          this.data = "1";
+          this.data = response_json;
         });
 
       //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
