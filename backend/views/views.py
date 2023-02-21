@@ -3,6 +3,7 @@ from db_connect import db
 import base64
 from flask_cors import CORS
 from models import User, EntireTree, TreeRoot, TreeBranch, TreeLeap, TreeStem, TreeSize
+from model_predict import classification, classification_multi, detection #여기에 함수 다 넣음
 
 import numpy as np
 import tensorflow as tf
@@ -176,6 +177,15 @@ def showSecond():
 def callTreeModel(binaryimg):
     user = db.session.query(User).filter(User.userid == session['userid']).first()
 
+    #######수정 및 추가 내용########
+    #######원래 가지, 줄기, 뿌리, 나무 타입 모델이었던 것은 멀티라벨 모델로 진행하여 모델 수를 줄이려고 했었는데
+    #######그랬더니 정확도가 낮게 나와서 가지 모델 2개, 줄기 모델 2개, 잎열매 모델 4개, 뿌리 모델 1개, 나무 타입 모델 1개 예정
+    #######아래의 코드처럼 classification(모델이름, 이미지, 사이즈(input size에 맞게 설정해둘 예정)) 함수만 추가하면 됨
+    # result_treeType = classification('tree_type', './image/1004.png', 300) #나무 타입
+    # result_flower = classification('flower', './image/1001.png', 300) #꽃 유무. 없다 0, 있다 1 
+    # result_fruit = classification('fruit', './image/1001.png', 300) #열매 유무. 없다 0, 있다 1
+    #################################
+
     # 0. tree_size_location
     treesizeResult = detection(binaryimg) # 경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것    
     user.treesize = save_result(EntireTree, treesizeResult)
@@ -184,6 +194,13 @@ def callTreeModel(binaryimg):
     user.entiretree = save_result(TreeSize, entiretreeResult)
     # 2. branch 가지 => [0, 0, 0]
     # 3. leap 잎, 열매 => [0, 0, 0, 0]
+    leapResult = []
+    result_flower = classification('flower', './image/1001.png', 300) #꽃 유무. 없다 0, 있다 1 
+    result_fruit = classification('fruit', './image/1001.png', 300) #열매 유무. 없다 0, 있다 1
+    leapResult.append(result_flower)
+    leapResult.append(result_fruit)
+    # 인덱스로 변환해서 들어가야 됨
+    user.treeleap = save_result(TreeLeap, leapResult)
     # 4. stem 줄기 => [0, 0, 0]
     # 5. root 뿌리 => 1 2 3 4 5 중에 하나
     
@@ -197,10 +214,10 @@ def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 r
     for index in result:
         resultData = db.session.query(table).filter(table.id == index).first()
         if resultData is not None:
-            resultStr += resultData.result
+            resultStr += (resultData.result + '\n')
     return resultStr
     
-
+'''
 # detection function
 def detection(binaryimg):
     resultlist = []
@@ -375,3 +392,4 @@ def tree_size_loc(height, width, top, bottom, left, right): ## 새로 생성
         tree_location = 1 # center
         treesizeResult.append(2)
     return treesizeResult
+'''
