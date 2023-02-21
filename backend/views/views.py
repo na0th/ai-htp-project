@@ -58,8 +58,6 @@ def showMain():
 
 @bp.route('/tree/', methods=['POST', 'GET'])
 def showFirst():
-    # if g.user == None:
-    #     return redirect(url_for('views.showMain'))
     if request.method == 'POST':
         '''
         request
@@ -171,10 +169,19 @@ def showSecond():
 
         return jsonify({
             "username": user.username,
-            "image1": base64_str1,
-            "image2": base64_str2,
-            "result1": user.result1,
-            "result2": user.result2
+            "image1": 'data:image/png;base64,' + base64_str1,
+            "image2": 'data:image/png;base64,' + base64_str2,
+            "tree": {
+                "entiretree": user.entiretree,
+                "treeroot": user.treeroot,
+                "treebranch": user.treebranch,
+                "treeleap": user.treeleap,
+                "treestem": user.treestem,
+                "treesize": user.treesize
+            },
+            "home": {
+                "key": "value"
+            }
         }), 200
 
     
