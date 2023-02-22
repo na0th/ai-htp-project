@@ -155,7 +155,7 @@ def classification(model_file_name, binary_img, SIZE):###########수정 내용. 
    
     prediction = model.predict(image) #추론
     result = np.argmax(prediction) #결과 확인.
-    return str(result)
+    return result
 
 #######멀티라벨 모델로 갈 경우 사용.
 def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
@@ -179,10 +179,14 @@ def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
 
     sorted_categories = np.argsort(proba[0])[:-(COUNT+1):-1]
 
+    resultlist=[]
+
     for i in range(COUNT):
      if proba[0][sorted_categories[i]] > SCORE_THRESHOLD:
+        resultlist.append(class_li[sorted_categories[i]])
         print(class_li[sorted_categories[i]])
         print('score:', proba[0][sorted_categories[i]])
+    return resultlist
 
 def cropimgToDB(class_id, npbinary):
     userid = session['userid']
