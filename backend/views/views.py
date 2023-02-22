@@ -148,9 +148,6 @@ def predict():
 
     branch_leaf_li = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
     result_leaf_branch = classification_multi('leaf_barnch', './image/1001.png', branch_leaf_li, 200, 7)
-
-    
-
     #################################
 
     return result_leaf_branch   
@@ -188,33 +185,39 @@ def callTreeModel(binaryimg):
     branch_leaf_li = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
     result_leaf_branch = classification_multi('leaf_branch', user.crop1_1001, branch_leaf_li, 200, 7)
     leapResult=[]
-    if '열매있음' in branch_leaf_li:
+    if '열매있음' in result_leaf_branch:
         leapResult.append(3)
-    if '잎무성한' in branch_leaf_li:
+    if '잎무성한' in result_leaf_branch:
         leapResult.append(1)
-    if '잎이 큰' in branch_leaf_li:
+    if '잎이 큰' in result_leaf_branch:
         leapResult.append(0)
-    if '꽃있음' in branch_leaf_li:
+    if '꽃있음' in result_leaf_branch:
         leapResult.append(2)
     user.treeleap = save_result(TreeLeap, leapResult)
     
     branchResult=[]
-    if '윗쪽으로 뻗는' in branch_leaf_li:
+    if '윗쪽으로 뻗는' in result_leaf_branch:
         branchResult.append(1)
-    if '그물' in branch_leaf_li:
+    if '그물' in result_leaf_branch:
         branchResult.append(0)
     user.treebranch = save_result(TreeBranch, branchResult)
     
     # 4. stem 줄기 => [0, 0, 0]
+    stemResult=[]
+    stemResult.append(classification('stem', user.crop1_1002, 300))
+    user.treestem = save_result(TreeStem, stemResult)
 
     # 5. root 뿌리 => 1 2 3 4 5 중에 하나
-    
+    rootResult=[]
+    rootResult.append(classification('root', user.crop1_1003, 300))
+    user.treeroot = save_result(TreeRoot, rootResult)
+
     db.session.commit()
     # return result
     # return resultStr
 
 def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
-    print(result)
+    # print(result)
     resultStr = ''
     for index in result:
         resultData = db.session.query(table).filter(table.id == index).first()
