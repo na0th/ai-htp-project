@@ -20,37 +20,46 @@ class User(db.Model):
 # 나무 db class
 class EntireTree(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
         
 class TreeRoot(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
 	
 class TreeBranch(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
 	
 class TreeLeap(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
 	
 class TreeStem(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
 	
 class TreeSize(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
 	
 # 집 db class
 class HouseRoof(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
 	
 class HouseDoor(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
 	
 class HouseWindow(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
