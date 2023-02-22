@@ -49,6 +49,24 @@
         magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
         temporibus excepturi.
       </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
+        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
+        temporibus excepturi.
+      </p>
 
       <div v-for="(value, key) in tree" :key="key">
         <p>{{ key }}를 그린 것으로 판단되었습니다.:{{ value }}</p>
@@ -105,6 +123,7 @@ export default {
   color: black;
   font-family: korFont1;
   width: 100%;
+  height: auto !important;
 }
 .userName {
   font-size: 25px;
