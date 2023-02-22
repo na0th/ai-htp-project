@@ -24,11 +24,14 @@ import io
 from models import User, EntireTree, TreeRoot, TreeBranch, TreeLeap, TreeStem, TreeSize
 from db_connect import db
 
+from model_init import model_dict
+
 def getClassfication(model_file_name):
-    if g.model_dict[model_file_name] is not None:
+    if model_dict[model_file_name] is not None:
         model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
     else:
-        model = g.model_dict[model_file_name]
+        model = model_dict[model_file_name]
+    return model
 
 #detection function
 def detection(binaryimg):
@@ -47,12 +50,12 @@ def detection(binaryimg):
     draw_img = img_array.copy()
 
     #모델 로드
-    model = tf.saved_model.load('.\model\detection\saved_model')
+    # model = tf.saved_model.load('.\model\detection\saved_model')
     ### 전역변수로 해보기 추가 ###
-    # if g.model_dict["detection"] is not None:
-    #     model = tf.saved_model.load('.\model\detection\saved_model')
-    # else:
-    #     model = g.saved_model
+    if model_dict["detection"] is not None:
+        model = tf.saved_model.load('.\model\detection\saved_model')
+    else:
+        model = model_dict["detection"]
     ############################
 
     #사용자 이미지 추론 (detection)
@@ -65,7 +68,13 @@ def detection(binaryimg):
 
     #클래스 매칭
     labels_to_names = {1.0:'1001', 2.0:'1002', 3.0:'1003', 4.0:'1004'}
-
+    
+    # 선언
+    tree_height = 0
+    tree_width = 0
+    
+    stem_height = 0
+    stem_width = 0
 
     for i in range(min(result['detection_scores'][0].shape[0], OBJECT_DEFAULT_COUNT)):
         score = result['detection_scores'][0,i]
@@ -139,9 +148,9 @@ def classification(model_file_name, binary_img, SIZE):###########수정 내용. 
     # img: np array
     # 예시: 나무 타입 분류
 
-    model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
+    # model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
     ### 전역변수로 해보기 추가 ###
-    # model = getClassfication(model_file_name)
+    model = getClassfication(model_file_name)
     ############################
 
     encoded_img = np.fromstring(binary_img, dtype = np.uint8)
@@ -162,9 +171,9 @@ def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
 
     SCORE_THRESHOLD = 0.5
 
-    model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
+    # model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
     ### 전역변수로 해보기 추가 ###
-    # model = getClassfication(model_file_name)
+    model = getClassfication(model_file_name)
     ############################
 
     encoded_img = np.fromstring(binary_img, dtype = np.uint8)
@@ -202,7 +211,7 @@ def cropimgToDB(class_id, npbinary):
             user.crop1_1003 = npbinary
         else: # class_id == 4.0
             user.crop1_1004 = npbinary
-    else: # g.step == 2:
+    else: 
         if class_id == 1.0:
             user.crop2_1001 = npbinary
         elif class_id == 2.0:

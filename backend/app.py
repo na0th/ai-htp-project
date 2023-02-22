@@ -18,7 +18,6 @@ from views import views
 app.register_blueprint(views.bp)
 
 if __name__ == '__main__':
-    print('여기 실행됨??')
     app.run(port=3000, debug=True)
 
 # with app.app_context():

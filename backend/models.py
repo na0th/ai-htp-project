@@ -10,17 +10,21 @@ class User(db.Model):
     crop1_1002 = db.Column(db.BLOB)
     crop1_1003 = db.Column(db.BLOB)
     crop1_1004 = db.Column(db.BLOB)
+    entiretree = db.Column(db.TEXT)
+    treeroot = db.Column(db.TEXT)
+    treebranch = db.Column(db.TEXT)
+    treeleap = db.Column(db.TEXT)
+    treestem = db.Column(db.TEXT)
+    treesize = db.Column(db.TEXT)
     crop2_1001 = db.Column(db.BLOB)
     crop2_1002 = db.Column(db.BLOB)
     crop2_1003 = db.Column(db.BLOB)
     crop2_1004 = db.Column(db.BLOB)
-    result1 = db.Column(db.TEXT)
-    result2 = db.Column(db.TEXT)
 
 # 나무 db class
 class EntireTree(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	subtitle = db.Column(db.TEXT)
+	# subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
         
 class TreeRoot(db.Model):
