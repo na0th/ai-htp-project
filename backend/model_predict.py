@@ -1,4 +1,4 @@
-from flask import session
+from flask import session, g
 
 import tensorflow as tf
 import numpy as np
@@ -24,6 +24,12 @@ import io
 from models import User, EntireTree, TreeRoot, TreeBranch, TreeLeap, TreeStem, TreeSize
 from db_connect import db
 
+def getClassfication(model_file_name):
+    if g.model_dict[model_file_name] is not None:
+        model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
+    else:
+        model = g.model_dict[model_file_name]
+
 #detection function
 def detection(binaryimg):
     resultlist = []
@@ -42,6 +48,12 @@ def detection(binaryimg):
 
     #모델 로드
     model = tf.saved_model.load('.\model\detection\saved_model')
+    ### 전역변수로 해보기 추가 ###
+    # if g.model_dict["detection"] is not None:
+    #     model = tf.saved_model.load('.\model\detection\saved_model')
+    # else:
+    #     model = g.saved_model
+    ############################
 
     #사용자 이미지 추론 (detection)
     result = model(img_tensor)
@@ -69,6 +81,11 @@ def detection(binaryimg):
 
         crop_img = draw_img[int(top):int(bottom),int(left):int(right)] #detection 하여 그린 박스만큼 이미지 크롭
         
+        # 1001: 가지, 잎
+        # 1002: 줄기
+        # 1003: 뿌리
+        # 1004: 나무 전체
+
         ###########추가
         if labels_to_names[class_id] == '1004':
             tree_height = bottom-top
@@ -121,29 +138,39 @@ def classification(model_file_name, binary_img, SIZE):###########수정 내용. 
     # model_file_name: str
     # img: np array
     # 예시: 나무 타입 분류
-   model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
 
-   encoded_img = np.fromstring(binary_img, dtype = np.uint8)
-   decoded_img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+    model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
+    ### 전역변수로 해보기 추가 ###
+    # model = getClassfication(model_file_name)
+    ############################
 
-   img_array = cv2.cvtColor(decoded_img, cv2.COLOR_BGR2RGB) #아까 잘라서 저장한 나무 전체 이미지 불러온다
-   image = cv2.resize(img_array, dsize=(SIZE, SIZE)) #리사이징
-   image = np.array(image) #np array type으로 변경
-   image = image/255.
-   image = np.expand_dims(image, axis=0) #차원 추가
+    encoded_img = np.fromstring(binary_img, dtype = np.uint8)
+    decoded_img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+
+    img_array = cv2.cvtColor(decoded_img, cv2.COLOR_BGR2RGB) #아까 잘라서 저장한 나무 전체 이미지 불러온다
+    image = cv2.resize(img_array, dsize=(SIZE, SIZE)) #리사이징
+    image = np.array(image) #np array type으로 변경
+    image = image/255.
+    image = np.expand_dims(image, axis=0) #차원 추가
    
-   prediction = model.predict(image) #추론
-   result = np.argmax(prediction) #결과 확인.
-   return str(result)
+    prediction = model.predict(image) #추론
+    result = np.argmax(prediction) #결과 확인.
+    return str(result)
 
 #######멀티라벨 모델로 갈 경우 사용.
-def classification_multi(model_file_name, img_path, class_li, SIZE, COUNT):
+def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
 
     SCORE_THRESHOLD = 0.5
 
     model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
+    ### 전역변수로 해보기 추가 ###
+    # model = getClassfication(model_file_name)
+    ############################
 
-    img_array = cv2.cvtColor(cv2.imread(img_path), cv2.COLOR_BGR2RGB) #아까 잘라서 저장한 나무 전체 이미지 불러온다
+    encoded_img = np.fromstring(binary_img, dtype = np.uint8)
+    decoded_img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+
+    img_array = cv2.cvtColor(decoded_img, cv2.COLOR_BGR2RGB) #아까 잘라서 저장한 나무 전체 이미지 불러온다
     image = cv2.resize(img_array, dsize=(SIZE, SIZE)) #리사이징
     image = np.array(image) #np array type으로 변경
     image = np.expand_dims(image, axis=0) #차원 추가

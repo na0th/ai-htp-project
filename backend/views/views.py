@@ -3,7 +3,7 @@ from db_connect import db
 import base64
 from flask_cors import CORS
 from models import User, EntireTree, TreeRoot, TreeBranch, TreeLeap, TreeStem, TreeSize
-from model_predict import classification, detection #여기에 함수 다 넣음
+from model_predict import classification_multi, classification, detection #여기에 함수 다 넣음
 
 import numpy as np
 import tensorflow as tf
@@ -114,19 +114,19 @@ def showFirst():
 
         # response = jsonify({'username':'choigeon', 'test1' : {'image1':'1','tree':'xxx'},'test2' : {'image2': '2', 'home' : 'xxx'}})
 
-        return jsonify({
-            "username": user.username,
-            "test1": {
-                "image1": base64_str1,
-                "entiretree": user.entiretree,
-                "treeroot": user.treeroot,
-                "treebranch": user.treebranch,
-                "treeleap": user.treeleap,
-                "treestem": user.treestem,
-                "treesize": user.treesize
-            }
-        }), 200
-
+        # return jsonify({
+        #     "username": user.username,
+        #     "test1": {
+        #         "image1": base64_str1,
+        #         "entiretree": user.entiretree,
+        #         "treeroot": user.treeroot,
+        #         "treebranch": user.treebranch,
+        #         "treeleap": user.treeleap,
+        #         "treestem": user.treestem,
+        #         "treesize": user.treesize
+        #     }
+        # }), 200
+        return jsonify({'message': 'The image is saved.'}), 200
 
 @bp.route('/home/', methods=['POST', 'GET'])
 def showSecond():
@@ -178,13 +178,24 @@ def showSecond():
                 "treeleap": user.treeleap,
                 "treestem": user.treestem,
                 "treesize": user.treesize
-            },
-            "home": {
-                "key": "value"
             }
         }), 200
 
+def predict():
+
+    detection('./image/test_3.PNG') #경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것
+
+    #######수정 및 추가 내용########
+
+    branch_leaf_li = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
+    result_leaf_branch = classification_multi('leaf_barnch', './image/1001.png', branch_leaf_li, 200, 7)
+
     
+
+    #################################
+
+    return result_leaf_branch   
+
 def callTreeModel(binaryimg):
     user = db.session.query(User).filter(User.userid == session['userid']).first()
 
@@ -205,16 +216,36 @@ def callTreeModel(binaryimg):
     entiretreeResult = classification('tree_type', user.crop1_1004, 300)
     user.entiretree = save_result(TreeSize, entiretreeResult)
     # 2. branch 가지 => [0, 0, 0]
-
     # 3. leap 잎, 열매 => [0, 0, 0, 0]
-    leapResult = []
-    result_flower = classification('flower', user.crop1_1001, 300) #꽃 유무. 없다 0, 있다 1 
-    result_fruit = classification('fruit', user.crop1_1001, 300) #열매 유무. 없다 0, 있다 1
-    leapResult.append(result_flower)
-    leapResult.append(result_fruit)
+    # leapResult = []
+    # result_flower = classification('flower', user.crop1_1001, 300) #꽃 유무. 없다 0, 있다 1 
+    # result_fruit = classification('fruit', user.crop1_1001, 300) #열매 유무. 없다 0, 있다 1
+    # leapResult.append(result_flower)
+    # leapResult.append(result_fruit)
     # 인덱스로 변환해서 들어가야 됨
     # user.treeleap = save_result(TreeLeap, leapResult)
 
+    # 2. 3. 잎, 열매, 꽃, 가지
+    branch_leaf_li = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
+    result_leaf_branch = classification_multi('leaf_branch', user.crop1_1001, branch_leaf_li, 200, 7)
+    leapResult=[]
+    if '열매있음' in branch_leaf_li:
+        leapResult.append(3)
+    if '잎무성한' in branch_leaf_li:
+        leapResult.append(1)
+    if '잎이 큰' in branch_leaf_li:
+        leapResult.append(0)
+    if '꽃있음' in branch_leaf_li:
+        leapResult.append(2)
+    user.treeleap = save_result(TreeLeap, leapResult)
+    
+    branchResult=[]
+    if '윗쪽으로 뻗는' in branch_leaf_li:
+        branchResult.append(1)
+    if '그물' in branch_leaf_li:
+        branchResult.append(0)
+    user.treebranch = save_result(TreeBranch, branchResult)
+    
     # 4. stem 줄기 => [0, 0, 0]
 
     # 5. root 뿌리 => 1 2 3 4 5 중에 하나
