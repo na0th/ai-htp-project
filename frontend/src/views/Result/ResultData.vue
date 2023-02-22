@@ -5,82 +5,35 @@
     <div class="first-result">
       <h1>{{ username }}님의 나무 그림</h1>
       <img width="200" height="300" :src="data.image1" alt="image" />
-      <p>{{ username }}님의 집 그림</p>
-      <img width="200" height="300" :src="data.image2" alt="image" />
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
-        cupiditate quam eos hic dolore eveniet, tempore dolorum quos veniam,
-        magnam tenetur? Nisi sequi nam, eaque magni debitis perferendis
-        temporibus excepturi.
-      </p>
+      <div class="result-texts">
+        <div v-for="(treeAttributes, key1) in tree" :key="key1">
+          <br />
+          <p class="treeAttributes">{{ key1 }}</p>
 
-      <div v-for="(value, key) in tree" :key="key">
-        <p>{{ key }}를 그린 것으로 판단되었습니다.:{{ value }}</p>
+          <div v-for="(treeFeatures, key2) in treeAttributes" :key="key2">
+            <li class="treefeatures">{{ key2 }}</li>
+            <p class="treevalues">{{ treeFeatures }}</p>
+          </div>
+        </div>
       </div>
     </div>
-
+    <br />
     <div class="second-result">
-      <div v-for="(value, key) in home" :key="key">
-        <p>
-          {{ key }}를 그린 것으로 판단되었습니다. 이것이 의미하는 바는 다음과
-          같습니다.: {{ value }}
-        </p>
-      </div>
+      <h1>{{ username }}님의 집 그림</h1>
+      <img width="200" height="300" :src="data.image2" alt="image" />
+      <!-- <div class="result-texts">
+        <div v-for="(homeAttributes, key1) in home" :key="key1">
+          <br />
+          <p class="treeAttributes">{{ key1 }}</p>
+
+          <div v-for="(homeFeatures, key2) in homeAttributes" :key="key2">
+            <li class="treefeatures">{{ key2 }}</li>
+            <p class="treevalues">{{ homeFeatures }}</p>
+          </div>
+        </div>
+      </div> -->
     </div>
+    <br />
   </div>
 </template>
 
@@ -91,10 +44,6 @@ export default {
   components: {},
   data() {
     return {
-      name: "이겸희",
-      firstResultText: `나무의 줄기가 얇은 것을 봤을때 현재 당신은 지친 상태에 있습니다. 나무의
-      뿌리가 또한 땅 속에 밖혀있지 않고 밖으로 나와있는데, 이는 현재 휴식이
-      필요하다는 것을 의미하며...`,
       username: null,
       tree: null,
       home: null,
@@ -142,5 +91,24 @@ export default {
 .first-result-text {
   width: 80%;
   margin: 50px auto;
+}
+.result-texts {
+  text-align: left;
+  font-family: korFont2;
+  width: 80%;
+  display: inline-block;
+}
+.treeAttributes {
+  font-weight: 1000;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+.treefeatures {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.treevalues {
+  font-size: 18px;
+  margin-bottom: 8px;
 }
 </style>
