@@ -97,7 +97,7 @@ export default {
 .results-data {
   display: inline-block;
   font-family: korFont2;
-  background-image: url("../../assets/images/ResultBody.jpg");
+  background-color: antiquewhite;
   /*
   background-size: cover;
   background-repeat: no-repeat;
