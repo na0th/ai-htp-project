@@ -1,9 +1,9 @@
-resultStr = [] # 결과 list
+resultStr = {} # 결과 얓 {subtitle : result}
 
 def save_result(table, findId): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
     resultData = db.session.query(table).filter(table.id == findId).first()
     if resultData.result is not None:
-        resultStr.append(resultData.result)
+        resultStr[resultData.subtitle] = resultData.result
     return 
 
 ##나무 전체 분류모델

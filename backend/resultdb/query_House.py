@@ -1,9 +1,9 @@
-resultStr2 = [] # 결과 list
+resultStr2 = {} # 결과 dic
 
 def save_result(table, findId): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
     resultData = db.session.query(table).filter(table.id == findId).first()
     if resultData.result is not None:
-        resultStr2.append(resultData.result)
+        resultStr[resultData.subtitle] = resultData.result
     return 
 
 ## 지붕 모델
