@@ -4,7 +4,7 @@ import base64
 from flask_cors import CORS
 from models import User, EntireTree, TreeRoot, TreeBranch, TreeLeap, TreeStem, TreeSize
 from model_predict import classification_multi, classification, detection #여기에 함수 다 넣음
-
+from model_init import model_
 import numpy as np
 import tensorflow as tf
 from flask import Flask
@@ -72,60 +72,17 @@ def showFirst():
             return redirect(url_for('views.showMain'))
         
         imgstr = params['image'][22:] 
-        print(params['image'])
+        # print(params['image'])
 
         binaryimg = base64.b64decode(imgstr) # type: bytes
-        # print(imgdata)
-        # print(type(imgdata))
-
-        # filename = 'receivedimage.jpg'  # I assume you have a way of picking unique filenames
-        # with open(filename, 'wb') as f:
-        #     f.write(imgdata)
-        # picture = convertToBinaryData(filename)      
-        # print(picture)
-        # print(type(picture))
-
-        # 모델 넣을 자리
-        resultText = callTreeModel(binaryimg)
 
         # user = User.query.filter_by(userid).first()
         user = db.session.query(User).filter(User.userid == userid).first()
         user.image1 = binaryimg
-        user.result1 = resultText
         db.session.commit()
 
-        # return jsonify({'message': 'The image is saved.'}), 200
-
-        ## TEST ##
-        str_base641 = base64.b64encode(user.image1)
-        base64_str1 = str_base641.decode('utf-8')
-
-
-        # return jsonify({
-        #     "username": user.username,
-        #     "image1": base64_str1,
-        #     "entiretree": user.entiretree,
-        #     "treeroot": user.treeroot,
-        #     "treebranch": user.treebranch,
-        #     "treeleap": user.treeleap,
-        #     "treestem": user.treestem,
-        #     "treesize": user.treesize
-        # }), 200
-
-        # response = jsonify({'username':'choigeon', 'test1' : {'image1':'1','tree':'xxx'},'test2' : {'image2': '2', 'home' : 'xxx'}})
-
-        # return jsonify({
-        #     "username": user.username,
-        #     "test1": {
-        #         "image1": base64_str1,
-        #         "entiretree": user.entiretree,
-        #         "treeroot": user.treeroot,
-        #         "treebranch": user.treebranch,
-        #         "treeleap": user.treeleap,
-        #         "treestem": user.treestem,
-        #         "treesize": user.treesize
-        #     }
-        # }), 200
+        # 모델 넣을 자리
+        resultText = callTreeModel(binaryimg)
         return jsonify({'message': 'The image is saved.'}), 200
 
 @bp.route('/home/', methods=['POST', 'GET'])
@@ -137,30 +94,29 @@ def showSecond():
 
         params = request.get_json()
         userid = params['userid']
+        session['userid'] = userid
         if userid == None:
             return redirect(url_for('views.showMain'))
         
-        imgstr = params['image'][22:]
+        imgstr = params['image'][22:] 
+        # print(params['image'])
 
-        imgdata = base64.b64decode(imgstr)
-        # filename = 'receivedimage.jpg'  # I assume you have a way of picking unique filenames
-        # with open(filename, 'wb') as f:
-        #     f.write(imgdata)
-
-        # picture = convertToBinaryData(filename)      
-
-        # 모델 넣을 자리
-        resultText = 'great!'
+        binaryimg = base64.b64decode(imgstr) # type: bytes
 
         # user = User.query.filter_by(userid).first()
-        # user = db.session.query(User).filter(User.userid == userid).first()
-        user = session['user']
-        user.image2 = imgstr
-        user.result2 = resultText
+        user = db.session.query(User).filter(User.userid == userid).first()
+        user.image2 = binaryimg
+        db.session.commit()
+
+        # 모델 넣을 자리
+        callTreeModel(binaryimg)
+
+        # user = User.query.filter_by(userid).first()
+        user = db.session.query(User).filter(User.userid == userid).first()
+        user.image2 = binaryimg
         db.session.commit()
 
         # 결과 넘겨주기 위한 코드
-
         str_base641 = base64.b64encode(user.image1)
         base64_str1 = str_base641.decode('utf-8')
 
@@ -178,6 +134,9 @@ def showSecond():
                 "treeleap": user.treeleap,
                 "treestem": user.treestem,
                 "treesize": user.treesize
+            },
+            "home": {
+                "temporarykey": "temporaryvalue"
             }
         }), 200
 
