@@ -27,7 +27,8 @@ from db_connect import db
 from model_init import model_dict
 
 def getClassfication(model_file_name):
-    if model_dict[model_file_name] is not None:
+    if model_dict[model_file_name] is None:
+        # print("여기 오니???????????????????????????????")
         model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
     else:
         model = model_dict[model_file_name]
@@ -169,7 +170,7 @@ def classification(model_file_name, binary_img, SIZE):###########수정 내용. 
 #######멀티라벨 모델로 갈 경우 사용.
 def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
 
-    SCORE_THRESHOLD = 0.1
+    SCORE_THRESHOLD = 0.3
 
     # model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
     ### 전역변수로 해보기 추가 ###
@@ -189,6 +190,13 @@ def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
     sorted_categories = np.argsort(proba[0])[:-(COUNT+1):-1]
 
     resultlist=[]
+
+    print("********************************")
+    print(proba)
+    print(sorted_categories)
+    print(len(class_li))
+    print(class_li)
+    print("********************************")
 
     for i in range(COUNT):
      if proba[0][sorted_categories[i]] > SCORE_THRESHOLD:
