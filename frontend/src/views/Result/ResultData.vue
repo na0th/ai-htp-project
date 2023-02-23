@@ -7,32 +7,38 @@
       <h1 class="first-result-title">{{ username }}님의 나무 그림</h1>
       <img width="200" height="300" :src="data.image1" alt="image" />
       <div class="result-texts">
-          <div v-for="(treeAttributes, key1) in tree" :key="key1">
-            <br/>
-            <p class="treeAttributes">{{ key1 }}</p>
-            <template v-for="(treeFeatures, key2) in treeAttributes">
-              <div v-if="treeFeatures !== null && treeFeatures !== undefined" :key="key2">
-                <li class="treefeatures">
-                  {{ key2 }}
-                </li>
-                <p class="treevalues">
-                  {{ treeFeatures }}
-                </p>
-              </div>
-            </template>
+        <div v-for="(treeAttributes, key1) in tree" :key="key1">
+          <br />
+          <p class="treeAttributes">{{ key1 }}</p>
+          <template v-for="(treeFeatures, key2) in treeAttributes">
+            <div
+              v-if="treeFeatures !== null && treeFeatures !== undefined"
+              :key="key2"
+            >
+              <li class="treefeatures">
+                {{ key2 }}
+                result
+              </li>
+              <p class="treevalues">
+                {{ treeFeatures }}
+              </p>
+            </div>
+          </template>
         </div>
       </div>
     </div>
-    <br />
     <div class="second-result">
       <h1 class="first-result-title">{{ username }}님의 집 그림</h1>
       <img width="200" height="300" :src="data.image2" alt="image" />
       <div class="result-texts">
         <div v-for="(homeAttributes, key1) in home" :key="key1">
-          <br/>
+          <br />
           <p class="treeAttributes">{{ key1 }}</p>
           <template v-for="(homeFeatures, key2) in homeAttributes" :key="key2">
-            <div v-if="homeFeatures !== null && homeFeatures !== undefined" :key="key2">
+            <div
+              v-if="homeFeatures !== null && homeFeatures !== undefined"
+              :key="key2"
+            >
               <li class="treefeatures">
                 {{ key2 }}
               </li>
@@ -147,6 +153,8 @@ export default {
 }
 .first-result {
   margin-top: 50px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
 }
 
 .first-result-title {
@@ -167,6 +175,7 @@ export default {
   font-family: korFont2;
   width: 80%;
   display: inline-block;
+  margin-bottom: 20px;
 }
 .treeAttributes {
   font-weight: 1000;
