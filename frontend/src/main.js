@@ -2,15 +2,16 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import VueCookies from "vue-cookies";
-import VueClipboard from 'vue-clipboard2'
+import VueClipboard from "vue-clipboard2";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faVolumeHigh,
   faMusic,
   faRotateRight,
+  faLink,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faVolumeHigh, faMusic, faRotateRight);
+library.add(faVolumeHigh, faMusic, faRotateRight, faLink);
 
 // 여기가 맞나?
 VueClipboard.config.autoSetContainer = true;
@@ -22,8 +23,6 @@ createApp(App)
   .use(VueClipboard)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");
-
-
 
 //쿠키를 사용한다.
 // App.use(VueCookies);

@@ -146,7 +146,7 @@ export default {
       size: 2.5,
       color: "#2c2c2c",
       showModal: false,
-      data: "1",
+      data: "",
       showPaint: true,
       showLoading: false,
       mode: null,

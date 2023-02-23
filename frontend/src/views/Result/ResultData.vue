@@ -45,8 +45,8 @@
       </div>
     </div>
     <br />
+    <p class="share-btns-text">공유하기</p>
     <div class="share-btns">
-      <p class="share-btns-text">공유하기</p>
       <a id="kakaotalk-sharing-btn" href="javascript:;">
         <img
           src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
@@ -55,9 +55,13 @@
           @click="kakaoLink"
         />
       </a>
-    </div>
-    <div class="clipboard-copy">
-      <button @click="urlCopy">클립보드</button>
+      <div class="clipboard-copy">
+        <font-awesome-icon
+          class="copylink-btn"
+          @click="urlCopy"
+          icon="fa-solid fa-link"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -106,9 +110,10 @@ export default {
         ],
       });
     },
-    urlCopy(){
-      this.$copyText('URL:blabalbalblablablablala')
-      .then( () => {alert("마음스케치 링크 복사 완료")})
+    urlCopy() {
+      this.$copyText("http://192.168.219.103:8080/").then(() => {
+        alert("클릭보드에 성공적으로 복사되었습니다.");
+      });
     },
   },
   setup() {},
@@ -180,11 +185,23 @@ export default {
 .share-btns-text {
   font-family: korFont1;
   margin-bottom: 10px;
+  font-size: 20px;
 }
 .share-btns {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 .kakaotalk-btn {
-  width: 50px;
+  height: 40px;
+}
+.copylink-btn {
+  height: 30px;
+}
+.clipboard-copy {
+  display: inline-block;
 }
 </style>

@@ -49,11 +49,11 @@ export default {
   font-family: korFont3;
 }
 .loading-text {
-  width: 80%;
-  font-family: korFont2;
+  width: 70%;
+  font-family: korFont3;
   display: flex;
   flex-direction: column;
-  padding-top: 70px;
+  padding-top: 60px;
   display: inline-block;
   align-items: center;
 }

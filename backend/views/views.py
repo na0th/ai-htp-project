@@ -29,7 +29,6 @@ import pandas as pd
 
 import json
 
-from model_init import model_dict
 from sqlalchemy import select
 
 bp = Blueprint('views', __name__, url_prefix='/')
@@ -58,7 +57,7 @@ def showMain():
 
         session['userid'] = user.userid
 
-        print(model_dict)
+        # print(model_dict)
 
         return jsonify({'message': 'The username is saved.', "userid": user.userid }), 200
 
@@ -88,7 +87,7 @@ def showFirst():
         db.session.commit()
 
         # 모델 넣을 자리
-        resultText = callTreeModel(binaryimg)
+        callTreeModel(binaryimg)
         return jsonify({'message': 'The image is saved.'}), 200
 
 @bp.route('/home/', methods=['POST', 'GET'])
@@ -134,17 +133,27 @@ def showSecond():
             "image1": 'data:image/png;base64,' + base64_str1,
             "image2": 'data:image/png;base64,' + base64_str2,
             "tree": {
-                "entiretree": json.loads(user.entiretree),
-                "treeroot": json.loads(user.treeroot),
-                "treebranch": json.loads(user.treebranch),
-                "treeleap": json.loads(user.treeleap),
-                "treestem": json.loads(user.treestem),
-                "treesize": json.loads(user.treesize)
+                "entiretree": stringtojson(user.entiretree),
+                "treeroot": stringtojson(user.treeroot),
+                "treebranch": stringtojson(user.treebranch),
+                "treeleap": stringtojson(user.treeleap),
+                "treestem": stringtojson(user.treestem),
+                "treesize": stringtojson(user.treesize)
             },
             "home": {
                 "temporarykey": "temporaryvalue"
             }
         }), 200
+
+def stringtojson(str):
+    if str is not None:
+        tmpsjon = json.loads(str)
+        if len(tmpsjon) == 0:
+            return None
+        else:
+            return tmpsjon
+    else:
+        return None
 
 @bp.route('/test/', methods=['POST', 'GET'])
 def test():
@@ -189,32 +198,39 @@ def callTreeModel(binaryimg):
         entiretreeResult.append(classification('tree_type', user.crop1_1004, 300))
         user.entiretree = save_result(EntireTree, entiretreeResult)
 
-    # if user.crop1_1001 is not None:
-    # # 2. 3. 잎, 열매, 꽃, 가지
-    #     branch_leaf_li = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
-    #     result_leaf_branch = classification_multi('leaf_branch', user.crop1_1001, branch_leaf_li, 200, 7)
-    #     leapResult=[]
-    #     if '열매있음' in result_leaf_branch:
-    #         leapResult.append(3)
-    #     if '잎무성한' in result_leaf_branch:
-    #         leapResult.append(1)
-    #     if '잎이 큰' in result_leaf_branch:
-    #         leapResult.append(0)
-    #     if '꽃있음' in result_leaf_branch:
-    #         leapResult.append(2)
-    #     user.treeleap = save_result(TreeLeap, leapResult)
+    if user.crop1_1001 is not None:
+    # 2. 3. 잎, 열매, 꽃, 가지
+        branch_leaf_li = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
+        result_leaf_branch = classification_multi('leaf_branch', user.crop1_1001, branch_leaf_li, 200, 7)
+        leapResult=[]
+        if '열매있음' in result_leaf_branch:
+            leapResult.append(3)
+        if '잎무성한' in result_leaf_branch:
+            leapResult.append(1)
+        if '잎이 큰' in result_leaf_branch:
+            leapResult.append(0)
+        if '꽃있음' in result_leaf_branch:
+            leapResult.append(2)
+        user.treeleap = save_result(TreeLeap, leapResult)
     
-    #     branchResult=[]
-    #     if '윗쪽으로 뻗는' in result_leaf_branch:
-    #         branchResult.append(1)
-    #     if '그물' in result_leaf_branch:
-    #         branchResult.append(0)
-    #     user.treebranch = save_result(TreeBranch, branchResult)
+        branchResult=[]
+        if '윗쪽으로 뻗는' in result_leaf_branch:
+            branchResult.append(1)
+        if '그물' in result_leaf_branch:
+            branchResult.append(0)
+        user.treebranch = save_result(TreeBranch, branchResult)
     
     if user.crop1_1002 is not None:
         # 4. stem 줄기 => [0, 0, 0]
+        label_names = ['나이테_나무껍질_옹이_O','동물_곤충_O','나이테_나무껍질_옹이_X']
         stemResult=[]
-        stemResult.append(classification('stem', user.crop1_1002, 300))
+        result_stem = classification_multi('stem', user.crop1_1002, label_names, 200, 3)
+        if '나이테_나무껍질_옹이_O' in result_stem:
+            stemResult.append(0)
+        if '동물_곤충_O' in result_stem:
+            stemResult.append(1)
+        # if '나이테_나무껍질_옹이_X' in result_stem:
+        #     stemResult.append()
         user.treestem = save_result(TreeStem, stemResult)
 
     if user.crop1_1003 is not None:
@@ -254,5 +270,8 @@ def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 r
             print(type(result))
             resultJson[subtitle]=result
             # resultJson['{}'.format(resultData.subtitle)] = resultData.result
+        else:
+            print("result none이다.!!!!!!!!!!!!!!")
         # resultStr += (resultData.result + '\n')
+    
     return json.dumps(resultJson)
