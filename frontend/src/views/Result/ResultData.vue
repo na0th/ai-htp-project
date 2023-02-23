@@ -5,7 +5,7 @@
 
     <div class="first-result">
       <h1 class="first-result-title">{{ username }}님의 나무 그림</h1>
-      <img width="200" height="300" :src="data.image1" alt="image" />
+      <img width="200" height="300" :src="newData.image1" alt="image" />
       <div class="result-texts">
         <div v-for="(treeAttributes, key1) in tree" :key="key1">
           <br />
@@ -29,7 +29,7 @@
     </div>
     <div class="second-result">
       <h1 class="first-result-title">{{ username }}님의 집 그림</h1>
-      <img width="200" height="300" :src="data.image2" alt="image" />
+      <img width="200" height="300" :src="newData.image2" alt="image" />
       <div class="result-texts">
         <div v-for="(homeAttributes, key1) in home" :key="key1">
           <br />
@@ -122,11 +122,44 @@ export default {
       });
     },
   },
-  setup() {},
+  setup() {
+    const newData = this.data;
+    const removeNull = function () {
+      for (let Attr in this.newData.tree) {
+        let attrCount = 0;
+        let nullCount = 0;
+        for (let Val in this.newData.tree[Attr]) {
+          if (this.newData.tree[Attr][Val] === null) {
+            nullCount++; //null이 나오는 key 수 카운트
+          }
+          attrCount++; //속성 수 카운트
+        }
+        if (nullCount === attrCount) {
+          delete this.newData.tree[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
+        }
+      }
+      for (let Attr in this.newData.home) {
+        let attrCount = 0;
+        let nullCount = 0;
+        for (let Val in this.newData.home[Attr]) {
+          if (this.newData.home[Attr][Val] === null) {
+            nullCount++; //null이 나오는 key 수 카운트
+          }
+          attrCount++; //속성 수 카운트
+        }
+        if (nullCount === attrCount) {
+          delete this.newData.home[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
+        }
+      }
+    };
+
+    removeNull();
+    return { newData };
+  },
   created() {
-    this.username = this.data.username;
-    this.tree = this.data.tree;
-    this.home = this.data.home;
+    this.username = this.newData.username;
+    this.tree = this.newData.tree;
+    this.home = this.newData.home;
   },
   mounted() {},
 };
