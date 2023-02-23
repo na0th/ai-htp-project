@@ -34,10 +34,15 @@
       </div> -->
     </div>
     <br />
+    <a id="kakaotalk-sharing-btn" href="javascript:;">
+      <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+        alt="카카오톡 공유 보내기 버튼" @click="kakaoLink"/>
+    </a>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "ResultData",
   props: ["data"],
@@ -49,7 +54,39 @@ export default {
       home: null,
     };
   },
-  methods: {},
+  methods: {
+    kakaoLink(){window.Kakao.Share.createDefaultButton({
+    container: '#kakaotalk-sharing-btn',
+    objectType: 'feed',
+    content: {
+      title: '마음스케치',
+      description: '#AI심리검사 #그림심리검사',
+      imageUrl:
+        'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+      link: {
+        // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+        mobileWebUrl: 'https://developers.kakao.com',
+        webUrl: 'https://developers.kakao.com',
+      },
+    },
+    social: {
+      likeCount: 123,
+      commentCount: 456,
+      sharedCount: 789,
+    },
+    buttons: [
+      {
+        title: '웹으로 보기',
+        link: {
+          mobileWebUrl: 'https://developers.kakao.com',
+          webUrl: 'https://developers.kakao.com',
+        },
+      },
+    ],
+  });
+
+  },
+},
   setup() {},
   created() {
     this.username = this.data.username;
