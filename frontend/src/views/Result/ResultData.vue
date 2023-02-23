@@ -7,14 +7,19 @@
       <h1 class="first-result-title">{{ username }}님의 나무 그림</h1>
       <img width="200" height="300" :src="data.image1" alt="image" />
       <div class="result-texts">
-        <div v-for="(treeAttributes, key1) in tree" :key="key1">
-          <br />
-          <p class="treeAttributes">{{ key1 }}</p>
-
-          <div v-for="(treeFeatures, key2) in treeAttributes" :key="key2">
-            <li class="treefeatures">{{ key2 }}</li>
-            <p class="treevalues">{{ treeFeatures }}</p>
-          </div>
+          <div v-for="(treeAttributes, key1) in tree" :key="key1">
+            <br/>
+            <p class="treeAttributes">{{ key1 }}</p>
+            <template v-for="(treeFeatures, key2) in treeAttributes">
+              <div v-if="treeFeatures !== null && treeFeatures !== undefined" :key="key2">
+                <li class="treefeatures">
+                  {{ key2 }}
+                </li>
+                <p class="treevalues">
+                  {{ treeFeatures }}
+                </p>
+              </div>
+            </template>
         </div>
       </div>
     </div>
@@ -24,13 +29,18 @@
       <img width="200" height="300" :src="data.image2" alt="image" />
       <div class="result-texts">
         <div v-for="(homeAttributes, key1) in home" :key="key1">
-          <br />
+          <br/>
           <p class="treeAttributes">{{ key1 }}</p>
-
-          <div v-for="(homeFeatures, key2) in homeAttributes" :key="key2">
-            <li class="treefeatures">{{ key2 }}</li>
-            <p class="treevalues">{{ homeFeatures }}</p>
-          </div>
+          <template v-for="(homeFeatures, key2) in homeAttributes" :key="key2">
+            <div v-if="homeFeatures !== null && homeFeatures !== undefined" :key="key2">
+              <li class="treefeatures">
+                {{ key2 }}
+              </li>
+              <p class="treevalues">
+                {{ homeFeatures }}
+              </p>
+            </div>
+          </template>
         </div>
       </div>
     </div>
