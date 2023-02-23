@@ -20,7 +20,7 @@
         </transition>
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger3">
-            벽 난로에는 장작이 타고 있으며 <br />당신을 따뜻하게 녹여 줍니다.
+            벽난로에는 장작이 타고 있으며 <br />당신을 따뜻하게 녹여 줍니다.
           </p>
         </transition>
         <transition name="fade">
