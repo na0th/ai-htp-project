@@ -46,6 +46,9 @@
         />
       </a>
     </div>
+    <div class="clipboard-copy">
+      <button @click="urlCopy">클립보드</button>
+    </div>
   </div>
 </template>
 
@@ -92,6 +95,10 @@ export default {
           },
         ],
       });
+    },
+    urlCopy(){
+      this.$copyText('URL:blabalbalblablablablala')
+      .then( () => {alert("마음스케치 링크 복사 완료")})
     },
   },
   setup() {},
