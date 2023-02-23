@@ -1,5 +1,5 @@
 <template>
-  <ResultData v-if="data" v-bind:newData="newData"></ResultData>
+  <ResultData v-if="newData" v-bind:newData="newData"></ResultData>
   <div v-else class="loading-page">
     <img class="paint-spring" src="../assets/images/paintSpring.png" />
     <div class="loading-text">
