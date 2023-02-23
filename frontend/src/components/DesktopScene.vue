@@ -21,8 +21,8 @@ export default {
 </script>
 <style scoped>
 .desktop-scene {
-  height: 100vh;
-  background-image: url("../assets/images/desktop1.png");
+  height: calc(var(--vh, 1vh) * 100);
+  background-image: url("../assets/images/desktop2.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -33,7 +33,7 @@ export default {
 }
 .desktop-text {
   position: absolute;
-  top: 15%;
+  top: 20%;
   left: 0;
   right: 0;
 }
