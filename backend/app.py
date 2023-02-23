@@ -3,7 +3,7 @@ from db_connect import db
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"*": {"origins": "http://localhost:8080"}})
+CORS(app, resources={r"*": {"origins": "*"}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1234@127.0.0.1:3306/ai-htp-test"
 app.config['SQLARCHEMY_TRACK_MODIFICATIONS'] = False

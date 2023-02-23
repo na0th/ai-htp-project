@@ -21,4 +21,5 @@ model_dict = {
         "tree_type": tf.keras.models.load_model('./model/classification/tree_type.h5'),
         "root": tf.keras.models.load_model('./model/classification/root.h5'),
         "stem": tf.keras.models.load_model('./model/classification/stem.h5'),
+        "house": tf.keras.models.load_model('./model/classification/house.h5'),
     }

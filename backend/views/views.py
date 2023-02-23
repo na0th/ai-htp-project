@@ -32,7 +32,7 @@ import json
 from sqlalchemy import select
 
 bp = Blueprint('views', __name__, url_prefix='/')
-CORS(bp)
+CORS(bp, resources={r"*": {"origins": "*"}})
 
 def convertToBinaryData(filename):
     # Convert digital data to binary format
@@ -48,6 +48,10 @@ def showMain():
             username
             ex) {"username": "yang"}
         '''
+        print("*************************")
+        print(request)
+        print("*************************")
+
         params = request.get_json()
 
         # insert
@@ -179,15 +183,6 @@ def test():
 def callTreeModel(binaryimg):
     user = db.session.query(User).filter(User.userid == session['userid']).first()
 
-    #######수정 및 추가 내용########
-    #######원래 가지, 줄기, 뿌리, 나무 타입 모델이었던 것은 멀티라벨 모델로 진행하여 모델 수를 줄이려고 했었는데
-    #######그랬더니 정확도가 낮게 나와서 가지 모델 2개, 줄기 모델 2개, 잎열매 모델 4개, 뿌리 모델 1개, 나무 타입 모델 1개 예정
-    #######아래의 코드처럼 classification(모델이름, 이미지, 사이즈(input size에 맞게 설정해둘 예정)) 함수만 추가하면 됨
-    # result_treeType = classification('tree_type', './image/1004.png', 300) #나무 타입
-    # result_flower = classification('flower', './image/1001.png', 300) #꽃 유무. 없다 0, 있다 1 
-    # result_fruit = classification('fruit', './image/1001.png', 300) #열매 유무. 없다 0, 있다 1
-    #################################
-
     # 0. tree_size_location
     treesizeResult = detection(binaryimg) # 경로에서 불러온 이미지를 request 메시지에서 받은 이미지로 변경할 것    
     user.treesize = save_result(TreeSize, treesizeResult)
@@ -243,6 +238,11 @@ def callTreeModel(binaryimg):
     # return result
     # return resultStr
 
+def callHouseModel(binaryimg):
+    user = db.session.query(User).filter(User.userid == session['userid']).first()
+
+    db.session.commit()
+
 def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
     '''
    	id int,
@@ -270,8 +270,8 @@ def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 r
             print(type(result))
             resultJson[subtitle]=result
             # resultJson['{}'.format(resultData.subtitle)] = resultData.result
-        else:
-            print("result none이다.!!!!!!!!!!!!!!")
+        # else:
+        #     print("result none이다.!!!!!!!!!!!!!!")
         # resultStr += (resultData.result + '\n')
     
     return json.dumps(resultJson)
