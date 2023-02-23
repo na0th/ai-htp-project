@@ -75,7 +75,7 @@
 <script>
 export default {
   name: "ResultData",
-  props: ["data"],
+  props: ["newData"],
   components: {},
   data() {
     return {
@@ -118,43 +118,9 @@ export default {
     },
     urlCopy() {
       this.$copyText("http://192.168.219.103:8080/").then(() => {
-        alert("클릭보드에 성공적으로 복사되었습니다.");
+        alert("클립보드에 성공적으로 복사되었습니다.");
       });
     },
-  },
-  setup() {
-    const newData = this.data;
-    const removeNull = function () {
-      for (let Attr in this.newData.tree) {
-        let attrCount = 0;
-        let nullCount = 0;
-        for (let Val in this.newData.tree[Attr]) {
-          if (this.newData.tree[Attr][Val] === null) {
-            nullCount++; //null이 나오는 key 수 카운트
-          }
-          attrCount++; //속성 수 카운트
-        }
-        if (nullCount === attrCount) {
-          delete this.newData.tree[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
-        }
-      }
-      for (let Attr in this.newData.home) {
-        let attrCount = 0;
-        let nullCount = 0;
-        for (let Val in this.newData.home[Attr]) {
-          if (this.newData.home[Attr][Val] === null) {
-            nullCount++; //null이 나오는 key 수 카운트
-          }
-          attrCount++; //속성 수 카운트
-        }
-        if (nullCount === attrCount) {
-          delete this.newData.home[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
-        }
-      }
-    };
-
-    removeNull();
-    return { newData };
   },
   created() {
     this.username = this.newData.username;

@@ -128,7 +128,7 @@
       </div>
     </div>
   </transition>
-  <loading-page v-if="showLoading" v-bind:data="data"></loading-page>
+  <loading-page v-if="showLoading" v-bind:newData="newData"></loading-page>
 </template>
 
 <script>
@@ -150,6 +150,7 @@ export default {
       showPaint: true,
       showLoading: false,
       mode: null,
+      newData: "",
     };
   },
   methods: {
@@ -177,9 +178,39 @@ export default {
         .then((response) => response.json())
         .then((response_json) => {
           this.data = response_json;
+          this.removeNull();
+          this.newData = this.data;
         });
 
       //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
+    },
+    removeNull() {
+      for (let Attr in this.data.tree) {
+        let attrCount = 0;
+        let nullCount = 0;
+        for (let Val in this.data.tree[Attr]) {
+          if (this.data.tree[Attr][Val] === null) {
+            nullCount++; //null이 나오는 key 수 카운트
+          }
+          attrCount++; //속성 수 카운트
+        }
+        if (nullCount === attrCount) {
+          delete this.data.tree[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
+        }
+      }
+      for (let Attr in this.data.home) {
+        let attrCount = 0;
+        let nullCount = 0;
+        for (let Val in this.data.home[Attr]) {
+          if (this.data.home[Attr][Val] === null) {
+            nullCount++; //null이 나오는 key 수 카운트
+          }
+          attrCount++; //속성 수 카운트
+        }
+        if (nullCount === attrCount) {
+          delete this.data.home[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
+        }
+      }
     }, //클릭시 다음 페이지로 넘어가는 버튼
     onMouseMove(event) {
       const x = event.offsetX;

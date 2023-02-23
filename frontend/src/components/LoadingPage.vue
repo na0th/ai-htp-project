@@ -1,5 +1,5 @@
 <template>
-  <ResultData v-if="data" v-bind:data="data"></ResultData>
+  <ResultData v-if="data" v-bind:newData="newData"></ResultData>
   <div v-else class="loading-page">
     <img class="paint-spring" src="../assets/images/paintSpring.png" />
     <div class="loading-text">
@@ -27,7 +27,7 @@ import ResultData from "../views/Result/ResultData.vue";
 export default {
   name: "LoadingPage",
   components: { ResultData },
-  props: ["data"],
+  props: ["newData"],
   data() {
     return {};
   },
