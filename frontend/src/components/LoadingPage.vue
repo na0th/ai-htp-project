@@ -3,18 +3,18 @@
   <div v-else class="loading-page">
     <img class="paint-spring" src="../assets/images/paintSpring.png" />
     <div class="loading-text">
+      <p class="member-text">
+        <span class="member-text-header">프로젝트 참여 인원:</span> <br /><br />
+        Front-End: 이윤영, 최건 <br />
+        Back-End: 양채린, 황혜수, 백소미 <br />
+        AI: 이수민, 이겸희 <br />Design: 이가윤
+      </p>
       <p class="loading-maintext">
         <span style="color: #eeb3ad; font-weight: 1000">'마음 스케치'</span>
         프로젝트는 AI 기술을 통해 유저가 직접 그린 그림을 분석하여 본인의 심리
         및 정서 상태를 파악할 수 있도록 돕고자 제작되었습니다. 본인의 상태가
         심각하다고 판단되거나, 보다 정확한 해석을 알기 위해서는 전문 의료진을
         찾아주세요.
-      </p>
-      <p class="member-text">
-        프로젝트 참여 인원: <br /><br />
-        Front-End: 이윤영, 최건 <br />
-        Back-End: 양채린, 황혜수, 백소미 <br />
-        AI: 이수민, 이겸희 <br />Design: 이가윤
       </p>
       <img class="loading-img" src="../assets/images/heart.png" />
     </div>
@@ -61,9 +61,13 @@ export default {
   font-size: 18px;
   text-align: left;
   line-height: 2;
+  padding-top: 30px;
+}
+.member-text-header {
+  font-size: 21px;
+  font-family: korFont3;
 }
 .member-text {
-  padding-top: 50px;
   font-size: 20px;
   font-family: korFont3;
   line-height: 1.3;
