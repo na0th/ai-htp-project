@@ -134,17 +134,38 @@ def showSecond():
             "image1": 'data:image/png;base64,' + base64_str1,
             "image2": 'data:image/png;base64,' + base64_str2,
             "tree": {
-                "entiretree": json.parse(user.entiretree),
-                "treeroot": json.parse(user.treeroot),
-                "treebranch": user.treebranch,
-                "treeleap": user.treeleap,
-                "treestem": user.treestem,
-                "treesize": user.treesize
+                "entiretree": json.loads(user.entiretree),
+                "treeroot": json.loads(user.treeroot),
+                "treebranch": json.loads(user.treebranch),
+                "treeleap": json.loads(user.treeleap),
+                "treestem": json.loads(user.treestem),
+                "treesize": json.loads(user.treesize)
             },
             "home": {
                 "temporarykey": "temporaryvalue"
             }
         }), 200
+
+@bp.route('/test/', methods=['POST', 'GET'])
+def test():
+    resultJson = {}
+    resultData = db.session.query(EntireTree).filter(EntireTree.id == 0).first()
+    if resultData is not None:
+        tmp = resultData.result
+        print(type(tmp))
+        tmpsplit = resultData.result.split(':')
+        print(tmpsplit)
+        subtitle = tmpsplit[0]
+        print(subtitle)
+        print(type(subtitle))
+        result = tmpsplit[1]
+        print(result)
+        print(type(result))
+        resultJson[subtitle]=result
+    print(json.dumps(resultJson))
+    print(json.loads(json.dumps(resultJson)))
+
+    return json.dumps(resultJson)
 
 def callTreeModel(binaryimg):
     user = db.session.query(User).filter(User.userid == session['userid']).first()
@@ -163,40 +184,44 @@ def callTreeModel(binaryimg):
     user.treesize = save_result(TreeSize, treesizeResult)
 
     # 1. tree_type 나무 전체 => 0 1 2 3 4 중에 하나 
-    entiretreeResult=[]
-    entiretreeResult.append(classification('tree_type', user.crop1_1004, 300))
-    user.entiretree = save_result(EntireTree, entiretreeResult)
+    if user.crop1_1004 is not None:
+        entiretreeResult=[]
+        entiretreeResult.append(classification('tree_type', user.crop1_1004, 300))
+        user.entiretree = save_result(EntireTree, entiretreeResult)
 
-    # 2. 3. 잎, 열매, 꽃, 가지
-    branch_leaf_li = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
-    result_leaf_branch = classification_multi('leaf_branch', user.crop1_1001, branch_leaf_li, 200, 7)
-    leapResult=[]
-    if '열매있음' in result_leaf_branch:
-        leapResult.append(3)
-    if '잎무성한' in result_leaf_branch:
-        leapResult.append(1)
-    if '잎이 큰' in result_leaf_branch:
-        leapResult.append(0)
-    if '꽃있음' in result_leaf_branch:
-        leapResult.append(2)
-    user.treeleap = save_result(TreeLeap, leapResult)
+    # if user.crop1_1001 is not None:
+    # # 2. 3. 잎, 열매, 꽃, 가지
+    #     branch_leaf_li = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
+    #     result_leaf_branch = classification_multi('leaf_branch', user.crop1_1001, branch_leaf_li, 200, 7)
+    #     leapResult=[]
+    #     if '열매있음' in result_leaf_branch:
+    #         leapResult.append(3)
+    #     if '잎무성한' in result_leaf_branch:
+    #         leapResult.append(1)
+    #     if '잎이 큰' in result_leaf_branch:
+    #         leapResult.append(0)
+    #     if '꽃있음' in result_leaf_branch:
+    #         leapResult.append(2)
+    #     user.treeleap = save_result(TreeLeap, leapResult)
     
-    branchResult=[]
-    if '윗쪽으로 뻗는' in result_leaf_branch:
-        branchResult.append(1)
-    if '그물' in result_leaf_branch:
-        branchResult.append(0)
-    user.treebranch = save_result(TreeBranch, branchResult)
+    #     branchResult=[]
+    #     if '윗쪽으로 뻗는' in result_leaf_branch:
+    #         branchResult.append(1)
+    #     if '그물' in result_leaf_branch:
+    #         branchResult.append(0)
+    #     user.treebranch = save_result(TreeBranch, branchResult)
     
-    # 4. stem 줄기 => [0, 0, 0]
-    stemResult=[]
-    stemResult.append(classification('stem', user.crop1_1002, 300))
-    user.treestem = save_result(TreeStem, stemResult)
+    if user.crop1_1002 is not None:
+        # 4. stem 줄기 => [0, 0, 0]
+        stemResult=[]
+        stemResult.append(classification('stem', user.crop1_1002, 300))
+        user.treestem = save_result(TreeStem, stemResult)
 
-    # 5. root 뿌리 => 1 2 3 4 5 중에 하나
-    rootResult=[]
-    rootResult.append(classification('root', user.crop1_1003, 300))
-    user.treeroot = save_result(TreeRoot, rootResult)
+    if user.crop1_1003 is not None:
+        # 5. root 뿌리 => 1 2 3 4 5 중에 하나
+        rootResult=[]
+        rootResult.append(classification('root', user.crop1_1003, 300))
+        user.treeroot = save_result(TreeRoot, rootResult)
 
     db.session.commit()
     # return result
@@ -210,20 +235,24 @@ def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 r
     '''
     resultJson = {}
     resultStr = ""
-    for index in result:
+    for id in result:
         print("*************")
-        print(index)
-        # resultData = table.query.filter_by(id=index).all()
-        from sqlalchemy.orm.exc import NoResultFound
-        try:
-            resultData = table.query.filter(table.id == int(index)).one()
-        except NoResultFound:
-            print(NoResultFound)
-        # if resultData is not None:
-            # strtmp = str(resultData.subtitle)
-            # print(strtmp)
-            # resultJson.update(dict(strtmp=resultData.result))
+        print(id)
+        # resultData = table.query.filter_by(id).first()
+        resultData = db.session.query(table).filter(table.id == id).first()
+        if resultData is not None:
+            tmp = resultData.result
+            print(type(tmp))
+            print(tmp)
+            tmpsplit = resultData.result.split(":")
+            print(tmpsplit)
+            subtitle = tmpsplit[0]
+            print(subtitle)
+            print(type(subtitle))
+            result = tmpsplit[1]
+            print(result)
+            print(type(result))
+            resultJson[subtitle]=result
             # resultJson['{}'.format(resultData.subtitle)] = resultData.result
         # resultStr += (resultData.result + '\n')
-        resultStr += (resultData + '\n')
-    return resultStr
+    return json.dumps(resultJson)

@@ -169,7 +169,7 @@ def classification(model_file_name, binary_img, SIZE):###########수정 내용. 
 #######멀티라벨 모델로 갈 경우 사용.
 def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
 
-    SCORE_THRESHOLD = 0.5
+    SCORE_THRESHOLD = 0.1
 
     # model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
     ### 전역변수로 해보기 추가 ###
