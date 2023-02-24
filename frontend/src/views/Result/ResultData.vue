@@ -17,7 +17,6 @@
             >
               <li class="treefeatures">
                 {{ key2 }}
-                result
               </li>
               <p class="treevalues">
                 {{ treeFeatures }}

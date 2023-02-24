@@ -140,18 +140,18 @@ def showSecond():
             "image1": 'data:image/png;base64,' + base64_str1,
             "image2": 'data:image/png;base64,' + base64_str2,
             "tree": {
-                "entiretree": stringtojson(user.entiretree),
-                "treeroot": stringtojson(user.treeroot),
-                "treebranch": stringtojson(user.treebranch),
-                "treeleap": stringtojson(user.treeleap),
-                "treestem": stringtojson(user.treestem),
-                "treesize": stringtojson(user.treesize)
+                "나무 유형": stringtojson(user.entiretree),
+                "나무 뿌리": stringtojson(user.treeroot),
+                "나무 가지": stringtojson(user.treebranch),
+                "나뭇잎": stringtojson(user.treeleap),
+                "나무 줄기": stringtojson(user.treestem),
+                "나무 크기": stringtojson(user.treesize)
             },
             "home": {
-                "entirehouse": stringtojson(user.entirehouse),
-                "houseroof": stringtojson(user.houseroof),
-                "housedoor": stringtojson(user.housedoor),
-                "housewindow": stringtojson(user.housewindow)
+                "집 유형": stringtojson(user.entirehouse),
+                "집 지붕": stringtojson(user.houseroof),
+                "집 문": stringtojson(user.housedoor),
+                "집 창문": stringtojson(user.housewindow)
             }
         }), 200
 

@@ -1,11 +1,11 @@
 from flask import session, g
 
-import tensorflow as tf
-import numpy as np
-
 #tf.keras lib
 from tensorflow import keras
 from keras.models import Model
+
+import tensorflow as tf
+import numpy as np
 
 #image, file lib
 import cv2
@@ -267,18 +267,21 @@ def detection_house(binaryimg):
 
     #클래스 매칭
     labels_to_names = {1.0:'1001', 2.0:'1002', 3.0:'1003', 4.0:'1004'}
-    detection_list_1001 = [] #탐지 오브젝트 담을거임
-    detection_list_1002 = [] #탐지 오브젝트 담을거임
-    detection_list_1003 = [] #탐지 오브젝트 담을거임
-    detection_list_1004 = [] #탐지 오브젝트 담을거임
     
-    detection_list = []###############추가
-
+    detection_list = [] ###############추가
+ 
     ######추가
     roof_width_list = [] 
+    
     wall_list = []
+    wall_height_list=[]
+
     window_list = [] 
+    window_width_list = []
+
     door_list = []
+    door_width_list=[]
+    door_height_list=[]
     
     # 1001: 지붕
     # 1002: 벽
@@ -306,21 +309,24 @@ def detection_house(binaryimg):
           wall_right = right
           wall_height = bottom - top
           wall_width = right-left
-
+          wall_width_list.append(wall_width)
+          wall_height_list.append(wall_height)
           wall_list.append([wall_left, wall_right, wall_height, wall_width])
 
         elif labels_to_names[class_id] == '1003':
           window_height = bottom - top
           window_width = right - left
+          window_width_list.append(window_width)
           window_list.append([window_height, window_width])
-          # detection_list_1003.append(labels_to_names[class_id])
+          
         elif labels_to_names[class_id] == '1004':
           door_left = left
           door_right = right
           door_height = bottom - top
           door_width = right - left
-
           door_list.append([door_left, door_right, door_height, door_width])
+          door_width_list.append(door_width)
+          door_height_list.append(door_height)
         
         detection_list.append(labels_to_names[class_id]) ##########추가. 모든 탐지 오브젝트를 담는다.
 
@@ -338,68 +344,47 @@ def detection_house(binaryimg):
         windowresult.append(0)
     
     #큰 지붕
-
     if detection_list.count('1001') == 1 and detection_list.count('1002') == 1: #지붕 벽 각각 하나
-        roofresult.append(roof_size(roof_width, wall_width))
-    elif detection_list.count('1001') >= 2 and detection_list.count('1002') >= 2: #지붕이나 벽이 2개 이상
-        # 여기 elif 수정 필수!!!!!!!!!
-        wall_cnt = detection_list.count('1002') 
-        for i in range(0, wall_cnt):
-            wall_width_list.append(wall_list[i][3])
-        roofresult.append(roof_size(max(roof_width_list), max(wall_width_list)))
+       if roof_size(roof_width, wall_width) == 1: # 지붕이 있는데 크다.
+          roofresult.append(1)
     elif detection_list.count('1001') == 0: #지붕 없다
-        pass
-    # 1001: 지붕
-    # 1002: 벽
-    # 1003: 창문
-    # 1004: 문
+        roofresult.append(0)
 
-    if detection_list.count('1003') >= 1:
+    #지붕이나 벽이 2개 이상
+    if (detection_list.count('1001') >= 2 and detection_list.count('1002') >= 1) or (detection_list.count('1001') >= 1 and detection_list.count('1002') >= 2): 
+        roofresult.append(roof_size(max(roof_width_list), max(wall_width_list)))
+
+    # 창문이 없는 경우
+    if detection_list.count('1003') == 0:
+        windowresult.append(0)
+    # 창문이 한 개라도 있으면
+    if detection_list.count('1003') >= 1 and detection_list.count('1002') >= 1:
         #창문 크기
-        window_width_list = []
-        window_cnt = detection_list.count('1003') 
-        for i in range(0, window_cnt):
-            window_width_list.append(window_list[i][1])
-        if len(wall_width_list) > 0:
-            windowresult.append(window_size(max(window_width_list), max(wall_width_list)))
+        windowresult.append(window_size(max(window_width_list), max(wall_width_list)))
 
 
-    #큰 문 작은 문
+    # 큰 문 작은 문 판별
+    # 문이 한 개고 벽이 한 개이면
     if detection_list.count('1004') == 1 and detection_list.count('1002') == 1:
         doorresult.append(door_size(door_height, door_width, wall_height, wall_width))
+    # 문이 두 개 이상이고 벽이 한 개 이상이면
     elif detection_list.count('1004') > 2 and detection_list.count('1002') == 1:
-        # wall_width_list=[]
-        wall_height_list=[]
-        wall_cnt = detection_list.count('1002') 
-        for i in range(0, wall_cnt):
-            # wall_width_list.append(wall_list[i][3])
-            wall_height_list.append(wall_list[i][2])
-    
-        door_width_list=[]
-        door_height_list=[]
-        door_cnt = detection_list.count('1004') 
-        if door_cnt >= 1:
-            for i in range(0, door_cnt):
-                door_width_list.append(door_list[i][3])
-                door_height_list.append(door_list[i][2])
-            doorresult.append(door_size(max(door_height_list), max(door_width_list), max(door_height_list), max(door_width_list)))
+       doorresult.append(door_size(max(door_height_list), max(door_width_list), max(wall_height_list), max(wall_width_list)))
 
     print(roofresult)
     print(doorresult)
     print(windowresult)
+
+    print("지붕 개수: ", detection_list.count('1001'))
+    print("벽 개수: ", detection_list.count('1002'))
+    print("창문 개수: ", detection_list.count('1003'))
+    print("문 개수: ", detection_list.count('1004'))
 
     return {
         "roofresult": roofresult,
         "doorresult": doorresult,
         "windowresult": windowresult,
     }
-
-# def dictmax(list, standard):
-#     max = list[0][standard]
-#     for elem in list:
-#         if elem[standard] > max:
-#             max = elem[standard]
-#     return max
 
 #지붕이 큰가? 함수
 def roof_size(roof_width, wall_width):
@@ -443,3 +428,4 @@ def window_size(window_height, window_width, wall_height, wall_width):
     if window_height >= wall_height*0.8:
       window_size = 2 #큰 창문 (통유리창 정도)
   return window_size
+
