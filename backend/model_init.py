@@ -16,7 +16,8 @@ from efficientnet.keras import EfficientNetB3
 
 # 전역 변수
 model_dict = {
-        "detection": tf.saved_model.load('.\model\detection\saved_model'),
+        "saved_model": tf.saved_model.load('.\model\detection\saved_model'),
+        "saved_model2": tf.saved_model.load('.\model\detection\saved_model2'),
         "leaf_branch": tf.keras.models.load_model('./model/classification/leaf_branch.h5'),
         "tree_type": tf.keras.models.load_model('./model/classification/tree_type.h5'),
         "root": tf.keras.models.load_model('./model/classification/root.h5'),

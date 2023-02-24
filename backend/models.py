@@ -16,10 +16,11 @@ class User(db.Model):
     treeleap = db.Column(db.TEXT)
     treestem = db.Column(db.TEXT)
     treesize = db.Column(db.TEXT)
-    crop2_1001 = db.Column(db.BLOB)
-    crop2_1002 = db.Column(db.BLOB)
-    crop2_1003 = db.Column(db.BLOB)
-    crop2_1004 = db.Column(db.BLOB)
+    houseroof = db.Column(db.TEXT)
+    housedoor = db.Column(db.TEXT)
+    housewindow = db.Column(db.TEXT)
+    entirehouse = db.Column(db.TEXT)
+	
 
 # 나무 db class
 class EntireTree(db.Model):
@@ -53,17 +54,22 @@ class TreeSize(db.Model):
 	result = db.Column(db.TEXT)
 	
 # 집 db class
-class HouseRoof(db.Model):
+class EntireHouse(db.Model):
+	__tablename__ = 'entire_house'
 	id = db.Column(db.Integer, primary_key=True)
-	subtitle = db.Column(db.TEXT)
+	result = db.Column(db.TEXT)
+
+class HouseRoof(db.Model):
+	__tablename__ = 'house_roof'
+	id = db.Column(db.Integer, primary_key=True)
 	result = db.Column(db.TEXT)
 	
 class HouseDoor(db.Model):
+	__tablename__ = 'house_door'
 	id = db.Column(db.Integer, primary_key=True)
-	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)
 	
 class HouseWindow(db.Model):
+	__tablename__ = 'house_window'
 	id = db.Column(db.Integer, primary_key=True)
-	subtitle = db.Column(db.TEXT)
 	result = db.Column(db.TEXT)

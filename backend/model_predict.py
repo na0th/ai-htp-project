@@ -28,20 +28,26 @@ from model_init import model_dict
 
 def getClassfication(model_file_name):
     if model_dict[model_file_name] is None:
-        # print("여기 오니???????????????????????????????")
         model = tf.keras.models.load_model('./model/classification/'+model_file_name+'.h5') #모델 로드
     else:
         model = model_dict[model_file_name]
     return model
 
+def getDetection(model_file_name):
+    if model_dict[model_file_name] is None:
+        model = tf.saved_model.load('.\model\detection\\'+model_file_name) #모델 로드
+    else: 
+        model = model_dict[model_file_name]
+    return model
+
 #detection function
-def detection(binaryimg):
+def detection_tree(binaryimg):
     resultlist = []
     
     encoded_img = np.fromstring(binaryimg, dtype = np.uint8)
-    img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+    decoded_img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
     
-    img_array = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) #이미지를 읽고 rgb로 변환한다. (opencv는 bgr로 읽음)
+    img_array = cv2.cvtColor(decoded_img, cv2.COLOR_BGR2RGB) #이미지를 읽고 rgb로 변환한다. (opencv는 bgr로 읽음)
     img_tensor = tf.convert_to_tensor(img_array, dtype=tf.uint8)[tf.newaxis, ...] #텐서 형식으로 변환
     
 
@@ -53,10 +59,11 @@ def detection(binaryimg):
     #모델 로드
     # model = tf.saved_model.load('.\model\detection\saved_model')
     ### 전역변수로 해보기 추가 ###
-    if model_dict["detection"] is not None:
-        model = tf.saved_model.load('.\model\detection\saved_model')
-    else:
-        model = model_dict["detection"]
+    # if model_dict["detection"] is not None:
+    #     model = tf.saved_model.load('.\model\detection\saved_model')
+    # else:
+    #     model = model_dict["detection"]
+    model = getDetection('saved_model')
     ############################
 
     #사용자 이미지 추론 (detection)
@@ -137,7 +144,7 @@ def detection(binaryimg):
     if stem_width  < tree_width/10:
         stem_thickness = 1 # 얇다
         resultlist.append(7)
-    elif stem_width > tree_width * 0.23:
+    elif stem_width > tree_width * 0.4: # 0.4로 수정함
         stem_thickness = 2 # 굵다
         resultlist.append(6)
     ##########    
@@ -229,3 +236,210 @@ def cropimgToDB(class_id, npbinary):
         else: # class_id == 4.0
             user.crop2_1004 = npbinary
     db.session.commit()
+
+def detection_house(binaryimg):
+    roofresult=[]
+    doorresult=[]
+    windowresult=[]
+    wall_width_list=[]
+
+    encoded_img = np.fromstring(binaryimg, dtype = np.uint8)
+    decoded_img = cv2.imdecode(encoded_img, cv2.IMREAD_COLOR)
+
+    img_array = cv2.cvtColor(decoded_img, cv2.COLOR_BGR2RGB) #이미지를 읽고 rgb로 변환한다. (opencv는 bgr로 읽음)
+    img_tensor = tf.convert_to_tensor(img_array, dtype=tf.uint8)[tf.newaxis, ...] #텐서 형식으로 변환
+    
+    height = img_array.shape[0]
+    width = img_array.shape[1]
+
+    draw_img = img_array.copy()
+
+    #모델 로드
+    model = getDetection('saved_model2')
+
+    #사용자 이미지 추론 (detection)
+    result = model(img_tensor)
+    result = {key:value.numpy() for key,value in result.items()}
+    
+    #임계값 지정. 50% 이상일 때만 바운딩박스 그림
+    SCORE_THRESHOLD = 0.5
+    OBJECT_DEFAULT_COUNT = 4 #클래스 개수
+
+    #클래스 매칭
+    labels_to_names = {1.0:'1001', 2.0:'1002', 3.0:'1003', 4.0:'1004'}
+    detection_list_1001 = [] #탐지 오브젝트 담을거임
+    detection_list_1002 = [] #탐지 오브젝트 담을거임
+    detection_list_1003 = [] #탐지 오브젝트 담을거임
+    detection_list_1004 = [] #탐지 오브젝트 담을거임
+    
+    detection_list = []###############추가
+
+    ######추가
+    roof_width_list = [] 
+    wall_list = []
+    window_list = [] 
+    door_list = []
+    
+    # 1001: 지붕
+    # 1002: 벽
+    # 1003: 창문
+    # 1004: 문
+
+    for i in range(min(result['detection_scores'][0].shape[0], OBJECT_DEFAULT_COUNT)):
+        score = result['detection_scores'][0,i]
+        print(i)
+        if score < SCORE_THRESHOLD: #임계값보다 작을 경우 break
+            break
+        box = result['detection_boxes'][0,i]
+        left = box[1] * width
+        top = box[0] * height
+        right = box[3] * width
+        bottom = box[2] * height
+        class_id = result['detection_classes'][0, i]
+        
+        if labels_to_names[class_id] == '1001':
+          roof_width = right-left
+          roof_width_list.append(roof_width)
+
+        elif labels_to_names[class_id] == '1002':
+          wall_left = left
+          wall_right = right
+          wall_height = bottom - top
+          wall_width = right-left
+
+          wall_list.append([wall_left, wall_right, wall_height, wall_width])
+
+        elif labels_to_names[class_id] == '1003':
+          window_height = bottom - top
+          window_width = right - left
+          window_list.append([window_height, window_width])
+          # detection_list_1003.append(labels_to_names[class_id])
+        elif labels_to_names[class_id] == '1004':
+          door_left = left
+          door_right = right
+          door_height = bottom - top
+          door_width = right - left
+
+          door_list.append([door_left, door_right, door_height, door_width])
+        
+        detection_list.append(labels_to_names[class_id]) ##########추가. 모든 탐지 오브젝트를 담는다.
+
+        print('class_id', class_id)
+
+        caption = "{}: {:.4f}".format(labels_to_names[class_id], score)
+        print(caption)  #score 콘솔에서 확인    
+    
+    if detection_list.count('1002') == 1 and detection_list.count('1004') == 1: #문, 벽이 한 개라면
+        doorresult.append(door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right)) #가장자리 함수
+    
+    if detection_list.count('1003') >= 2: ##창문 2개 이상
+        windowresult.append(1)
+    elif detection_list.count('1003') == 0:
+        windowresult.append(0)
+    
+    #큰 지붕
+
+    if detection_list.count('1001') == 1 and detection_list.count('1002') == 1: #지붕 벽 각각 하나
+        roofresult.append(roof_size(roof_width, wall_width))
+    elif detection_list.count('1001') >= 2 and detection_list.count('1002') >= 2: #지붕이나 벽이 2개 이상
+        # 여기 elif 수정 필수!!!!!!!!!
+        wall_cnt = detection_list.count('1002') 
+        for i in range(0, wall_cnt):
+            wall_width_list.append(wall_list[i][3])
+        roofresult.append(roof_size(max(roof_width_list), max(wall_width_list)))
+    elif detection_list.count('1001') == 0: #지붕 없다
+        pass
+    # 1001: 지붕
+    # 1002: 벽
+    # 1003: 창문
+    # 1004: 문
+
+    if detection_list.count('1003') >= 1:
+        #창문 크기
+        window_width_list = []
+        window_cnt = detection_list.count('1003') 
+        for i in range(0, window_cnt):
+            window_width_list.append(window_list[i][1])
+        if len(wall_width_list) > 0:
+            windowresult.append(window_size(max(window_width_list), max(wall_width_list)))
+
+
+    #큰 문 작은 문
+    if detection_list.count('1004') == 1 and detection_list.count('1002') == 1:
+        doorresult.append(door_size(door_height, door_width, wall_height, wall_width))
+    elif detection_list.count('1004') > 2 and detection_list.count('1002') == 1:
+        # wall_width_list=[]
+        wall_height_list=[]
+        wall_cnt = detection_list.count('1002') 
+        for i in range(0, wall_cnt):
+            # wall_width_list.append(wall_list[i][3])
+            wall_height_list.append(wall_list[i][2])
+    
+        door_width_list=[]
+        door_height_list=[]
+        door_cnt = detection_list.count('1004') 
+        if door_cnt >= 1:
+            for i in range(0, door_cnt):
+                door_width_list.append(door_list[i][3])
+                door_height_list.append(door_list[i][2])
+            doorresult.append(door_size(max(door_height_list), max(door_width_list), max(door_height_list), max(door_width_list)))
+
+    print(roofresult)
+    print(doorresult)
+    print(windowresult)
+
+    return {
+        "roofresult": roofresult,
+        "doorresult": doorresult,
+        "windowresult": windowresult,
+    }
+
+# def dictmax(list, standard):
+#     max = list[0][standard]
+#     for elem in list:
+#         if elem[standard] > max:
+#             max = elem[standard]
+#     return max
+
+#지붕이 큰가? 함수
+def roof_size(roof_width, wall_width):
+  roof_size = 0
+  if int(roof_width) > int(wall_width)*3:
+    roof_size = 1 #크다
+  return roof_size
+
+#문이 큰가? 함수
+def door_size(door_height, door_width, wall_height, wall_width):
+  door_size = 0 #보통
+  if door_height > wall_height*(4/5):
+    if door_width > wall_width*(3/5):
+      door_size = 2 #넓은
+    else:
+      door_size = 1 #큰 (길이)
+  elif door_height < wall_height*(1/5):
+    if door_width < wall_width*(1/4):
+      door_size = 4 #작은
+    else:
+      door_size = 3 #낮은 (길이)
+  return door_size
+
+#문 가장자리 함수
+def door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right):
+  door_edge = 0 #치우치지 않은
+  if door_left <= wall_left+(wall_width*(1/4)):
+    if door_right <=wall_left+(wall_width*(1/2)):
+      door_edge = 1 #왼쪽 가장자리로 치우친
+  elif door_left >= wall_left+(wall_width / 2):
+    if door_right >= wall_right - (wall_width/4):
+      door_edght = 2 #오른쪽 가장자리로 치우친
+  return door_edge
+
+#창문 크기 함수
+def window_size(window_height, window_width, wall_height, wall_width):
+  window_size = 0 #보통
+  if window_width < wall_width/6:
+    window_size = 1 # 좁은. 작다.
+  elif window_width >= wall_width/2:
+    if window_height >= wall_height*0.8:
+      window_size = 2 #큰 창문 (통유리창 정도)
+  return window_size

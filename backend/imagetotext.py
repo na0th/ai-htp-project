@@ -1,7 +1,7 @@
 import base64
 import sys
 
-with open("backend\example.jpg", "rb") as imageFile:
+with open("backend\\test3.jpg", "rb") as imageFile:
     str = base64.b64encode(imageFile.read())
     print(str)
     # print(sys.getsizeof(str))
