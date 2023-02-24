@@ -91,8 +91,8 @@ export default {
   text-align: left;
   display: inline-block;
   padding-right: 20px;
-  font-size: 38px;
-  font-family: korFont3;
+  font-size: 42px;
+  font-family: korFont1;
   margin-top: 50px;
   font-weight: 1000;
   position: absolute;
@@ -108,9 +108,9 @@ export default {
   margin-bottom: 20px;
 }
 .title-subtext {
-  font-size: 15px;
-  font-family: korFont1;
-  margin-top: 10px;
+  font-size: 16px;
+  font-family: korFont3;
+  margin-top: 12px;
 }
 .start-btn {
   font-family: korFont1;
