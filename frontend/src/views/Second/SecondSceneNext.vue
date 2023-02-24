@@ -7,7 +7,7 @@
       <button v-else @click="$emit('toggleSound')" class="sound-btn1">
         <img class="icon-sound1" src="../../assets/images/volumeoff.png" />
       </button>
-      <div class="first-text">
+      <div class="second-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger1.Trigger5">
             길을 계속 걷다 보니 <br />어느새 길의 끝이 보입니다.

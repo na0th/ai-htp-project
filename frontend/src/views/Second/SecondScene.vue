@@ -7,7 +7,7 @@
       <button v-else @click="toggleSound" class="sound-btn1">
         <img class="icon-sound1" src="../../assets/images/volumeoff.png" />
       </button>
-      <div class="first-text">
+      <div class="second-text">
         <transition name="fade">
           <p class="texts" v-if="timedTrigger.Trigger1">
             시간이 지나고 당신은 <br />
@@ -149,7 +149,16 @@ export default {
 }
 .second-text {
   display: inline-block;
-  margin-top: 150px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 10px;
+  top: 50%;
+  right: 0;
+  text-align: left;
+  color: #fff;
+  font-size: 19px;
+  font-family: korFont3;
 }
 .touch-text {
   color: #dededeb9;

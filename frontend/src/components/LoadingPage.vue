@@ -85,8 +85,8 @@ export default {
   left: 0;
   right: 0;
   text-align: center;
-  bottom: 7%;
-  font-size: 17px;
+  bottom: 8%;
+  font-size: 19px;
   animation: blinker 2s linear infinite;
 }
 .paint-spring {

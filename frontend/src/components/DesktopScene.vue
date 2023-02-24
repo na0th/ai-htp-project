@@ -1,5 +1,6 @@
 <template>
   <div class="desktop-scene">
+    <img src="../assets/images/desktop4.png" class="background-img" />
     <div class="desktop-text">
       <p class="title-text"><span style="color: #eba090">마음</span>스케치</p>
       <img class="icon1" src="../assets/images/icon5.png" />
@@ -29,8 +30,7 @@ export default {
 </script>
 <style scoped>
 .desktop-scene {
-  height: calc(var(--vh, 1vh) * 100);
-  background-image: url("../assets/images/desktop4.png");
+  height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -38,6 +38,10 @@ export default {
   -moz-background-size: cover;
   -o-background-size: cover;
   color: black;
+}
+.background-img {
+  height: 100%;
+  width: 100%;
 }
 .desktop-text {
   position: absolute;
@@ -64,7 +68,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 40px;
   gap: 10px;
 }
 .qrcode {
