@@ -86,7 +86,7 @@ def detection_tree(binaryimg):
 
     for i in range(min(result['detection_scores'][0].shape[0], OBJECT_DEFAULT_COUNT)):
         score = result['detection_scores'][0,i]
-        print(i)
+        # print(i)
         if score < SCORE_THRESHOLD: #임계값보다 작을 경우 break
             break
         box = result['detection_boxes'][0,i]
@@ -198,12 +198,12 @@ def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
 
     resultlist=[]
 
-    print("********************************")
-    print(proba)
-    print(sorted_categories)
-    print(len(class_li))
-    print(class_li)
-    print("********************************")
+    # print("********************************")
+    # print(proba)
+    # print(sorted_categories)
+    # print(len(class_li))
+    # print(class_li)
+    # print("********************************")
 
     for i in range(COUNT):
      if proba[0][sorted_categories[i]] > SCORE_THRESHOLD:
@@ -274,10 +274,12 @@ def detection_house(binaryimg):
     roof_width_list = [] 
     
     wall_list = []
+    wall_width_list=[]
     wall_height_list=[]
 
     window_list = [] 
     window_width_list = []
+    window_height_list = []
 
     door_list = []
     door_width_list=[]
@@ -317,6 +319,7 @@ def detection_house(binaryimg):
           window_height = bottom - top
           window_width = right - left
           window_width_list.append(window_width)
+          window_height_list.append(window_height)
           window_list.append([window_height, window_width])
           
         elif labels_to_names[class_id] == '1004':
@@ -330,10 +333,10 @@ def detection_house(binaryimg):
         
         detection_list.append(labels_to_names[class_id]) ##########추가. 모든 탐지 오브젝트를 담는다.
 
-        print('class_id', class_id)
+        # print('class_id', class_id)
 
         caption = "{}: {:.4f}".format(labels_to_names[class_id], score)
-        print(caption)  #score 콘솔에서 확인    
+        # print(caption)  #score 콘솔에서 확인    
     
     if detection_list.count('1002') == 1 and detection_list.count('1004') == 1: #문, 벽이 한 개라면
         doorresult.append(door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right)) #가장자리 함수
@@ -360,8 +363,8 @@ def detection_house(binaryimg):
     # 창문이 한 개라도 있으면
     if detection_list.count('1003') >= 1 and detection_list.count('1002') >= 1:
         #창문 크기
-        windowresult.append(window_size(max(window_width_list), max(wall_width_list)))
-
+        windowresult.append(window_size(max(window_height_list), max(window_width_list), max(wall_height_list), max(wall_width_list)))
+        # window_height, window_width, wall_height, wall_width
 
     # 큰 문 작은 문 판별
     # 문이 한 개고 벽이 한 개이면
@@ -371,9 +374,9 @@ def detection_house(binaryimg):
     elif detection_list.count('1004') > 2 and detection_list.count('1002') == 1:
        doorresult.append(door_size(max(door_height_list), max(door_width_list), max(wall_height_list), max(wall_width_list)))
 
-    print(roofresult)
-    print(doorresult)
-    print(windowresult)
+    # print(roofresult)
+    # print(doorresult)
+    # print(windowresult)
 
     print("지붕 개수: ", detection_list.count('1001'))
     print("벽 개수: ", detection_list.count('1002'))

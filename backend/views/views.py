@@ -88,15 +88,15 @@ def showFirst():
 
         # 모델 넣을 자리
         callTreeModel(binaryimg)
-        # return jsonify({'message': 'The image is saved.', "userid": user.userid }), 200
-        return {
-                "entiretree": stringtojson(user.entiretree),
-                "treeroot": stringtojson(user.treeroot),
-                "treebranch": stringtojson(user.treebranch),
-                "treeleap": stringtojson(user.treeleap),
-                "treestem": stringtojson(user.treestem),
-                "treesize": stringtojson(user.treesize)
-            }
+        return jsonify({'message': 'The image is saved.', "userid": user.userid }), 200
+        # return {
+        #         "entiretree": stringtojson(user.entiretree),
+        #         "treeroot": stringtojson(user.treeroot),
+        #         "treebranch": stringtojson(user.treebranch),
+        #         "treeleap": stringtojson(user.treeleap),
+        #         "treestem": stringtojson(user.treestem),
+        #         "treesize": stringtojson(user.treesize)
+        #     }
     
 @bp.route('/home/', methods=['POST', 'GET'])
 def showSecond():
@@ -164,27 +164,6 @@ def stringtojson(str):
             return tmpsjon
     else:
         return None
-
-@bp.route('/test/', methods=['POST', 'GET'])
-def test():
-    resultJson = {}
-    resultData = db.session.query(EntireTree).filter(EntireTree.id == 0).first()
-    if resultData is not None:
-        tmp = resultData.result
-        print(type(tmp))
-        tmpsplit = resultData.result.split(':')
-        print(tmpsplit)
-        subtitle = tmpsplit[0]
-        print(subtitle)
-        print(type(subtitle))
-        result = tmpsplit[1]
-        print(result)
-        print(type(result))
-        resultJson[subtitle]=result
-    print(json.dumps(resultJson))
-    print(json.loads(json.dumps(resultJson)))
-
-    return json.dumps(resultJson)
 
 def callTreeModel(binaryimg):
     user = db.session.query(User).filter(User.userid == session['userid']).first()
@@ -266,7 +245,6 @@ def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 r
     '''
     resultJson = {}
     for id in result:
-        # resultData = table.query.filter_by(id).first()
         resultData = db.session.query(table).filter(table.id == id).first()
         if resultData is not None:
             tmp = resultData.result
