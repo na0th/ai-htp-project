@@ -8,7 +8,7 @@
         확인해보는 나의 심리
       </p>
       <div class="qrcode-div">
-        <img class="qrcode" src="../assets/images/QR.svg.png" />
+        <img class="qrcode" src="../assets/images/qrcode.png" />
         <p class="qrcode-text">
           시작하기 위해 QR코드를 <br />핸드폰으로 스캔해주세요
         </p>
