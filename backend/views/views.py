@@ -246,7 +246,7 @@ def save_result(table, result): # db테이블과 찾고자하는 id 값 받고 r
     resultJson = {}
     for id in result:
         resultData = db.session.query(table).filter(table.id == id).first()
-        if resultData is not None:
+        if resultData is not None and resultData.result is not None:
             tmp = resultData.result
             tmpsplit = resultData.result.split(":")
             subtitle = tmpsplit[0]

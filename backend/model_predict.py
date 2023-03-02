@@ -339,7 +339,9 @@ def detection_house(binaryimg):
         # print(caption)  #score 콘솔에서 확인    
     
     if detection_list.count('1002') == 1 and detection_list.count('1004') == 1: #문, 벽이 한 개라면
-        doorresult.append(door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right)) #가장자리 함수
+        door_edge_result = door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right)
+        if door_edge_result == 1 or door_edge_result == 2:
+            doorresult.append(5) #가장자리 함수
     
     if detection_list.count('1003') >= 2: ##창문 2개 이상
         windowresult.append(1)
@@ -357,22 +359,27 @@ def detection_house(binaryimg):
     if (detection_list.count('1001') >= 2 and detection_list.count('1002') >= 1) or (detection_list.count('1001') >= 1 and detection_list.count('1002') >= 2): 
         roofresult.append(roof_size(max(roof_width_list), max(wall_width_list)))
 
-    # 창문이 없는 경우
-    if detection_list.count('1003') == 0:
-        windowresult.append(0)
     # 창문이 한 개라도 있으면
     if detection_list.count('1003') >= 1 and detection_list.count('1002') >= 1:
         #창문 크기
-        windowresult.append(window_size(max(window_height_list), max(window_width_list), max(wall_height_list), max(wall_width_list)))
+        window_size_result = window_size(max(window_height_list), max(window_width_list), max(wall_height_list), max(wall_width_list))
+        if window_size_result == 1:
+           window_list.append(3)
+        elif window_size_result == 2:
+           window_list.append(2)
         # window_height, window_width, wall_height, wall_width
 
     # 큰 문 작은 문 판별
     # 문이 한 개고 벽이 한 개이면
-    if detection_list.count('1004') == 1 and detection_list.count('1002') == 1:
-        doorresult.append(door_size(door_height, door_width, wall_height, wall_width))
-    # 문이 두 개 이상이고 벽이 한 개 이상이면
-    elif detection_list.count('1004') > 2 and detection_list.count('1002') == 1:
-       doorresult.append(door_size(max(door_height_list), max(door_width_list), max(wall_height_list), max(wall_width_list)))
+    # if detection_list.count('1004') == 1 and detection_list.count('1002') == 1:
+    #     door_size_result = door_size(door_height, door_width, wall_height, wall_width)
+    #     if door_size_result != 0:
+    #         doorresult.append(door_size_result)
+    # # 문이 두 개 이상이고 벽이 한 개 이상이면
+    # elif detection_list.count('1004') > 1 and detection_list.count('1002') == 1:
+    #     door_size_result = door_size(max(door_height_list), max(door_width_list), max(wall_height_list), max(wall_width_list))
+    #     if door_size_result != 0:
+    #         doorresult.append(door_size_result)
 
     # print(roofresult)
     # print(doorresult)
@@ -382,6 +389,8 @@ def detection_house(binaryimg):
     print("벽 개수: ", detection_list.count('1002'))
     print("창문 개수: ", detection_list.count('1003'))
     print("문 개수: ", detection_list.count('1004'))
+
+    print(detection_list)
 
     return {
         "roofresult": roofresult,
