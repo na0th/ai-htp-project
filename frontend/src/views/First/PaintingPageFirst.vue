@@ -1,6 +1,7 @@
 <template>
   <transition name="first">
     <div class="painting-page">
+      <p class="sub-text-paint">※ 나무를 그려주세요!</p>
       <div class="painting-content">
         <div id="canvas_Wrapper">
           <canvas ref="jsCanvas" id="jsCanvas" class="canvas"></canvas>
@@ -687,6 +688,14 @@ html {
     opacity: 1;
     transform: scale3d(1, 1, 1);
   }
+}
+.sub-text-paint {
+  color: rgba(100, 100, 100, 0.585);
+  position: absolute;
+  left: 9px;
+  top: 4.5px;
+  font-family: korFont1;
+  font-size: 13px;
 }
 /* 핸드폰 사이즈*/
 @media screen and (max-width: 450px) {
