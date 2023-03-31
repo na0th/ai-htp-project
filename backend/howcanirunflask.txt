@@ -1,0 +1,21 @@
+To run Flask using an absolute path to your __init__.py file, you can use the -a option of the flask run command. Here are the steps:
+
+Open a terminal or command prompt and navigate to the root directory of your Flask application.
+
+Obtain the absolute path of your __init__.py file. You can do this by running the following command in the terminal:
+
+bash
+Copy code
+pwd
+This will print the current working directory (i.e., the root directory of your Flask application) to the terminal. Copy the output of this command.
+
+Run the flask run command with the -a option, followed by the absolute path to your __init__.py file. For example:
+
+css
+Copy code
+flask run -a /path/to/your/app/__init__.py
+Replace /path/to/your/app with the absolute path to your Flask application's root directory, and make sure to include the __init__.py file in the path.
+
+The server will start listening on http://127.0.0.1:5000 by default. You can access your Flask application by visiting this URL in your web browser.
+
+That's it! You should now be able to run your Flask application using an absolute path to the __init__.py file. Note that you may need to adjust the path to the config.py file and other dependencies based on the new directory structure.

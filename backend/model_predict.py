@@ -24,7 +24,7 @@ import io
 from models import User, EntireTree, TreeRoot, TreeBranch, TreeLeap, TreeStem, TreeSize
 from db_connect import db
 
-from model_init import model_dict
+from init_model import model_dict
 
 def getClassfication(model_file_name):
     if model_dict[model_file_name] is None:
