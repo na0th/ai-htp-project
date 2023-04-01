@@ -6,19 +6,18 @@ import numpy as np
 import cv2
 import numpy as np
 # local application imports
-from backend.app.main.config.init_model import model_dict
-from backend.app.main.model.repository.result.result_repository import *
+from main.config.init_model import model_dict
+from main.model.repository.result.result_repository import *
 
 def result_match(table, result_list): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
     result_json = {}
 
     for index in result_list:
         row = find_result(table, index)
-        if row is not None and row.result is not None:
+        if len(row.result) != 0:
             tmpsplit = row.result.split(":")
             subtitle = tmpsplit[0]
             result = tmpsplit[1]
-            
             result_json[subtitle]=result
 
     result_str = json.dumps(result_json)

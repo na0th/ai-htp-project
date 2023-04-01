@@ -1,8 +1,8 @@
-from db_connect import db
+from main.config.db_connect import db
 
 # 집 db class
-class EntireHouse(db.Model):
-	__tablename__ = 'entire_house'
+class HouseType(db.Model):
+	__tablename__ = 'house_type'
 	id = db.Column(db.Integer, primary_key=True)
 	result = db.Column(db.TEXT)
 

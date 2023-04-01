@@ -7,12 +7,12 @@ import cv2
 from PIL import Image
 
 # local application imports
-from backend.app.main.service.draw.common import *
-from backend.app.main.model.domain.user.user_model import *
-from backend.app.main.model.domain.result.house_model import * 
-from backend.app.main.model.domain.result.tree_model import * 
-from backend.app.main.model.repository.user.user_repository import *
-from backend.app.main.service.draw.common import *
+from main.service.draw.common import *
+from main.model.domain.user.user_model import *
+from main.model.domain.result.house_model import * 
+from main.model.domain.result.tree_model import * 
+from main.model.repository.user.user_repository import *
+from main.service.draw.common import *
 
 class UserTreeResult:
     size = ''

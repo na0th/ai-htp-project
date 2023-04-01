@@ -3,8 +3,8 @@
 from flask import (Blueprint, jsonify, request, session)
 from flask_cors import CORS
 # local application imports
-from db_connect import db
-from backend.app.main.model.repository.user.user_repository import *
+from main.config.db_connect import db
+from main.model.repository.user.user_repository import *
 
 bp = Blueprint('main', __name__, url_prefix='/')
 CORS(bp, resources={r"*": {"origins": "*"}})

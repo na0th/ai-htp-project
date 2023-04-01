@@ -3,9 +3,9 @@
 from flask import Flask, g
 from flask_cors import CORS
 # local application imports
-from db_connect import db
-from backend.app.main.controller.api.draw_controller import draw
-from backend.app.main.controller.api.main_controller import main
+from main.config.db_connect import db
+from main.controller.api.draw_controller import bp as drawbp
+from main.controller.api.main_controller import bp as mainbp
 
 app = Flask(__name__)
 CORS(app, resources={r"*": {"origins": "*"}})
@@ -16,8 +16,8 @@ app.secret_key = 'ekdwls'
 
 db.init_app(app)
 
-app.register_blueprint(main.bp)
-app.register_blueprint(draw.bp)
+app.register_blueprint(mainbp)
+app.register_blueprint(drawbp)
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)

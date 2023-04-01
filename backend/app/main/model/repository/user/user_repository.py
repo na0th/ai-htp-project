@@ -1,5 +1,5 @@
-from db_connect import db
-from model.domain.user.user_model import *
+from main.config.db_connect import db
+from main.model.domain.user.user_model import *
 
 def save_user(username):
     user = User(username=username)

@@ -1,4 +1,4 @@
-from db_connect import db
+from main.config.db_connect import db
 
 class User(db.Model):
     userid = db.Column(db.Integer, primary_key=True)

@@ -4,14 +4,20 @@ import tensorflow as tf
 import numpy as np
 import cv2
 # local application imports
-from backend.app.main.service.draw.common import *
-from backend.app.main.model.domain.user.user_model import *
-from backend.app.main.model.domain.result.house_model import * 
-from backend.app.main.model.domain.result.tree_model import * 
-from backend.app.main.model.repository.user.user_repository import *
-from backend.app.main.service.draw.common import *
+from main.service.draw.common import *
+from main.model.domain.user.user_model import *
+from main.model.domain.result.house_model import * 
+from main.model.domain.result.tree_model import * 
+from main.model.repository.user.user_repository import *
+
+# from .common import *
+# from ...model.domain.user.user_model import *
+# from ...model.domain.result.house_model import * 
+# from ...model.domain.result.tree_model import * 
+# from ...model.repository.user.user_repository import *
 
 class UserHouseResult:
+  
     type = ''
     roof = ''
     door = ''
@@ -20,7 +26,7 @@ class UserHouseResult:
     def __init__(self):
         pass
 
-def call_house_model(userid):
+def house_process(userid):
     user = find_user(userid)
     img_binary = user.houseimg
 
@@ -30,10 +36,15 @@ def call_house_model(userid):
     result.roof = result_match(HouseRoof, total_result_dict["roofresult"])
     result.door = result_match(HouseDoor, total_result_dict["doorresult"])
     result.window = result_match(HouseWindow, total_result_dict["windowresult"])
+    print("##########")
+    print(total_result_dict)
 
     type_result_list = []
     type_result_list.append(classification('house', img_binary, 150))
-    type_result_str = result_match(EntireHouse, type_result_list)
+    type_result_str = result_match(HouseType, type_result_list)
+    print(type_result_str)
+    print("##########")
+
     result.type = type_result_str
 
     save_user_house(userid=userid, result=result)
@@ -133,60 +144,106 @@ def detection_house(binaryimg):
         
         detection_list.append(labels_to_names[class_id]) ##########추가. 모든 탐지 오브젝트를 담는다.
 
-        # print('class_id', class_id)
+        print('class_id', class_id)
 
         caption = "{}: {:.4f}".format(labels_to_names[class_id], score)
-        # print(caption)  #score 콘솔에서 확인    
+        print(caption)  #score 콘솔에서 확인    
+
+    print("[start] width, height list - roof, wall, window, door")
+    print(roof_width_list)
     
-    if detection_list.count('1002') == 1 and detection_list.count('1004') == 1: #문, 벽이 한 개라면
-        door_edge_result = door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right)
-        if door_edge_result == 1 or door_edge_result == 2:
-            door_result_list.append(5) #가장자리 함수
-    
-    if detection_list.count('1003') >= 2: ##창문 2개 이상
+    print(wall_width_list)
+    print(wall_height_list)
+
+    print(window_list)
+    print(window_width_list)
+    print(window_height_list)
+
+    print(door_list)
+    print(door_width_list)
+    print(door_height_list)
+    print("[end] width, height list")
+
+    # 1001: 지붕 Roof
+    # 지붕 크기
+    if detection_list.count('1001') == 0: #지붕 없다
+       roof_result_list.append(0)
+    elif detection_list.count('1001') == 1 and detection_list.count('1002') == 1: #지붕 벽 각각 하나
+       if roof_size(roof_width, wall_width) == 1: # 지붕이 있는데 크다.
+          roof_result_list.append(1)
+    # 지붕이 2개 이상이고 벽이 1개일 때 
+    elif (detection_list.count('1001') >= 2 and detection_list.count('1002') >= 1): 
+        if roof_size(max(roof_width_list), max(wall_width_list)) == 1:
+           roof_result_list.append(1)
+
+    # 1003: 창문 Window
+    # 창문 개수
+    if detection_list.count('1003') >= 2: # 창문 2개 이상
         window_result_list.append(1)
     elif detection_list.count('1003') == 0:
         window_result_list.append(0)
-    
-    #큰 지붕
-    if detection_list.count('1001') == 1 and detection_list.count('1002') == 1: #지붕 벽 각각 하나
-       if roof_size(roof_width, wall_width) == 1: # 지붕이 있는데 크다.
-          roof_result_list.append(1)
-    elif detection_list.count('1001') == 0: #지붕 없다
-        roof_result_list.append(0)
 
-    #지붕이나 벽이 2개 이상
-    if (detection_list.count('1001') >= 2 and detection_list.count('1002') >= 1) or (detection_list.count('1001') >= 1 and detection_list.count('1002') >= 2): 
-        roof_result_list.append(roof_size(max(roof_width_list), max(wall_width_list)))
-
-    # 창문이 한 개라도 있으면
+    # 창문 크기
+    # (창문과 벽이 한 개라도 있으면)
     if detection_list.count('1003') >= 1 and detection_list.count('1002') >= 1:
-        #창문 크기
         window_size_result = window_size(max(window_height_list), max(window_width_list), max(wall_height_list), max(wall_width_list))
-        if window_size_result == 1:
-           window_list.append(3)
-        elif window_size_result == 2:
-           window_list.append(2)
-        # window_height, window_width, wall_height, wall_width
+        if window_size_result == 1: # 작다
+           window_result_list.append(3)
+        elif window_size_result == 2: # 크다
+           window_result_list.append(2)
 
-    # 큰 문 작은 문 판별
+    # 1004: 문 Door
+    # 문 개수
+    if detection_list.count('1004') == 0:
+       door_result_list.append(0)
+
+    # 문 위치
+    if detection_list.count('1002') == 1 and detection_list.count('1004') == 1: # 문, 벽이 한 개라면
+        door_edge_result = door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right)
+        if door_edge_result == 1 or door_edge_result == 2:
+            door_result_list.append(5) # 가장자리 함수
+    
+    # 문 크기
     # 문이 한 개고 벽이 한 개이면
     # if detection_list.count('1004') == 1 and detection_list.count('1002') == 1:
     #     door_size_result = door_size(door_height, door_width, wall_height, wall_width)
     #     if door_size_result != 0:
-    #         doorresult.append(door_size_result)
+    #         door_result_list.append(door_size_result)
     # # 문이 두 개 이상이고 벽이 한 개 이상이면
-    # elif detection_list.count('1004') > 1 and detection_list.count('1002') == 1:
+    # elif detection_list.count('1004') >= 2 and detection_list.count('1002') >= 1:
     #     door_size_result = door_size(max(door_height_list), max(door_width_list), max(wall_height_list), max(wall_width_list))
     #     if door_size_result != 0:
-    #         doorresult.append(door_size_result)
+    #         door_result_list.append(door_size_result)
 
+    # 넓이로 해보기
+    # 문이 한 개고 벽이 한 개이면
+    if detection_list.count('1004') >= 1 and detection_list.count('1002') >= 1:
+      door_max_area = max(door_width_list) * max(door_height_list)
+      wall_max_area = max(wall_width_list) * max(wall_height_list)
+      if door_max_area > wall_max_area * 0.7:
+         door_result_list.append(2) # 매우 큰
+      elif door_max_area > wall_max_area * 0.4:
+         door_result_list.append(1) # 큰 
+      elif door_max_area < wall_max_area * 0.2:
+         door_result_list.append(4) # 매우 작은
+      elif max(door_height_list) < max(wall_height_list) * 0.4:
+         door_result_list.append(3)
+
+    print("[start] detection_list.count")
     print("지붕 개수: ", detection_list.count('1001'))
     print("벽 개수: ", detection_list.count('1002'))
     print("창문 개수: ", detection_list.count('1003'))
     print("문 개수: ", detection_list.count('1004'))
+    print("[end] detection_list.count")
+    print()
 
+    print("[start] detection_list")
     print(detection_list)
+    print(roof_result_list)
+    print(door_result_list)
+    print(window_result_list)
+    print("[start] detection_list")
+    print()
 
     return {
         "roofresult": roof_result_list,
@@ -216,6 +273,7 @@ def door_size(door_height, door_width, wall_height, wall_width):
       door_size = 3 #낮은 (길이)
   return door_size
 
+
 #문 가장자리 함수
 def door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right):
   door_edge = 0 #치우치지 않은
@@ -236,4 +294,3 @@ def window_size(window_height, window_width, wall_height, wall_width):
     if window_height >= wall_height*0.8:
       window_size = 2 #큰 창문 (통유리창 정도)
   return window_size
-

@@ -1,4 +1,4 @@
-from db_connect import db
+from main.config.db_connect import db
 
 # 나무 db class
 class EntireTree(db.Model):

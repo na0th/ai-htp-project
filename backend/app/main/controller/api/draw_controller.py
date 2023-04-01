@@ -5,10 +5,10 @@ import json
 from flask import (Blueprint, jsonify, redirect, request, session, url_for)
 from flask_cors import CORS
 # local application imports
-from db_connect import db
-from backend.app.main.model.repository.user.user_repository import *
-from backend.app.main.service.drawing.tree_service import *
-from backend.app.main.service.drawing.house_service import *
+from main.config.db_connect import db
+from main.model.repository.user.user_repository import *
+from main.service.draw.tree_service import *
+from main.service.draw.house_service import *
 
 bp = Blueprint('draw', __name__, url_prefix='/')
 CORS(bp, resources={r"*": {"origins": "*"}})
@@ -31,7 +31,7 @@ def house_draw_save():
         params = request.get_json()
         # session settings
         setup(params['userid'], params['image'][22:], 2)
-        call_house_model(params['userid'])
+        house_process(params['userid'])
         
         # http response
         userid = params['userid']
@@ -44,18 +44,18 @@ def house_draw_save():
             "image1": 'data:image/png;base64,' + binary_to_string(user.treeimg),
             "image2": 'data:image/png;base64,' + binary_to_string(user.houseimg),
             "tree": {
-                "나무 유형": string_to_json(user_tree.type),
-                "나무 뿌리": string_to_json(user_tree.root),
-                "나무 가지": string_to_json(user_tree.branch),
-                "나뭇잎": string_to_json(user_tree.leap),
-                "나무 줄기": string_to_json(user_tree.stem),
-                "나무 크기": string_to_json(user_tree.size)
+                "나무 유형": string_to_json(user_tree.treetype),
+                "나무 뿌리": string_to_json(user_tree.treeroot),
+                "나무 가지": string_to_json(user_tree.treebranch),
+                "나뭇잎": string_to_json(user_tree.treeleap),
+                "나무 줄기": string_to_json(user_tree.treestem),
+                "나무 크기": string_to_json(user_tree.treesize)
             },
             "home": {
-                "집 유형": string_to_json(user_house.type),
-                "집 지붕": string_to_json(user_house.roof),
-                "집 문": string_to_json(user_house.door),
-                "집 창문": string_to_json(user_house.window)
+                "집 유형": string_to_json(user_house.housetype),
+                "집 지붕": string_to_json(user_house.houseroof),
+                "집 문": string_to_json(user_house.housedoor),
+                "집 창문": string_to_json(user_house.housewindow)
             }
         }), 200
     
@@ -69,7 +69,7 @@ def setup(userid, img_str, step):
     update_user_draw(userid, img_binary, step)
 
 def string_to_json(str):
-    if str is not None:
+    if str is not None and str is not "":
         tmpsjon = json.loads(str)
         if len(tmpsjon) == 0:
             return None
