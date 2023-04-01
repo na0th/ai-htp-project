@@ -6,9 +6,11 @@ def base64_convert(path):
     # print(type(encoded))
     return str(encoded)
 
-data = base64_convert("sample_img/tree/sample_tree2.png")
+num = 15
+
+data = base64_convert("sample_img/house/sample_house"+str(num)+".png")
 data = data[2:-1]
 
-f = open("sample_img/tree/sample_tree2.txt", 'w')
+f = open("sample_img/house/sample_house"+str(num)+".txt", 'w')
 f.write(data)
 f.close()
