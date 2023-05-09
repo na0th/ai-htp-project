@@ -35,8 +35,3 @@ select * from user;
 select * from user_tree;
 select * from user_house;
 
-set sql_safe_updates=0;
-delete from user;
-delete from user_tree;
-delete from user_house;
-

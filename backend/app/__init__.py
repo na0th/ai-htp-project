@@ -10,7 +10,7 @@ from main.controller.api.main_controller import bp as mainbp
 app = Flask(__name__)
 CORS(app, resources={r"*": {"origins": "*"}})
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1234@127.0.0.1:3306/ai-htp-test"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1234@127.0.0.1:3306/ai_htp_test"
 app.config['SQLARCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'ekdwls'
 
