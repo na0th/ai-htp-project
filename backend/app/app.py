@@ -1,6 +1,6 @@
 # standard library imports
 # Third party imports
-from flask import Flask, g
+from flask import Flask
 from flask_cors import CORS
 # local application imports
 from main.config.db_connect import db

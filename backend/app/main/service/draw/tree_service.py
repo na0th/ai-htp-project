@@ -14,6 +14,21 @@ from main.model.domain.result.tree_model import *
 from main.model.repository.user.user_repository import *
 from main.service.draw.common import *
 
+## constant variable
+STR_TREE_LEAF_FRUIT = '열매있음'
+STR_TREE_LEAF_FLOWER = '꽃있음'
+STR_TREE_LEAF_LEAFY = '잎무성한'
+
+STR_TREE_BRANCH_UP = '윗쪽으로 뻗는'
+STR_TREE_BRANCH_NET = '그물'
+
+STR_TREE_LEAF_NOT_BIG = '잎이 안 큰'
+STR_TREE_LEAF_BIG = '잎이 큰'
+
+STR_TREE_STEM_RING = '나이테_나무껍질_옹이_O'
+STR_TREE_STEM_ANIMAL = '동물_곤충_O'
+STR_TREE_STEM_RING_X = '나이테_나무껍질_옹이_X'
+
 class UserTreeResult:
     size = ''
     type = ''
@@ -21,6 +36,7 @@ class UserTreeResult:
     branch = ''
     stem = ''
     root = ''
+    score = [0, 0, 0, 0, 0]
 
     def __init__(self):
         pass
@@ -36,7 +52,8 @@ def call_tree_model(userid):
     size_result_str = result_match(TreeSize, size_result_list)
     result.size = size_result_str
 
-    # 1. tree_type 나무 전체 => 0 1 2 3 4 중에 하나 
+    # 1. tree_type 나무 타입 분류 모델
+    # return 0 1 2 3 4 중에 하나 
     if user.tree1004 is not None:
         type_result_list=[]
         type_result_list.append(classification('tree_type', user.tree1004, 300))
@@ -45,37 +62,37 @@ def call_tree_model(userid):
 
     # 2. 3. 잎, 열매, 꽃, 가지
     if user.tree1001 is not None:
-        label_names = ['열매있음','윗쪽으로 뻗는','잎이 안 큰','잎무성한','꽃있음', '그물', '잎이 큰']
+        label_names = [STR_TREE_LEAF_FRUIT, STR_TREE_BRANCH_UP, STR_TREE_LEAF_NOT_BIG, STR_TREE_LEAF_LEAFY, STR_TREE_LEAF_FLOWER, STR_TREE_BRANCH_NET, STR_TREE_LEAF_BIG]
         label_return = classification_multi('leaf_branch', user.tree1001, label_names, 200, 7)
         leap_result_list = []
-        if '열매있음' in label_return:
+        if STR_TREE_LEAF_FRUIT in label_return:
             leap_result_list.append(3)
-        if '잎무성한' in label_return:
+        if STR_TREE_LEAF_LEAFY in label_return:
             leap_result_list.append(1)
-        if '잎이 큰' in label_return:
+        if STR_TREE_LEAF_BIG in label_return:
             leap_result_list.append(0)
-        if '꽃있음' in label_return:
+        if STR_TREE_LEAF_FLOWER in label_return:
             leap_result_list.append(2)
         leap_result_str = result_match(TreeLeap, leap_result_list)
         result.leap = leap_result_str
     
         branch_result_list=[]
-        if '윗쪽으로 뻗는' in label_return:
+        if STR_TREE_BRANCH_UP in label_return:
             branch_result_list.append(1)
-        if '그물' in label_return:
+        if STR_TREE_BRANCH_NET in label_return:
             branch_result_list.append(0)
         branch_result_str = result_match(TreeBranch, branch_result_list)
         result.branch = branch_result_str
 
     # 4. stem 줄기 => [0, 0, 0]
     if user.tree1002 is not None:
-        label_names = ['나이테_나무껍질_옹이_O','동물_곤충_O','나이테_나무껍질_옹이_X']
+        label_names = [STR_TREE_STEM_RING, STR_TREE_STEM_ANIMAL, STR_TREE_STEM_RING_X]
         stem_result_list = []
         label_return = classification_multi('stem', user.tree1002, label_names, 200, 3)
 
-        if '나이테_나무껍질_옹이_O' in label_return:
+        if STR_TREE_STEM_RING in label_return:
             stem_result_list.append(0)
-        if '동물_곤충_O' in label_return:
+        if STR_TREE_STEM_ANIMAL in label_return:
             stem_result_list.append(1)
         
         stem_result_str = result_match(TreeStem, stem_result_list)
