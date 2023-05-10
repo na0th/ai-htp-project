@@ -1,28 +1,29 @@
 from main.config.db_connect import db
 
-class User(db.Model):
-    userid = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), nullable=False)
-    treeimg = db.Column(db.BLOB)
-    houseimg = db.Column(db.BLOB)
-    tree1001 = db.Column(db.BLOB)
-    tree1002 = db.Column(db.BLOB)
-    tree1003 = db.Column(db.BLOB)
-    tree1004 = db.Column(db.BLOB)    
+class UserImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    tree_image = db.Column(db.BLOB)
+    house_image = db.Column(db.BLOB)
+    tree_crop_leaf_branch = db.Column(db.BLOB)
+    tree_crop_stem = db.Column(db.BLOB)
+    tree_crop_root = db.Column(db.BLOB)
+    tree_crop_type = db.Column(db.BLOB) 
 
-class UserTree(db.Model):
-    userid = db.Column(db.Integer, primary_key=True)
-    treetype = db.Column(db.TEXT)
-    treeroot = db.Column(db.TEXT)
-    treebranch = db.Column(db.TEXT)
-    treeleap = db.Column(db.TEXT)
-    treestem = db.Column(db.TEXT)
-    treesize = db.Column(db.TEXT)
+class UserTreeResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.TEXT)
+    root = db.Column(db.TEXT)
+    branch = db.Column(db.TEXT)
+    leap = db.Column(db.TEXT)
+    stem = db.Column(db.TEXT)
+    size = db.Column(db.TEXT)
+    characters = db.Column(db.Integer)   
 
-class UserHouse(db.Model):
-    userid = db.Column(db.Integer, primary_key=True)
-    housetype = db.Column(db.TEXT)
-    houseroof = db.Column(db.TEXT)
-    housedoor = db.Column(db.TEXT)
-    housewindow = db.Column(db.TEXT)
+class UserHouseResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.TEXT)
+    roof = db.Column(db.TEXT)
+    door = db.Column(db.TEXT)
+    windows = db.Column(db.TEXT)
 	

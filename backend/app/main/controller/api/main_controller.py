@@ -14,7 +14,7 @@ def show_main_page():
     if request.method == 'POST':
         params = request.get_json()
         
-        session['user_id'] = save_user(params['username'])
+        session['id'] = save_user(params['name'])
 
-        return jsonify({'message': 'The username is saved.', 'user_id': session['user_id'] }), 200
+        return jsonify({'message': 'The name is saved.', 'id': session['id'] }), 200
 

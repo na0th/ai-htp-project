@@ -1,37 +1,38 @@
 SET foreign_key_checks = 0;
-drop table if exists user;
-create table user (
-	userid integer primary key auto_increment,
-    username varchar(50) not null,
-    treeimg LONGBLOB,
-    houseimg LONGBLOB,
-    tree1001 LONGBLOB,
-    tree1002 LONGBLOB,
-    tree1003 LONGBLOB,
-    tree1004 LONGBLOB
+drop table if exists user_image;
+create table user_image (
+	id integer primary key auto_increment,
+    name varchar(50) not null,
+    tree_image LONGBLOB,
+    house_image LONGBLOB,
+    tree_crop_leaf_branch LONGBLOB,
+    tree_crop_stem LONGBLOB,
+    tree_crop_root LONGBLOB,
+    tree_crop_type LONGBLOB
 );
 
-drop table if exists user_tree;
-create table user_tree(
-    userid integer primary key,
-    treetype TEXT,
-    treeroot TEXT, 
-    treebranch TEXT,
-    treeleap TEXT,
-    treestem TEXT, 
-    treesize TEXT
+drop table if exists user_tree_result;
+create table user_tree_result(
+    id integer primary key,
+    type TEXT,
+    root TEXT, 
+    branch TEXT,
+    leap TEXT,
+    stem TEXT, 
+    size TEXT,
+    characters integer
 );
 
-drop table if exists user_house;
-create table user_house(
-    userid integer primary key,
-    houseroof TEXT,
-    housedoor TEXT,
-    housewindow TEXT,
-    housetype TEXT    
+drop table if exists user_house_result;
+create table user_house_result(
+    id integer primary key,
+    type TEXT,
+    roof TEXT,
+    door TEXT,
+    windows TEXT
 );
 
-select * from user;
-select * from user_tree;
-select * from user_house;
+select * from user_image;
+select * from user_tree_result;
+select * from user_house_result;
 
