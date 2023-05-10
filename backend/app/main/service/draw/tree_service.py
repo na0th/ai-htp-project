@@ -49,7 +49,7 @@ def call_tree_model(userid):
 
     # 0. tree_size_location
     size_result_list = detection_tree(img_binary, userid)
-    size_result_str = result_match(TreeSize, size_result_list)
+    size_result_str = result_index_to_str(TreeSize, size_result_list)
     result.size = size_result_str
 
     # 1. tree_type 나무 타입 분류 모델
@@ -57,7 +57,7 @@ def call_tree_model(userid):
     if user.tree1004 is not None:
         type_result_list=[]
         type_result_list.append(classification('tree_type', user.tree1004, 300))
-        type_result_str = result_match(EntireTree, type_result_list)
+        type_result_str, result.score = result_index_to_str(EntireTree, type_result_list)
         result.type = type_result_str
 
     # 2. 3. 잎, 열매, 꽃, 가지
@@ -73,7 +73,7 @@ def call_tree_model(userid):
             leap_result_list.append(0)
         if STR_TREE_LEAF_FLOWER in label_return:
             leap_result_list.append(2)
-        leap_result_str = result_match(TreeLeap, leap_result_list)
+        leap_result_str = result_index_to_str(TreeLeap, leap_result_list)
         result.leap = leap_result_str
     
         branch_result_list=[]
@@ -81,7 +81,7 @@ def call_tree_model(userid):
             branch_result_list.append(1)
         if STR_TREE_BRANCH_NET in label_return:
             branch_result_list.append(0)
-        branch_result_str = result_match(TreeBranch, branch_result_list)
+        branch_result_str = result_index_to_str(TreeBranch, branch_result_list)
         result.branch = branch_result_str
 
     # 4. stem 줄기 => [0, 0, 0]
@@ -95,14 +95,14 @@ def call_tree_model(userid):
         if STR_TREE_STEM_ANIMAL in label_return:
             stem_result_list.append(1)
         
-        stem_result_str = result_match(TreeStem, stem_result_list)
+        stem_result_str = result_index_to_str(TreeStem, stem_result_list)
         result.stem = stem_result_str
 
     # 5. root 뿌리 => 1 2 3 4 5 중에 하나
     if user.tree1003 is not None:
         root_result_list = []
         root_result_list.append(classification('root', user.tree1003, 150))
-        root_result_str = result_match(TreeRoot, root_result_list)
+        root_result_str = result_index_to_str(TreeRoot, root_result_list)
         result.root = root_result_str
 
     save_user_tree(userid=userid, result=result)

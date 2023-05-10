@@ -9,19 +9,18 @@ import numpy as np
 from main.config.init_model import model_dict
 from main.model.repository.result.result_repository import *
 
-def result_match(table, result_list): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
+def result_index_to_str(result_list, find_list, score): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
     result_json = {}
 
-    for index in result_list:
-        row = find_result(table, index)
-        if len(row.result) != 0:
-            tmpsplit = row.result.split(":")
-            subtitle = tmpsplit[0]
-            result = tmpsplit[1]
-            result_json[subtitle]=result
+    for index in find_list:
+        row = result_list[index]
+        title = row.title
+        result = row.result
+        result_json[title]=result
+        score = [x+y for x,y in zip(score, row.score)]
 
     result_str = json.dumps(result_json)
-    return result_str
+    return result_str, score    
 
 def get_classfication_model(model_file_name):
     if model_dict[model_file_name] is None:

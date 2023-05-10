@@ -33,15 +33,15 @@ def house_process(userid):
     result = UserHouseResult()
 
     total_result_dict = detection_house(img_binary)
-    result.roof = result_match(HouseRoof, total_result_dict["roofresult"])
-    result.door = result_match(HouseDoor, total_result_dict["doorresult"])
-    result.window = result_match(HouseWindow, total_result_dict["windowresult"])
+    result.roof = result_index_to_str(HouseRoof, total_result_dict["roofresult"])
+    result.door = result_index_to_str(HouseDoor, total_result_dict["doorresult"])
+    result.window = result_index_to_str(HouseWindow, total_result_dict["windowresult"])
     print("##########")
     print(total_result_dict)
 
     type_result_list = []
     type_result_list.append(classification('house', img_binary, 150))
-    type_result_str = result_match(HouseType, type_result_list)
+    type_result_str = result_index_to_str(HouseType, type_result_list)
     print(type_result_str)
     print("##########")
 
