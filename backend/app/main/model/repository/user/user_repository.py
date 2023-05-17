@@ -16,6 +16,7 @@ def save_user_tree_result(id, result_cls):
     result_db.stem = result_cls.stem
     result_db.size = result_cls.size
     result_db.characters = result_cls.character
+    result_db.figures = ''.join(str(element) for element in result_cls.figures)
     db.session.add(result_db)
     db.session.commit()
 

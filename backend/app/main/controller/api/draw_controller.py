@@ -58,9 +58,8 @@ def house_controller():
                 '집 문': string_to_json(user_house_result.door),
                 '집 창문': string_to_json(user_house_result.windows)
             },
-            'character': user_tree_result.characters
-        }), 200
-
+            'character': user_tree_result.characters,
+            'graph': [int(char) for char in user_tree_result.figures]        }), 200
 
 def set_up(id, img_str, step):
     save_session(id, step)

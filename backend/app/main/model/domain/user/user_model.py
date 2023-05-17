@@ -1,4 +1,5 @@
 from main.config.db_connect import db
+from sqlalchemy.dialects.postgresql import ARRAY
 
 class UserImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +19,8 @@ class UserTreeResult(db.Model):
     leap = db.Column(db.TEXT)
     stem = db.Column(db.TEXT)
     size = db.Column(db.TEXT)
-    characters = db.Column(db.Integer)   
+    characters = db.Column(db.Integer)
+    figures = db.Column(db.TEXT)
 
 class UserHouseResult(db.Model):
     id = db.Column(db.Integer, primary_key=True)

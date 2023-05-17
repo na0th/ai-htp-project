@@ -20,7 +20,7 @@ def result_index_to_str(matched_list, matching_list): # db테이블과 찾고자
     result_str = json.dumps(result_json)
     return result_str    
 
-def calculate_score(matched_list, matching_list, score):
+def calculate_figures(matched_list, matching_list, score):
     for index in matching_list:
         row = matched_list[index]
         score = [x+y for x,y in zip(score, row.score)]

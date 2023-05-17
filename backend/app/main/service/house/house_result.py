@@ -16,7 +16,7 @@ HOUSE_DOOR_SHORT = BaseResult(3, "낮은 문을 그린 경우", "낮은 문을 �
 HOUSE_DOOR_SMALL = BaseResult(4, "매우 작은 문을 그린 경우", "들어갈 수 없을 정도로 작은 문을 그린 경우, 타인이 피검자의 내면에 들어오길 원치 않는 상태로 해석됩니다. 당신은 타인과 소통하고자 하는 강한 바람이 없는 것으로 보이며, 수줍음이 많은 성향으로 보입니다. 따라서 사교적이지 않거나 사교를 회피하는 상태일 수 있으며, 무기력한 상태에 빠져있을 가능성이 높습니다.")
 HOUSE_DOOR_EDGE = BaseResult(5, "가장자리에 위치한 문", "문을 상대적으로 가장자리에 위치하게 그린 경우, 도피성을 띠며 경계적인 성향을 나타내는 것으로 해석됩니다.")
 
-HOUSE_DOOR_RESULT = [HOUSE_DOOR_X, HOUSE_DOOR_BIG ]
+HOUSE_DOOR_RESULT = [HOUSE_DOOR_X, HOUSE_DOOR_BIG, HOUSE_DOOR_VERY_BIG, HOUSE_DOOR_SHORT, HOUSE_DOOR_SMALL, HOUSE_DOOR_EDGE]
 
 HOUSE_WINDOW_X = BaseResult(0, "창을 그리지 않은 경우", "창이 없는 그림을 그린 사람은 편집 성향을 보이는 것으로 해석됩니다. 또한, 환경에 대한 관심이 결여되어 있고, 적의가 있거나 폐쇄적인 상태일 수 있습니다. 혹은 피해망상증이 있기도 합니다. 당신은 뒤로 물러서는 경우가 많고, 위축된 일이 많아 보입니다. 만약, 창문도 없고 문도 없다면 조현병의 증후일 수 있습니다.")
 HOUSE_WINDOW_MANY = BaseResult(1, "창을 여러 개 그린 경우 (2개 이상)", "창의 개수는 외부 세계에 대한 호기심과 욕구를 나타냅니다. 많은 창을 그린 사람은 개방적이고 사교적입니다. 또한, 타인의 교류를 간절히 원하며 외부환경과의 접촉을 많이 하고 싶은 사람일 가능성이 높습니다. ")

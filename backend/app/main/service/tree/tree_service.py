@@ -21,7 +21,7 @@ class Result:
     branch = ''
     stem = ''
     root = ''
-    score = [0, 0, 0, 0, 0]
+    figures = [0, 0, 0, 0, 0]
     character = -1
 
     def __init__(self):
@@ -77,22 +77,22 @@ def call_tree_model(id):
         root_result_list.append(classification('root', user.tree_crop_root, 150))
 
     # result save
-    result.size, result.score = result_str_score(TREE_SIZE_RESULT, size_result_list, result.score)
-    result.type, result.score = result_str_score(TREE_TYPE_RESULT, type_result_list, result.score)
-    result.leap, result.score = result_str_score(TREE_LEAF_RESULT, leap_result_list, result.score)
-    result.branch, result.score = result_str_score(TREE_BRANCH_RESULT, branch_result_list, result.score)
-    result.stem, result.score = result_str_score(TREE_STEM_RESULT, stem_result_list, result.score)
-    result.root, result.score = result_str_score(TREE_ROOT_RESULT, root_result_list, result.score)
+    result.size, result.figures = result_str_figures(TREE_SIZE_RESULT, size_result_list, result.figures)
+    result.type, result.figures = result_str_figures(TREE_TYPE_RESULT, type_result_list, result.figures)
+    result.leap, result.figures = result_str_figures(TREE_LEAF_RESULT, leap_result_list, result.figures)
+    result.branch, result.figures = result_str_figures(TREE_BRANCH_RESULT, branch_result_list, result.figures)
+    result.stem, result.figures = result_str_figures(TREE_STEM_RESULT, stem_result_list, result.figures)
+    result.root, result.figures = result_str_figures(TREE_ROOT_RESULT, root_result_list, result.figures)
     
     # match score
-    result.character = match_character(result.score)
+    result.character = match_character(result.figures)
 
     save_user_tree_result(id=id, result_cls=result)
 
-def result_str_score(matching_list, matched_list, score):
+def result_str_figures(matching_list, matched_list, figures):
     result_str = result_index_to_str(matching_list, matched_list)
-    result_score = calculate_score(matching_list, matched_list, score)
-    return result_str, result_score
+    result_figures = calculate_figures(matching_list, matched_list, figures)
+    return result_str, result_figures
 
 def check_model_execution_conditions(img):
     if img is not None:
