@@ -45,9 +45,9 @@ export default {
             this.player.play();
             console.log(name);
 
-            var file = JSON.stringify({ username: name });
+            var file = JSON.stringify({ name: name });
 
-            fetch("http://localhost:3000/main/", {
+            fetch("http://localhost:5000/main/", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

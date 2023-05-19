@@ -167,9 +167,9 @@ export default {
       var cookie_userid = this.$cookies.get("userid");
       var file = JSON.stringify({
         image: canvasContents,
-        userid: cookie_userid,
+        id: cookie_userid,
       });
-      fetch("http://localhost:3000/home/", {
+      fetch("http://localhost:5000/house/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
