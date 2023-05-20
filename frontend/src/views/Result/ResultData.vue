@@ -1,7 +1,18 @@
 <template>
   <div class="results-data">
-    <img class="paint-spring" src="../../assets/images/paintSpring.png" />
     <h1 class="userName">{{ username }}님의 결과입니다.</h1>
+    <div>
+      <img
+        class="characterImage"
+        :src="getImageUrl(character_id)"
+        alt="Character Image"
+      />
+    </div>
+    <div>
+      <canvas id="myChart" width="50" height="50"></canvas>
+    </div>
+
+    <img class="paint-spring" src="../../assets/images/paintSpring.png" />
 
     <div class="first-result">
       <h1 class="first-result-title">{{ username }}님의 나무 그림</h1>
@@ -72,6 +83,7 @@
 </template>
 
 <script>
+import Chart from "chart.js/auto";
 export default {
   name: "ResultData",
   props: ["newData"],
@@ -81,9 +93,14 @@ export default {
       username: null,
       tree: null,
       home: null,
+      graph: [],
+      character_id: null,
     };
   },
   methods: {
+    getImageUrl(value) {
+      return require(`../../assets/images/${value}.png`);
+    },
     kakaoLink() {
       window.Kakao.Share.createDefaultButton({
         container: "#kakaotalk-sharing-btn",
@@ -122,11 +139,72 @@ export default {
     },
   },
   created() {
-    this.username = this.newData.username;
-    this.tree = this.newData.tree;
-    this.home = this.newData.home;
+    this.username = this.newData.name;
+    this.tree = this.newData.tree_result;
+    this.home = this.newData.house_result;
+    this.graph = this.newData.graph;
+    this.character_id = this.newData.character;
   },
-  mounted() {},
+  mounted() {
+    console.log("Component mounted.");
+    const ctx = document.getElementById("myChart");
+    const myChart = new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: ["공격성", "사회불안", "우울", "대인회피", "낮은 자존감"],
+        datasets: [
+          {
+            label: "수치",
+            data: this.graph,
+            backgroundColor: [
+              // "rgba(255, 99, 132, 0.2)",
+              // "rgba(54, 162, 235, 0.2)",
+              // "rgba(255, 206, 86, 0.2)",
+              // "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              // "rgba(54, 162, 235, 1)",
+              // "rgba(255, 206, 86, 1)",
+              // "rgba(75, 192, 192, 1)",
+              // "rgba(153, 102, 255, 1)",
+            ],
+            borderWidth: 2,
+          },
+        ],
+      },
+      options: {
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 10,
+            bottom: 10,
+            left: 10,
+            right: 10,
+          },
+        },
+        plugins: {
+          legend: {
+            display: false, // Hide the legend
+          },
+        },
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 1,
+            angleLines: {
+              display: false,
+            },
+            ticks: {
+              display: false,
+            },
+          },
+        },
+      },
+    });
+    myChart;
+  },
 };
 </script>
 
@@ -210,5 +288,15 @@ export default {
 }
 .clipboard-copy {
   display: inline-block;
+}
+.characterImage {
+  width: 160px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+}
+#myChart {
+  width: 250px;
 }
 </style>

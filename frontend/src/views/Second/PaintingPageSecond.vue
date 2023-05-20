@@ -151,7 +151,27 @@ export default {
       showPaint: true,
       showLoading: false,
       mode: null,
-      newData: "",
+      newData: {
+        name: "geon",
+        tree_image: "1",
+        house_image: "2",
+        tree_result: {
+          "나무 유형": { value: "aaa" },
+          "나무 뿌리": { value: "bbb" },
+          "나무 가지": { value: "ccc" },
+          나뭇잎: { value: "ddd" },
+          "나무 줄기": { value: "eee" },
+          "나무 크기": { value: "fff" },
+        },
+        house_result: {
+          "집 유형": { "home이 많음": "1111", "home이 적음": null },
+          "집 지붕": { "문이 많음": null, "문이 적음": "ccc" },
+          "집 문": { "문이 많음": null, "문이 적음": "ccc" },
+          "집 창문": { "문이 많음": null, "문이 적음": "ccc" },
+        },
+        character: 3,
+        graph: [0.9, 0.9, 0.9, 0.9, 0.9],
+      },
     };
   },
   methods: {
@@ -186,17 +206,17 @@ export default {
       //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
     },
     removeNull() {
-      for (let Attr in this.data.tree) {
+      for (let Attr in this.data.tree_result) {
         let attrCount = 0;
         let nullCount = 0;
-        for (let Val in this.data.tree[Attr]) {
-          if (this.data.tree[Attr][Val] === null) {
+        for (let Val in this.data.tree_result[Attr]) {
+          if (this.data.tree_result[Attr][Val] === null) {
             nullCount++; //null이 나오는 key 수 카운트
           }
           attrCount++; //속성 수 카운트
         }
         if (nullCount === attrCount) {
-          delete this.data.tree[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
+          delete this.data.tree_result[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
         }
       }
       for (let Attr in this.data.home) {
