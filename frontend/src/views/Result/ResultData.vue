@@ -1,8 +1,13 @@
 <template>
   <div class="results-data">
+    <div>
+    <img :src="getImageUrl(character_id)" alt="Character Image">
+    </div>
+    <div>
+      <canvas id="myChart" width="100" height="100"></canvas>
+    </div>
     <img class="paint-spring" src="../../assets/images/paintSpring.png" />
     <h1 class="userName">{{ username }}님의 결과입니다.</h1>
-
     <div class="first-result">
       <h1 class="first-result-title">{{ username }}님의 나무 그림</h1>
       <img width="200" height="300" :src="newData.image1" alt="image" />
@@ -72,7 +77,9 @@
 </template>
 
 <script>
+import Chart from 'chart.js/auto';
 export default {
+
   name: "ResultData",
   props: ["newData"],
   components: {},
@@ -81,9 +88,14 @@ export default {
       username: null,
       tree: null,
       home: null,
+      graph: [],
+      character_id: null,
     };
   },
   methods: {
+    getImageUrl(value) {
+      return require(`../../assets/images/${value}.png`);
+    },
     kakaoLink() {
       window.Kakao.Share.createDefaultButton({
         container: "#kakaotalk-sharing-btn",
@@ -122,11 +134,62 @@ export default {
     },
   },
   created() {
-    this.username = this.newData.username;
-    this.tree = this.newData.tree;
-    this.home = this.newData.home;
+    this.username = this.newData.name;
+    this.tree = this.newData.tree_result;
+    this.home = this.newData.house_result;
+    this.graph = this.newData.graph;
+    this.character_id = this.newData.character;
   },
-  mounted() {},
+  mounted() {
+    console.log('Component mounted.');
+    const ctx = document.getElementById('myChart');
+    const myChart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+          labels: ['공격성', '사회불안', '우울', '대인회피', '낮은 자존감'],
+          datasets: [{
+              label: '수치',
+              data: this.graph,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+            r: {
+            beginAtZero: true,
+            max: 1,
+            angleLines: {
+            display: false
+            },
+            ticks: {
+            display: false
+            }
+           }
+          },
+
+
+      }
+  });
+  myChart;
+
+  },
+
 };
 </script>
 

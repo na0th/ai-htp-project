@@ -1,135 +1,138 @@
 <template>
-  <div v-if="showPaint" class="painting-page">
-    <p class="sub-text-paint">※ 집을 그려주세요!</p>
-    <div class="painting-content">
-      <div id="canvas_Wrapper">
-        <canvas ref="jsCanvas" id="jsCanvas" class="canvas"></canvas>
-      </div>
-      <div class="controls">
-        <div class="controls-container">
-          <div class="controls__range">
-            <input
-              class="range-btn"
-              type="range"
-              id="jsRange"
-              min="0.1"
-              max="5"
-              step="0.1"
-              v-model="size"
-            />
-          </div>
-          <div class="controls__btns">
-            <img
-              class="eraser"
-              id="eraser"
-              @click="handleEraserClick"
-              src="../../assets/images/paintEraser.png"
-              style="color: #fff"
-            />
-            <button
-              type="button"
-              class="reset-btn"
-              id="jsReset"
-              @click="resetCanvas"
-            >
-              <img class="reset-icon" src="../../assets/images/reset.png" />
-            </button>
-            <button
-              v-if="isPlaying"
-              @click="$emit('toggleSound1')"
-              class="sound-btn1"
-            >
-              <img class="icon-sound1" src="../../assets/images/volumeon.png" />
-            </button>
-            <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
-              <img
-                class="icon-sound2"
-                src="../../assets/images/volumeoff.png"
+  <div>
+    <div v-if="showPaint" class="painting-page">
+      <p class="sub-text-paint">※ 집을 그려주세요!</p>
+      <div class="painting-content">
+        <div id="canvas_Wrapper">
+          <canvas ref="jsCanvas" id="jsCanvas" class="canvas"></canvas>
+        </div>
+        <div class="controls">
+          <div class="controls-container">
+            <div class="controls__range">
+              <input
+                class="range-btn"
+                type="range"
+                id="jsRange"
+                min="0.1"
+                max="5"
+                step="0.1"
+                v-model="size"
               />
-            </button>
+            </div>
+            <div class="controls__btns">
+              <img
+                class="eraser"
+                id="eraser"
+                @click="handleEraserClick"
+                src="../../assets/images/paintEraser.png"
+                style="color: #fff"
+              />
+              <button
+                type="button"
+                class="reset-btn"
+                id="jsReset"
+                @click="resetCanvas"
+              >
+                <img class="reset-icon" src="../../assets/images/reset.png" />
+              </button>
+              <button
+                v-if="isPlaying"
+                @click="$emit('toggleSound1')"
+                class="sound-btn1"
+              >
+                <img class="icon-sound1" src="../../assets/images/volumeon.png" />
+              </button>
+              <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
+                <img
+                  class="icon-sound2"
+                  src="../../assets/images/volumeoff.png"
+                />
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="colors-container">
-          <div class="controls__colors" id="jsColors" ref="jsColors">
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintBlack.png"
-              style="color: #3c3c3c"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintRed.png"
-              style="color: #ff3b30"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintOrange.png"
-              style="color: #ff9500"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintYellow.png"
-              style="color: #ffcc00"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintGreen.png"
-              style="color: #4cd963"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintBlue2.png"
-              style="color: #5ac8fa"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintBlue.png"
-              style="color: #0579ff"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintPurple.png"
-              style="color: #5856d6"
-            />
-            <img
-              class="controls__color jsColor"
-              @click="handleColorClick"
-              src="../../assets/images/paintBrown.png"
-              style="color: #884d1d"
-            />
+          <div class="colors-container">
+            <div class="controls__colors" id="jsColors" ref="jsColors">
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintBlack.png"
+                style="color: #3c3c3c"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintRed.png"
+                style="color: #ff3b30"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintOrange.png"
+                style="color: #ff9500"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintYellow.png"
+                style="color: #ffcc00"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintGreen.png"
+                style="color: #4cd963"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintBlue2.png"
+                style="color: #5ac8fa"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintBlue.png"
+                style="color: #0579ff"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintPurple.png"
+                style="color: #5856d6"
+              />
+              <img
+                class="controls__color jsColor"
+                @click="handleColorClick"
+                src="../../assets/images/paintBrown.png"
+                style="color: #884d1d"
+              />
+            </div>
           </div>
         </div>
       </div>
+      <img
+        src="../../assets/images/next.png"
+        class="painting-next"
+        @click="toggleModal"
+      />
     </div>
-    <img
-      src="../../assets/images/next.png"
-      class="painting-next"
-      @click="toggleModal"
-    />
+
+    <transition name="zoom">
+      <div v-show="showModal" class="overlay">
+        <div v-show="showModal" class="modal-container">
+          <div class="modal-content">
+            <p>그림을 이대로 <br />제출하시겠습니까?</p>
+          </div>
+          <div class="modal-btn-grid">
+            <button @click="toggleModal" class="modal-btn left">취소</button>
+            <button @click="onClickSecond" class="modal-btn">확인</button>
+          </div>
+        </div>
+      </div>
+    </transition>
+    <loading-page v-if="showLoading" v-bind:newData="newData"></loading-page>
   </div>
 
-  <transition name="zoom">
-    <div v-show="showModal" class="overlay">
-      <div v-show="showModal" class="modal-container">
-        <div class="modal-content">
-          <p>그림을 이대로 <br />제출하시겠습니까?</p>
-        </div>
-        <div class="modal-btn-grid">
-          <button @click="toggleModal" class="modal-btn left">취소</button>
-          <button @click="onClickSecond" class="modal-btn">확인</button>
-        </div>
-      </div>
-    </div>
-  </transition>
-  <loading-page v-if="showLoading" v-bind:newData="newData"></loading-page>
 </template>
 
 <script>
@@ -167,9 +170,9 @@ export default {
       var cookie_userid = this.$cookies.get("userid");
       var file = JSON.stringify({
         image: canvasContents,
-        userid: cookie_userid,
+        id: cookie_userid,
       });
-      fetch("http://localhost:3000/home/", {
+      fetch("http://localhost:5000/house/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -186,30 +189,30 @@ export default {
       //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
     },
     removeNull() {
-      for (let Attr in this.data.tree) {
+      for (let Attr in this.data.tree_result) {
         let attrCount = 0;
         let nullCount = 0;
-        for (let Val in this.data.tree[Attr]) {
-          if (this.data.tree[Attr][Val] === null) {
+        for (let Val in this.data.tree_result[Attr]) {
+          if (this.data.tree_result[Attr][Val] === null) {
             nullCount++; //null이 나오는 key 수 카운트
           }
           attrCount++; //속성 수 카운트
         }
         if (nullCount === attrCount) {
-          delete this.data.tree[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
+          delete this.data.tree_result[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
         }
       }
-      for (let Attr in this.data.home) {
+      for (let Attr in this.data.house_result) {
         let attrCount = 0;
         let nullCount = 0;
-        for (let Val in this.data.home[Attr]) {
-          if (this.data.home[Attr][Val] === null) {
+        for (let Val in this.data.house_result[Attr]) {
+          if (this.data.house_result[Attr][Val] === null) {
             nullCount++; //null이 나오는 key 수 카운트
           }
           attrCount++; //속성 수 카운트
         }
         if (nullCount === attrCount) {
-          delete this.data.home[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
+          delete this.data.house_result[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
         }
       }
     }, //클릭시 다음 페이지로 넘어가는 버튼

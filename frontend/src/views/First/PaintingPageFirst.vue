@@ -44,99 +44,99 @@
                   class="icon-sound1"
                   src="../../assets/images/volumeon.png"
                 />
-              </button>
-              <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
+                </button>
+                <button v-else @click="$emit('toggleSound1')" class="sound-btn1">
+                  <img
+                    class="icon-sound2"
+                    src="../../assets/images/volumeoff.png"
+                  />
+                </button>
+              </div>
+            </div>
+            <div class="colors-container">
+              <div class="controls__colors" id="jsColors" ref="jsColors">
                 <img
-                  class="icon-sound2"
-                  src="../../assets/images/volumeoff.png"
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintBlack.png"
+                  style="color: #3c3c3c"
                 />
-              </button>
-            </div>
-          </div>
-          <div class="colors-container">
-            <div class="controls__colors" id="jsColors" ref="jsColors">
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintBlack.png"
-                style="color: #3c3c3c"
-              />
 
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintRed.png"
-                style="color: #ff3b30"
-              />
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintOrange.png"
-                style="color: #ff9500"
-              />
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintYellow.png"
-                style="color: #ffcc00"
-              />
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintGreen.png"
-                style="color: #4cd963"
-              />
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintBlue2.png"
-                style="color: #5ac8fa"
-              />
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintBlue.png"
-                style="color: #0579ff"
-              />
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintPurple.png"
-                style="color: #5856d6"
-              />
-              <img
-                class="controls__color jsColor"
-                @click="handleColorClick"
-                src="../../assets/images/paintBrown.png"
-                style="color: #884d1d"
-              />
+                <img
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintRed.png"
+                  style="color: #ff3b30"
+                />
+                <img
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintOrange.png"
+                  style="color: #ff9500"
+                />
+                <img
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintYellow.png"
+                  style="color: #ffcc00"
+                />
+                <img
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintGreen.png"
+                  style="color: #4cd963"
+                />
+                <img
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintBlue2.png"
+                  style="color: #5ac8fa"
+                />
+                <img
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintBlue.png"
+                  style="color: #0579ff"
+                />
+                <img
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintPurple.png"
+                  style="color: #5856d6"
+                />
+                <img
+                  class="controls__color jsColor"
+                  @click="handleColorClick"
+                  src="../../assets/images/paintBrown.png"
+                  style="color: #884d1d"
+                />
+              </div>
             </div>
           </div>
         </div>
+        <img
+          src="../../assets/images/next.png"
+          class="painting-next"
+          @click="toggleModal"
+        />
       </div>
-      <img
-        src="../../assets/images/next.png"
-        class="painting-next"
-        @click="toggleModal"
-      />
-    </div>
-  </transition>
-  <transition name="zoom">
-    <div v-show="showModal" class="overlay">
-      <div v-show="showModal" class="modal-container">
-        <div class="modal-content">
-          <p>
-            그림을 이대로 <br />
-            제출하시겠습니까?
-          </p>
-        </div>
-        <div class="modal-btn-grid">
-          <button @click="toggleModal" class="modal-btn left">취소</button>
-          <button @click="onClickSecond" class="modal-btn">확인</button>
+    </transition>
+    <transition name="zoom">
+      <div v-show="showModal" class="overlay">
+        <div v-show="showModal" class="modal-container">
+          <div class="modal-content">
+            <p>
+              그림을 이대로 <br />
+              제출하시겠습니까?
+            </p>
+          </div>
+          <div class="modal-btn-grid">
+            <button @click="toggleModal" class="modal-btn left">취소</button>
+            <button @click="onClickSecond" class="modal-btn">확인</button>
+          </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
 </template>
 
 <script>
@@ -166,9 +166,9 @@ export default {
       var cookie_userid = this.$cookies.get("userid");
       var file = JSON.stringify({
         image: canvasContents,
-        userid: cookie_userid,
+        id: cookie_userid,
       });
-      fetch("http://localhost:3000/tree/", {
+      fetch("http://localhost:5000/house/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
