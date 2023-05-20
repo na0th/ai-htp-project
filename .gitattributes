@@ -1,2 +1,0 @@
-*.h5 filter=lfs diff=lfs merge=lfs -text
-backend/app/ai_model/classification/tree_type.h5 filter=lfs diff=lfs merge=lfs -text

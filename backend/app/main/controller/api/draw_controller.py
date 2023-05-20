@@ -4,6 +4,7 @@ import json
 # Third party imports
 from flask import (Blueprint, jsonify, redirect, request, session, url_for)
 from flask_cors import CORS
+from flask_restx import Api, Resource, reqparse, Namespace
 # local application imports
 from main.config.db_connect import db
 from main.model.repository.user.user_repository import *
@@ -12,9 +13,11 @@ from main.service.house.house_service import *
 from main.service.character.character import *
 
 bp = Blueprint('draw', __name__, url_prefix='/')
+api = Namespace('draw_controller', description='draw_controller')
 CORS(bp, resources={r'*': {'origins': '*'}})
 
-@bp.route('/tree/', methods=['POST'])
+@api.route('/tree')
+@bp.route('/tree', methods=['POST'])
 def tree_controller():
     if request.method == 'POST':
         # request params
@@ -24,8 +27,9 @@ def tree_controller():
         call_tree_model(params['id'])
         # http response
         return jsonify({'message': 'The tree image is saved.', 'id': params['id'] }), 200
-    
-@bp.route('/house/', methods=['POST'])
+
+@api.route('/house')    
+@bp.route('/house', methods=['POST'])
 def house_controller():
     if request.method == 'POST':
         # request params

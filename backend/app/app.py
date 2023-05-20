@@ -2,6 +2,8 @@
 # Third party imports
 from flask import Flask
 from flask_cors import CORS
+from flask_restx import Api, Resource, reqparse
+from flask_swagger_ui import get_swaggerui_blueprint
 # local application imports
 from main.config.db_connect import db
 from main.controller.api.draw_controller import bp as drawbp
@@ -15,6 +17,8 @@ app.config['SQLARCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'ekdwls'
 
 db.init_app(app)
+
+api = Api(app, version='1.0', title='API 문서', description='Swagger 문서', doc="/api-docs")
 
 app.register_blueprint(mainbp)
 app.register_blueprint(drawbp)
