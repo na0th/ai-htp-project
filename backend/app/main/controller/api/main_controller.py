@@ -20,5 +20,4 @@ def show_main_page():
         
         session['id'] = save_user(params['name'])
 
-        return jsonify({'message': 'The name is saved.', 'id': session['id'] }), 200
-
+        return jsonify({'id': session['id']}), 200

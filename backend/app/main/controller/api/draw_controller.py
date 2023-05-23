@@ -26,7 +26,7 @@ def tree_controller():
         set_up(params['id'], params['image'][22:], 1)
         call_tree_model(params['id'])
         # http response
-        return jsonify({'message': 'The tree image is saved.', 'id': params['id'] }), 200
+        return jsonify({'id': params['id']}), 200
 
 @api.route('/house')    
 @bp.route('/house', methods=['POST'])
@@ -63,7 +63,10 @@ def house_controller():
                 '집 창문': string_to_json(user_house_result.windows)
             },
             'character': user_tree_result.characters,
-            'graph': [int(char) for char in user_tree_result.figures]        }), 200
+            'graph': [int(char) for char in user_tree_result.figures]
+            }), 200
+    else:
+        return 404
 
 def set_up(id, img_str, step):
     save_session(id, step)
