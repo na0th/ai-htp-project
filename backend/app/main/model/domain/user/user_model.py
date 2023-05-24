@@ -20,7 +20,11 @@ class UserTreeResult(db.Model):
     stem = db.Column(db.TEXT)
     size = db.Column(db.TEXT)
     characters = db.Column(db.Integer)
-    figures = db.Column(db.TEXT)
+    figures_gen = db.Column(db.FLOAT)
+    figures_con = db.Column(db.FLOAT)
+    figures_hap = db.Column(db.FLOAT)
+    figures_soc = db.Column(db.FLOAT)
+    figures_hig = db.Column(db.FLOAT)
 
 class UserHouseResult(db.Model):
     id = db.Column(db.Integer, primary_key=True)

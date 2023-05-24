@@ -49,21 +49,25 @@ def house_controller():
             'tree_image': 'data:image/png;base64,' + binary_to_string(user.tree_image),
             'house_image': 'data:image/png;base64,' + binary_to_string(user.house_image),
             'tree_result': {
-                '나무 유형': string_to_json(user_tree_result.type),
-                '나무 뿌리': string_to_json(user_tree_result.root),
-                '나무 가지': string_to_json(user_tree_result.branch),
-                '나뭇잎': string_to_json(user_tree_result.leap),
-                '나무 줄기': string_to_json(user_tree_result.stem),
-                '나무 크기': string_to_json(user_tree_result.size)
+                '나무 유형': result_index_to_json(TREE_TYPE_RESULT, user_tree_result.type),
+                '나무 뿌리': result_index_to_json(TREE_ROOT_RESULT, user_tree_result.root),
+                '나무 가지': result_index_to_json(TREE_BRANCH_RESULT, user_tree_result.branch),
+                '나뭇잎': result_index_to_json(TREE_LEAF_RESULT, user_tree_result.leap),
+                '나무 줄기': result_index_to_json(TREE_STEM_RESULT, user_tree_result.stem),
+                '나무 크기': result_index_to_json(TREE_SIZE_RESULT, user_tree_result.size)
             },
             'house_result': {
-                '집 유형': string_to_json(user_house_result.type),
-                '집 지붕': string_to_json(user_house_result.roof),
-                '집 문': string_to_json(user_house_result.door),
-                '집 창문': string_to_json(user_house_result.windows)
+                '집 유형': result_index_to_json(HOUSE_TYPE_RESULT, user_house_result.type),
+                '집 지붕': result_index_to_json(HOUSE_ROOF_RESULT, user_house_result.roof),
+                '집 문': result_index_to_json(HOUSE_DOOR_RESULT, user_house_result.door),
+                '집 창문': result_index_to_json(HOUSE_WINDOW_RESULT, user_house_result.windows)
             },
             'character': user_tree_result.characters,
-            'graph': [int(char) for char in user_tree_result.figures]
+            'graph': [ user_tree_result.figures_gen, 
+                      user_tree_result.figures_con, 
+                      user_tree_result.figures_hap, 
+                      user_tree_result.figures_soc, 
+                      user_tree_result.figures_hig ]
             }), 200
     else:
         return 404

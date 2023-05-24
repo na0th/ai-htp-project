@@ -8,17 +8,18 @@ import numpy as np
 # local application imports
 from main.config.init_model import model_dict
 
-def result_index_to_str(matched_list, matching_list): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
+def result_index_to_json(matched_list, matching_list): # db테이블과 찾고자하는 id 값 받고 resultStr에 저장
     result_json = {}
 
-    for index in matching_list:
+    for char in matching_list:
+        index = int(char)
         row = matched_list[index]
         title = row.title
         result = row.result
         result_json[title]=result
-        
-    result_str = json.dumps(result_json)
-    return result_str    
+    
+    print(json)    
+    return result_json    
 
 def calculate_figures(matched_list, matching_list, score):
     for index in matching_list:
@@ -53,7 +54,7 @@ def classification(model_file_name, binary_img, SIZE):###########수정 내용. 
     image = np.array(image) #np array type으로 변경
     image = image/255.
     image = np.expand_dims(image, axis=0) #차원 추가
-   
+    
     prediction = model.predict(image) #추론
     result = np.argmax(prediction) #결과 확인.
     return result
@@ -79,8 +80,8 @@ def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
     result_list=[]
 
     for i in range(COUNT):
-     if proba[0][sorted_categories[i]] > SCORE_THRESHOLD:
-        result_list.append(class_li[sorted_categories[i]])
-        print(class_li[sorted_categories[i]])
-        print('score:', proba[0][sorted_categories[i]])
+        if proba[0][sorted_categories[i]] > SCORE_THRESHOLD:
+            result_list.append(class_li[sorted_categories[i]])
+            print(class_li[sorted_categories[i]])
+            print('score:', proba[0][sorted_categories[i]])
     return result_list

@@ -39,10 +39,17 @@ CHARACTER_LIST.append(Character(17, (LOW_ESTEEM, CONFIDENCE), "초코쉐이크�
 CHARACTER_LIST.append(Character(18, (LOW_ESTEEM, HAPPINESS), "따뜻한 숏라떼", "자존감이 낮고 행복한 당신"))
 CHARACTER_LIST.append(Character(19, (LOW_ESTEEM, SOCIAL_COMPETENCE), "수줍은 복숭아 아이스티", "자존감이 낮고 활발한 당신"))
 
+import random
+
 def match_character(score):
     bad_index = score.index(max(score))
     good_index = score.index(min(score))
     
+    if bad_index == good_index:
+        numbers = list(range(5))
+        random.shuffle(numbers)
+        bad_index, good_index = numbers[:2]
+        
     combination = (bad_index, good_index)
     
     for character in CHARACTER_LIST:

@@ -14,6 +14,12 @@ from main.service.tree.tree_result import *
 from main.service.tree.tree_service import *
 from main.service.character.character import *
 
+TOTAL_GENTLE = 9
+TOTAL_CONFIDENCE = 12
+TOTAL_HAPPINESS = 9
+TOTAL_SOCIAL_CONFIENDCE = 9
+TOTAL_HIGH_ESTEEM = 7
+
 class Result:
     size = ''
     type = ''
@@ -22,6 +28,11 @@ class Result:
     stem = ''
     root = ''
     figures = [0, 0, 0, 0, 0]
+    figures_gen = 0.0
+    figures_con = 0.0
+    figures_hap = 0.0
+    figures_soc = 0.0
+    figures_hig = 0.0
     character = -1
 
     def __init__(self):
@@ -74,25 +85,35 @@ def call_tree_model(id):
         
     # 5. root 뿌리 => 1 2 3 4 5 중에 하나
     if check_model_execution_conditions(user.tree_crop_root):
-        root_result_list.append(classification('root', user.tree_crop_root, 150))
+        root_result_list.append(classification('root', user.tree_crop_root, 300))
 
     # result save
-    result.size, result.figures = result_str_figures(TREE_SIZE_RESULT, size_result_list, result.figures)
-    result.type, result.figures = result_str_figures(TREE_TYPE_RESULT, type_result_list, result.figures)
-    result.leap, result.figures = result_str_figures(TREE_LEAF_RESULT, leap_result_list, result.figures)
-    result.branch, result.figures = result_str_figures(TREE_BRANCH_RESULT, branch_result_list, result.figures)
-    result.stem, result.figures = result_str_figures(TREE_STEM_RESULT, stem_result_list, result.figures)
-    result.root, result.figures = result_str_figures(TREE_ROOT_RESULT, root_result_list, result.figures)
+    result.size = ''.join(map(str, size_result_list))
+    result.type = ''.join(map(str, type_result_list))
+    result.leap = ''.join(map(str, leap_result_list))
+    result.branch = ''.join(map(str, branch_result_list))
+    result.stem = ''.join(map(str, stem_result_list))
+    result.root = ''.join(map(str, root_result_list))
     
-    # match score
-    result.character = match_character(result.figures)
-
+    # caculate figures
+    result.figures = calculate_figures(TREE_SIZE_RESULT, size_result_list, result.figures)
+    result.figures = calculate_figures(TREE_TYPE_RESULT, type_result_list, result.figures)
+    result.figures = calculate_figures(TREE_LEAF_RESULT, leap_result_list, result.figures)
+    result.figures = calculate_figures(TREE_BRANCH_RESULT, branch_result_list, result.figures)
+    result.figures = calculate_figures(TREE_STEM_RESULT, stem_result_list, result.figures)
+    result.figures = calculate_figures(TREE_ROOT_RESULT, root_result_list, result.figures)
+    
+    # figures/total
+    result.figures_gen = round(1 - (result.figures[0] / TOTAL_GENTLE), 3)
+    result.figures_con = round(1 - (result.figures[1] / TOTAL_CONFIDENCE), 3)
+    result.figures_hap = round(1 - (result.figures[2] / TOTAL_HAPPINESS), 3)
+    result.figures_soc = round(1 - (result.figures[3] / TOTAL_SOCIAL_CONFIENDCE), 3)
+    result.figures_hig = round(1 - (result.figures[4] / TOTAL_HIGH_ESTEEM), 3)
+    
+    # match character
+    result.character = match_character([result.figures_gen, result.figures_con, result.figures_hap, result.figures_soc, result.figures_hig])
+    
     save_user_tree_result(id=id, result_cls=result)
-
-def result_str_figures(matching_list, matched_list, figures):
-    result_str = result_index_to_str(matching_list, matched_list)
-    result_figures = calculate_figures(matching_list, matched_list, figures)
-    return result_str, result_figures
 
 def check_model_execution_conditions(img):
     if img is not None:

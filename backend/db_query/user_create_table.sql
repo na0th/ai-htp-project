@@ -20,7 +20,12 @@ create table user_tree_result(
     leap TEXT,
     stem TEXT, 
     size TEXT,
-    characters integer
+    characters integer,
+    figures_gen float,
+    figures_con float,
+    figures_hap float,
+    figures_soc float,
+    figures_hig float
 );
 
 drop table if exists user_house_result;

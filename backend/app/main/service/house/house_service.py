@@ -32,10 +32,10 @@ def house_process(id):
     type_result_list.append(classification('house', img_binary, 150))
     
     # result
-    result.roof = result_index_to_str(HOUSE_ROOF_RESULT, total_result_dict["roof_result"])
-    result.door = result_index_to_str(HOUSE_DOOR_RESULT, total_result_dict["door_result"])
-    result.window = result_index_to_str(HOUSE_WINDOW_RESULT, total_result_dict["window_result"])
-    result.type = result_index_to_str(HOUSE_TYPE_RESULT, type_result_list)
+    result.roof = ''.join(map(str, total_result_dict["roof_result"]))
+    result.door = ''.join(map(str, total_result_dict["door_result"]))
+    result.window = ''.join(map(str, total_result_dict["window_result"]))
+    result.type = ''.join(map(str, type_result_list))
 
     print(result.type)
     print("##########")
