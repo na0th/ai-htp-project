@@ -8,6 +8,9 @@
         alt="Character Image"
       />
     </div>
+    <div class="characterName" >
+      {{ character_name[character_id-1] }}
+    </div>
     <div>
       <canvas id="myChart" width="25" height="25"></canvas>
     </div>
@@ -98,6 +101,12 @@ export default {
   components: {},
   data() {
     return {
+      character_name:['공격적인 돼지바 프라푸치노','노른자가 두 개 띄워진 쌍화탕','샷 6번 추가한 공격적인 아메리카노',
+      '자존감 높은 1리터 쌍화탕','샷 6번 추가한 따뜻한 라떼','혼자 있기 좋아하는 자몽 허니 블랙티','따뜻한 아이스 아메리카노',
+      '인정이 필요한 민트 초코 라떼','미지근한 카모마일티','자신감이 넘치는 유니콘 프라푸치노','얼음이 녹아버린 아샷추','톡 쏘는 블루레몬에이드',
+      '휘핑 가득 따뜻한 민트초코라떼','펄 추가 아이스아메리카노','행복한 민트초코프라푸치노','혼자가 된 제주 유기농 감귤 주스','거품 뺀 카푸치노','초코쉐이크가 되고싶은 밀크쉐이크',
+      '따뜻한 숏라떼','수줍은 복숭아 아이스티'
+      ],
       username: null,
       tree: null,
       home: null,
@@ -321,4 +330,16 @@ export default {
   margin-bottom: 25px;
   font-family: korFont2;
 }
+.characterName {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 10px;
+  border: 2px solid pink;
+  border-radius: 10px;
+  display: inline-block;
+  max-width: 320px;
+  word-wrap: break-word;
+}
+
 </style>
