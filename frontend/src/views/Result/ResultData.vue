@@ -9,7 +9,7 @@
       />
     </div>
     <div>
-      <canvas id="myChart" width="50" height="50"></canvas>
+      <canvas id="myChart" width="25" height="25"></canvas>
     </div>
 
     <img class="paint-spring" src="../../assets/images/paintSpring.png" />
