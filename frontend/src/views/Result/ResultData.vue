@@ -13,53 +13,61 @@
     </div>
 
     <img class="paint-spring" src="../../assets/images/paintSpring.png" />
+    <button class="showDetailBtn" @click="showDetail">상세보기</button>
+    <transition name="fade">
+      <div v-if="showResults" class="details" :class="{ open: showDetails }">
+        <div class="first-result">
+          <h1 class="first-result-title">{{ username }}님의 나무 그림</h1>
+          <img width="200" height="300" :src="newData.image1" alt="image" />
+          <div class="result-texts">
+            <div v-for="(treeAttributes, key1) in tree" :key="key1">
+              <br />
+              <p class="treeAttributes">{{ key1 }}</p>
+              <template v-for="(treeFeatures, key2) in treeAttributes">
+                <div
+                  v-if="treeFeatures !== null && treeFeatures !== undefined"
+                  :key="key2"
+                >
+                  <li class="treefeatures">
+                    {{ key2 }}
+                  </li>
+                  <p class="treevalues">
+                    {{ treeFeatures }}
+                  </p>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+        <div class="second-result">
+          <h1 class="first-result-title">{{ username }}님의 집 그림</h1>
+          <img width="200" height="300" :src="newData.image2" alt="image" />
+          <div class="result-texts">
+            <div v-for="(homeAttributes, key1) in home" :key="key1">
+              <br />
+              <p class="treeAttributes">{{ key1 }}</p>
+              <template
+                v-for="(homeFeatures, key2) in homeAttributes"
+                :key="key2"
+              >
+                <div
+                  v-if="homeFeatures !== null && homeFeatures !== undefined"
+                  :key="key2"
+                >
+                  <li class="treefeatures">
+                    {{ key2 }}
+                  </li>
+                  <p class="treevalues">
+                    {{ homeFeatures }}
+                  </p>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
 
-    <div class="first-result">
-      <h1 class="first-result-title">{{ username }}님의 나무 그림</h1>
-      <img width="200" height="300" :src="newData.image1" alt="image" />
-      <div class="result-texts">
-        <div v-for="(treeAttributes, key1) in tree" :key="key1">
-          <br />
-          <p class="treeAttributes">{{ key1 }}</p>
-          <template v-for="(treeFeatures, key2) in treeAttributes">
-            <div
-              v-if="treeFeatures !== null && treeFeatures !== undefined"
-              :key="key2"
-            >
-              <li class="treefeatures">
-                {{ key2 }}
-              </li>
-              <p class="treevalues">
-                {{ treeFeatures }}
-              </p>
-            </div>
-          </template>
-        </div>
-      </div>
-    </div>
-    <div class="second-result">
-      <h1 class="first-result-title">{{ username }}님의 집 그림</h1>
-      <img width="200" height="300" :src="newData.image2" alt="image" />
-      <div class="result-texts">
-        <div v-for="(homeAttributes, key1) in home" :key="key1">
-          <br />
-          <p class="treeAttributes">{{ key1 }}</p>
-          <template v-for="(homeFeatures, key2) in homeAttributes" :key="key2">
-            <div
-              v-if="homeFeatures !== null && homeFeatures !== undefined"
-              :key="key2"
-            >
-              <li class="treefeatures">
-                {{ key2 }}
-              </li>
-              <p class="treevalues">
-                {{ homeFeatures }}
-              </p>
-            </div>
-          </template>
-        </div>
-      </div>
-    </div>
     <br />
     <p class="share-btns-text">공유하기</p>
     <div class="share-btns">
@@ -95,9 +103,13 @@ export default {
       home: null,
       graph: [],
       character_id: null,
+      showResults: false,
     };
   },
   methods: {
+    showDetail() {
+      this.showResults = !this.showResults;
+    },
     getImageUrl(value) {
       return require(`../../assets/images/${value}.png`);
     },
@@ -268,7 +280,7 @@ export default {
   line-height: 1.2;
 }
 .share-btns-text {
-  font-family: korFont1;
+  font-family: korFont2;
   margin-bottom: 10px;
   font-size: 20px;
 }
@@ -298,5 +310,15 @@ export default {
 }
 #myChart {
   width: 250px;
+}
+.showDetailBtn {
+  background-color: #3498db; /* Set the button background color */
+  padding: 8px 16px; /* Add padding to the button */
+  color: #ffffff; /* Set the button text color */
+  border: none; /* Remove the button border */
+  cursor: pointer; /* Show pointer cursor on hover */
+  border-radius: 25px;
+  margin-bottom: 25px;
+  font-family: korFont2;
 }
 </style>
