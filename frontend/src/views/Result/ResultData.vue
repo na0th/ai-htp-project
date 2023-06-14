@@ -1,6 +1,9 @@
 <template>
   <div class="results-data">
-    <h1 class="userName">{{ username }}님의 결과입니다.</h1>
+    <h1 class="userName">{{ username }}님의 결과</h1>
+    <div class="characterName">
+      {{ character_name[character_id - 1] }}
+    </div>
     <div>
       <img
         class="characterImage"
@@ -8,14 +11,11 @@
         alt="Character Image"
       />
     </div>
-    <div class="characterName" >
-      {{ character_name[character_id-1] }}
-    </div>
     <div>
-      <canvas id="myChart" width="25" height="25"></canvas>
+      <canvas id="myChart" :width="15" :height="15"></canvas>
     </div>
 
-    <img class="paint-spring" src="../../assets/images/paintSpring.png" />
+    <!-- <img class="paint-spring" src="../../assets/images/paintSpring.png" /> -->
     <button class="showDetailBtn" @click="showDetail">상세보기</button>
     <transition name="fade">
       <div v-if="showResults" class="details" :class="{ open: showDetails }">
@@ -72,7 +72,6 @@
     </transition>
 
     <br />
-    <p class="share-btns-text">공유하기</p>
     <div class="share-btns">
       <a id="kakaotalk-sharing-btn" href="javascript:;">
         <img
@@ -83,10 +82,10 @@
         />
       </a>
       <div class="clipboard-copy">
-        <font-awesome-icon
-          class="copylink-btn"
+        <img
+          class="clipboard-img"
           @click="urlCopy"
-          icon="fa-solid fa-link"
+          src="../../assets/images/sharelink.png"
         />
       </div>
     </div>
@@ -101,11 +100,27 @@ export default {
   components: {},
   data() {
     return {
-      character_name:['공격적인 돼지바 프라푸치노','노른자가 두 개 띄워진 쌍화탕','샷 6번 추가한 공격적인 아메리카노',
-      '자존감 높은 1리터 쌍화탕','샷 6번 추가한 따뜻한 라떼','혼자 있기 좋아하는 자몽 허니 블랙티','따뜻한 아이스 아메리카노',
-      '인정이 필요한 민트 초코 라떼','미지근한 카모마일티','자신감이 넘치는 유니콘 프라푸치노','얼음이 녹아버린 아샷추','톡 쏘는 블루레몬에이드',
-      '휘핑 가득 따뜻한 민트초코라떼','펄 추가 아이스아메리카노','행복한 민트초코프라푸치노','혼자가 된 제주 유기농 감귤 주스','거품 뺀 카푸치노','초코쉐이크가 되고싶은 밀크쉐이크',
-      '따뜻한 숏라떼','수줍은 복숭아 아이스티'
+      character_name: [
+        "공격적인 돼지바 프라푸치노",
+        "노른자가 두 개 띄워진 쌍화탕",
+        "샷 6번 추가한 공격적인 아메리카노",
+        "자존감 높은 1리터 쌍화탕",
+        "샷 6번 추가한 따뜻한 라떼",
+        "혼자 있기 좋아하는 자몽 허니 블랙티",
+        "따뜻한 아이스 아메리카노",
+        "인정이 필요한 민트 초코 라떼",
+        "미지근한 카모마일티",
+        "자신감이 넘치는 유니콘 프라푸치노",
+        "얼음이 녹아버린 아샷추",
+        "톡 쏘는 블루레몬에이드",
+        "휘핑 가득 따뜻한 민트초코라떼",
+        "펄 추가 아이스아메리카노",
+        "행복한 민트초코프라푸치노",
+        "혼자가 된 제주 유기농 감귤 주스",
+        "거품 뺀 카푸치노",
+        "초코쉐이크가 되고싶은 밀크쉐이크",
+        "따뜻한 숏라떼",
+        "수줍은 복숭아 아이스티",
       ],
       username: null,
       tree: null,
@@ -244,9 +259,10 @@ export default {
   height: auto !important;
 }
 .userName {
-  font-size: 28px;
-  margin-top: 15%;
+  font-size: 20px;
+  margin-top: 10%;
   font-family: korFont3;
+  color: #0000008a;
 }
 .first-result {
   margin-top: 50px;
@@ -288,13 +304,23 @@ export default {
   margin-bottom: 15px;
   line-height: 1.2;
 }
-.share-btns-text {
+.share-btn {
   font-family: korFont2;
   margin-bottom: 10px;
   font-size: 20px;
+  background-color: #fdd5cc;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 15px;
 }
 .share-btns {
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -310,6 +336,9 @@ export default {
 .clipboard-copy {
   display: inline-block;
 }
+.clipboard-img {
+  width: 40px;
+}
 .characterImage {
   width: 160px;
   display: block;
@@ -321,25 +350,24 @@ export default {
   width: 250px;
 }
 .showDetailBtn {
-  background-color: #3498db; /* Set the button background color */
-  padding: 8px 16px; /* Add padding to the button */
-  color: #ffffff; /* Set the button text color */
-  border: none; /* Remove the button border */
-  cursor: pointer; /* Show pointer cursor on hover */
+  background-color: #424242;
+  padding: 10px 20px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
   border-radius: 25px;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
   font-family: korFont2;
+  font-size: 16px;
 }
 .characterName {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 10px;
-  padding: 10px;
-  border: 2px solid pink;
+  font-size: 19px;
+  font-family: korFont2;
+  font-weight: 1000;
+  margin-top: 50px;
   border-radius: 10px;
   display: inline-block;
-  max-width: 320px;
+  max-width: 340px;
   word-wrap: break-word;
 }
-
 </style>
