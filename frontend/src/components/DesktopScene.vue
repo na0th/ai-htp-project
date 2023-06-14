@@ -71,11 +71,11 @@ export default {
   gap: 10px;
 }
 .qrcode {
-  width: 100px;
+  width: 80px;
 }
 .qrcode-text {
   font-size: 13px;
   font-family: korFont2;
-  line-height: 1.2;
+  line-height: 1.5;
 }
 </style>
