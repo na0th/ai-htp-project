@@ -1,6 +1,6 @@
 <template>
   <div class="desktop-scene">
-    <img src="../assets/images/desktop4.png" class="background-img" />
+    <img src="../assets/images/desktopbg.png" class="background-img" />
     <div class="desktop-text">
       <p class="title-text"><span style="color: #eba090">마음</span>스케치</p>
       <img class="icon1" src="../assets/images/icon5.png" />
@@ -51,17 +51,16 @@ export default {
 }
 .title-text {
   font-family: korFont1;
-  font-size: 55px;
+  font-size: 40px;
 }
 .title-subtext {
   font-family: korFont3;
   font-size: 25px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 .icon1 {
-  margin-top: 30px;
-
-  width: 100px;
+  margin-top: 50px;
+  width: 60px;
 }
 .qrcode-div {
   display: flex;
