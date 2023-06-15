@@ -71,6 +71,7 @@ def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
     img_array = cv2.cvtColor(decoded_img, cv2.COLOR_BGR2RGB) #아까 잘라서 저장한 나무 전체 이미지 불러온다
     image = cv2.resize(img_array, dsize=(SIZE, SIZE)) #리사이징
     image = np.array(image) #np array type으로 변경
+    image = image/255.
     image = np.expand_dims(image, axis=0) #차원 추가
 
     proba = model.predict(image)

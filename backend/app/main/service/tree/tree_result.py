@@ -44,14 +44,14 @@ TREE_ROOT_XRAY = BaseResult(0,
                             "엑스레이 사진처럼 지면을 그리고 뿌리를 적나라하게 보이게 그리는 것",
                             "- 땅속에 묻혀서 보이지 않아야 할 뿌리가 엑스레이를 찍은 듯이 보인다면 심리적인 문제가 있을 가능성이 있을 수 있으며, 현실을 검증하는 능력에 문제가 있을 수 있습니다. 이상과 현실을 구분하지 못한 경우 이런 그림을 그리기도 합니다.",
                             [0, 1, 0, 0, 0])
-TREE_ROOT_ABOVE = BaseResult(1,
-                             "지면 위로 뿌리",
-                             "- 뿌리가 지면 위로 올라와 있는 그림은 유년 시절 겪었던 상처와 트라우마를 잊지 못하고 현재까지 영향을 받고 있는 것으로 해석할 수 있습니다. 미성숙하거나 불안정했던 과거에 대한 관심을 나타냅니다. 만일 스스로에 대한 확신을 갖지 못하면, 자신을 탐구하기 위해 과거에 머무를 확률이 높습니다.",
-                             [0, 1, 0, 0, 1])
-TREE_ROOT_HIGHLIGHT = BaseResult(2,
+TREE_ROOT_HIGHLIGHT = BaseResult(1,
                                  "뿌리 강조",
                                  "- 나무뿌리를 강조해서 그린 사람은 미성숙하고 과거에 집착하는 경향을 보입니다. 현실에 적응하지 못하고, 미디어, 게임 등 자기만의 세계에 빠져 있을 가능성이 있습니다. 또한, 가족 속에서 안정을 느끼기를 원합니다.",
                                  [1, 1, 0, 1, 0])
+TREE_ROOT_ABOVE = BaseResult(2,
+                             "지면 위로 뿌리",
+                             "- 뿌리가 지면 위로 올라와 있는 그림은 유년 시절 겪었던 상처와 트라우마를 잊지 못하고 현재까지 영향을 받고 있는 것으로 해석할 수 있습니다. 미성숙하거나 불안정했던 과거에 대한 관심을 나타냅니다. 만일 스스로에 대한 확신을 갖지 못하면, 자신을 탐구하기 위해 과거에 머무를 확률이 높습니다.",
+                             [0, 1, 0, 0, 1])
 
 TREE_ROOT_RESULT = [TREE_ROOT_XRAY, TREE_ROOT_ABOVE, TREE_ROOT_HIGHLIGHT]
 
@@ -69,8 +69,13 @@ TREE_BRANCH_UP = BaseResult(1,
                             (당신의 능력과 의견은 조직에 큰 도움이 될 수 있습니다. 당신의 감정과 주관은 소중합니다.  당신이 다른 사람까지 챙길 수 있다면, 최고의 결과물을 낼 수 있을 것입니다.)",
                             [1, 0, 0, 1, 0],
                             "윗쪽으로 뻗는")
+TREE_BRANCH_UNCLOSED = BaseResult(2,
+                            "끝이 닫히지 않은 가지",
+                            "- 블라블라",
+                            [0, 0, 0, 0, 0],
+                            "끝이 닫히지 않은 가지")
 
-TREE_BRANCH_RESULT = [TREE_BRANCH_NET, TREE_BRANCH_UP]
+TREE_BRANCH_RESULT = [TREE_BRANCH_NET, TREE_BRANCH_UP, TREE_BRANCH_UNCLOSED]
 
 # tree leaf, fruit
 TREE_LEAF_BIG = BaseResult(0,

@@ -63,7 +63,7 @@ def call_tree_model(id):
 
     # 2. 3. 잎, 열매, 꽃, 가지  
     if check_model_execution_conditions(user.tree_crop_leaf_branch):
-        label_names = [TREE_LEAF_FRUIT.summary, TREE_BRANCH_UP.summary, '잎이 안 큰', TREE_LEAF_LEAFY.summary, TREE_LEAF_FLOWER.summary, TREE_BRANCH_NET.summary, TREE_LEAF_BIG.summary]
+        label_names = [TREE_LEAF_FRUIT.summary, TREE_BRANCH_UP.summary, TREE_LEAF_LEAFY.summary, TREE_LEAF_FLOWER.summary, TREE_BRANCH_NET.summary, TREE_LEAF_BIG.summary, TREE_BRANCH_UNCLOSED.summary]
         label_return = classification_multi('leaf_branch', user.tree_crop_leaf_branch, label_names, 200, 7)
         
         for leaf in TREE_LEAF_RESULT:
