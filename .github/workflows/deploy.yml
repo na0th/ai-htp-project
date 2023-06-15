@@ -14,22 +14,22 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@main
 
-    # 프론트엔드
-    # 1. node.js 환경설정
-    - name: Set up Node.js
-      uses: actions/setup-node@main
-      with:
-        node-version: 14.x
+#     # 프론트엔드
+#     # 1. node.js 환경설정
+#     - name: Set up Node.js
+#       uses: actions/setup-node@main
+#       with:
+#         node-version: 14.x
 
-    # 2. 패키지 설치
-    - name: Install dependencies
-      run: npm install
+#     # 2. 패키지 설치
+#     - name: Install dependencies
+#       run: npm install
 
-    # 3. 빌드
-    - name: Build Page
-      run: npm run build
-      env:
-        NODE_ENV: production
+#     # 3. 빌드
+#     - name: Build Page
+#       run: npm run build
+#       env:
+#         NODE_ENV: production
 
     # 백엔드
     # 1. python 환경설정
