@@ -21,7 +21,7 @@
       <div v-if="showResults" class="details" :class="{ open: showDetails }">
         <div class="first-result">
           <h1 class="first-result-title">{{ username }}님의 나무 그림</h1>
-          <img width="200" height="300" :src="newData.image1" alt="image" />
+          <img width="200" height="300" :src="newData.tree_image" alt="image" />
           <div class="result-texts">
             <div v-for="(treeAttributes, key1) in tree" :key="key1">
               <br />
@@ -44,7 +44,7 @@
         </div>
         <div class="second-result">
           <h1 class="first-result-title">{{ username }}님의 집 그림</h1>
-          <img width="200" height="300" :src="newData.image2" alt="image" />
+          <img width="200" height="300" :src="newData.house_image" alt="image" />
           <div class="result-texts">
             <div v-for="(homeAttributes, key1) in home" :key="key1">
               <br />
