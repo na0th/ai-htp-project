@@ -57,7 +57,7 @@ export default {
               .then((response) => response.json())
               .then((data) => {
                 console.log(data);
-                this.$cookies.set("userid", data.userid);
+                this.$cookies.set("userid", data.id);
               });
             this.$emit("ToFirstScene");
           } else {
