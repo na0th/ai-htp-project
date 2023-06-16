@@ -63,11 +63,11 @@ def house_controller():
                 '집 창문': result_index_to_json(HOUSE_WINDOW_RESULT, user_house_result.windows)
             },
             'character': user_tree_result.characters,
-            'graph': [ user_tree_result.figures_gen, 
+            'graph': [user_tree_result.figures_gen, 
                       user_tree_result.figures_con, 
                       user_tree_result.figures_hap, 
                       user_tree_result.figures_soc, 
-                      user_tree_result.figures_hig ]
+                      user_tree_result.figures_hig]
             }), 200
     else:
         return 404

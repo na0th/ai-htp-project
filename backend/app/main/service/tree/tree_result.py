@@ -71,8 +71,8 @@ TREE_BRANCH_UP = BaseResult(1,
                             "윗쪽으로 뻗는")
 TREE_BRANCH_UNCLOSED = BaseResult(2,
                             "끝이 닫히지 않은 가지",
-                            "- 블라블라",
-                            [0, 0, 0, 0, 0],
+                            "- 개방적이며 관심사가 많아 여러 가지(취미, 공부, 주제 등)에 흥미를 가지고 있습니다. 당신은 다양한 시도에 두려움을 가지지 않는 자신감을 가진 사람입니다. 반면, 지나친 에너지에 자신의 충동을 적절히 통제하지 못할 수도 있습니다. ",
+                            [0, 0, 1, 1, 1],
                             "끝이 닫히지 않은 가지")
 
 TREE_BRANCH_RESULT = [TREE_BRANCH_NET, TREE_BRANCH_UP, TREE_BRANCH_UNCLOSED]

@@ -16,9 +16,9 @@ from main.service.character.character import *
 
 TOTAL_GENTLE = 9
 TOTAL_CONFIDENCE = 12
-TOTAL_HAPPINESS = 9
-TOTAL_SOCIAL_CONFIENDCE = 9
-TOTAL_HIGH_ESTEEM = 7
+TOTAL_HAPPINESS = 10
+TOTAL_SOCIAL_CONFIENDCE = 10
+TOTAL_HIGH_ESTEEM = 8
 
 class Result:
     size = ''
