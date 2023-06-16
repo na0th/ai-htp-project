@@ -16,10 +16,10 @@ jobs:
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-access-key-id: ${{ secrets.AWS_SECRET_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
     - name: Copy backend code to S3 bucket
       run: |
-        aws s3 sync ./backend s3://ai-htp-test-bucket
+        aws s3 sync ./backend s3://${{ secrets.AWS_S3_BUCKET }}
