@@ -47,7 +47,7 @@ export default {
 
             var file = JSON.stringify({ name: name });
 
-            fetch("http://localhost:5000/main/", {
+            fetch("http://localhost:5000/main", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

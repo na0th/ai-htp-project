@@ -168,7 +168,7 @@ export default {
         image: canvasContents,
         id: cookie_userid,
       });
-      fetch("http://localhost:5000/tree/", {
+      fetch("http://localhost:5000/tree", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
