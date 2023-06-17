@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - npm install
+
+  pre_build:
+    commands:
+      - echo Buile Phase >> pre_build phase...
+
+  build:
+    commands:
+      - npm run build
+
+  # post_build:
+  #   commands:
+  #     - echo Buile Phase >> Build completed on `date`
+  #     - aws s3 cp dist/ s3://${{ secrets.AWS_S3_BUCKET_FRONTEND }} --recursive
+
+artifacts:
+  files:
+    - dist/**/*

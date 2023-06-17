@@ -22,4 +22,4 @@ jobs:
 
     - name: Copy frontend code to S3 bucket
       run: |
-        aws s3 sync ./frontend s3://${{ secrets.AWS_S3_BUCKET_FRONTEND }}/frontend
+        aws s3 sync ./frontend s3://${{ secrets.AWS_S3_BUCKET_FRONTEND }}
