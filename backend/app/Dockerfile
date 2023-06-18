@@ -5,6 +5,7 @@ COPY app.py myapp/app.py
 COPY requirements.txt myapp/requirements.txt
 
 WORKDIR /myapp/
+RUN pip install --upgrade pip==23.1.2
 RUN pip install -r requirements.txt
 
 EXPOSE 5000
