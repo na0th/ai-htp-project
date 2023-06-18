@@ -11,6 +11,7 @@ WORKDIR /app
 
 RUN pip install --upgrade pip==23.1.2
 RUN pip install -r requirements.txt
+RUN pip3 install tensorflow
 
 EXPOSE 5000
 CMD ["python", "app.py"]
