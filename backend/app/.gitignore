@@ -1,6 +1,14 @@
 # backend
 ### Model ###
-ml_models
+ml_models/clssification/*.h5
+
+ml_models/detection/saved_model/*.pb
+ml_models/detection/saved_model/variables/variables.data-00000-of-00001
+ml_models/detection/saved_model/variables/*.index
+
+ml_models/detection/saved_model2/variables/variables.data-00000-of-00001
+ml_models/detection/saved_model2/variables/*.index
+ml_models/detection/saved_model2/*.pb
 
 ### Flask ###
 instance/*
