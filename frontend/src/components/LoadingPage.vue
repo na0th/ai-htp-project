@@ -37,68 +37,138 @@ export default {
 </script>
 
 <style>
-.loading-page {
-  height: calc(var(--vh, 1vh) * 100);
-  background-image: url("../assets/images/night.jpg");
-  overflow: hidden;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  font-family: korFont3;
+@media only screen and (max-width: 767px) {
+  .loading-page {
+    height: calc(var(--vh, 1vh) * 100);
+    background-image: url("../assets/images/night.jpg");
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    font-family: korFont3;
+  }
+  .loading-text {
+    width: 70%;
+    font-family: korFont3;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+    display: inline-block;
+    align-items: center;
+  }
+  .loading-maintext {
+    font-size: 18px;
+    text-align: left;
+    line-height: 2;
+    padding-top: 30px;
+    padding-bottom: 10px;
+  }
+  .member-text-header {
+    font-size: 21px;
+    font-family: korFont3;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: korFont3;
+    font-weight: 1000;
+  }
+  .member-text {
+    font-size: 20px;
+    font-family: korFont3;
+    line-height: 1.3;
+  }
+  .touch-text1 {
+    color: #dededeb9;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 8%;
+    font-size: 19px;
+    animation: blinker 2s linear infinite;
+  }
+  .paint-spring {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .loading-img {
+    width: 45px;
+    display: inline-block;
+    margin-top: 30px;
+  }
 }
-.loading-text {
-  width: 70%;
-  font-family: korFont3;
-  display: flex;
-  flex-direction: column;
-  padding-top: 60px;
-  display: inline-block;
-  align-items: center;
-}
-.loading-maintext {
-  font-size: 18px;
-  text-align: left;
-  line-height: 2;
-  padding-top: 30px;
-  padding-bottom: 10px;
-}
-.member-text-header {
-  font-size: 21px;
-  font-family: korFont3;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-family: korFont3;
-  font-weight: 1000;
-}
-.member-text {
-  font-size: 20px;
-  font-family: korFont3;
-  line-height: 1.3;
-}
-.touch-text1 {
-  color: #dededeb9;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  text-align: center;
-  bottom: 8%;
-  font-size: 19px;
-  animation: blinker 2s linear infinite;
-}
-.paint-spring {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.loading-img {
-  width: 45px;
-  display: inline-block;
-  margin-top: 30px;
+
+/* Styles for iPads */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .loading-page {
+    height: calc(var(--vh, 1vh) * 100);
+    background-image: url("../assets/images/night.jpg");
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    font-family: korFont3;
+  }
+  .loading-text {
+    width: 70%;
+    font-family: korFont3;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+    display: inline-block;
+    align-items: center;
+  }
+  .loading-maintext {
+    font-size: 35px;
+    text-align: left;
+    line-height: 2;
+    padding-top: 30px;
+    padding-bottom: 10px;
+  }
+  .member-text-header {
+    font-size: 35px;
+    font-family: korFont3;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: korFont3;
+    font-weight: 1000;
+  }
+  .member-text {
+    font-size: 35px;
+    font-family: korFont3;
+    line-height: 1.3;
+  }
+  .touch-text1 {
+    color: #dededeb9;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 8%;
+    font-size: 30px;
+    animation: blinker 2s linear infinite;
+  }
+  .paint-spring {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .loading-img {
+    width: 45px;
+    display: inline-block;
+    margin-top: 30px;
+  }
 }
 </style>

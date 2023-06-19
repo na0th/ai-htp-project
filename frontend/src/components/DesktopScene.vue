@@ -31,7 +31,7 @@ export default {
 <style scoped>
 .desktop-scene {
   height: 100%;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-attachment: fixed;
   background-size: cover;
   -webkit-background-size: cover;

@@ -130,73 +130,148 @@ export default {
 </script>
 
 <style>
-.second-scene {
-  height: calc(var(--vh, 1vh) * 100);
-  width: 100%;
-  background-image: url("../../assets/images/night2.jpg");
-  color: #ffffff;
-  font-size: 18.5px;
-  font-family: korFont2;
-  position: relative;
-  line-height: 1.5;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-}
-.second-text {
-  display: inline-block;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 10px;
-  top: 50%;
-  right: 0;
-  text-align: left;
-  color: #fff;
-  font-size: 19px;
-  font-family: korFont3;
-}
-.touch-text {
-  color: #dededeb9;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  text-align: center;
-  bottom: 10%;
-  font-size: 17px;
-}
-.fade-enter-from {
-  opacity: 0;
-}
-.fade-enter-to {
-  opacity: 1;
-}
-.fade-enter-active {
-  transition: all 1.5s ease;
+@media only screen and (max-width: 767px) {
+  .second-scene {
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100%;
+    background-image: url("../../assets/images/night2.jpg");
+    color: #ffffff;
+    font-size: 18.5px;
+    font-family: korFont2;
+    position: relative;
+    line-height: 1.5;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+  }
+  .second-text {
+    display: inline-block;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 10px;
+    top: 50%;
+    right: 0;
+    text-align: left;
+    color: #fff;
+    font-size: 19px;
+    font-family: korFont3;
+  }
+  .touch-text {
+    color: #dededeb9;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 10%;
+    font-size: 17px;
+  }
+  .fade-enter-from {
+    opacity: 0;
+  }
+  .fade-enter-to {
+    opacity: 1;
+  }
+  .fade-enter-active {
+    transition: all 1.5s ease;
+  }
+
+  .first-enter-from {
+    opacity: 0;
+  }
+  .first-enter-to {
+    opacity: 1;
+  }
+  .first-enter-active {
+    transition: all 1s ease;
+  }
+  .first-leave-from {
+    opacity: 1;
+  }
+  .first-leave-to {
+    opacity: 0;
+  }
+  .first-leave-active {
+    transition: all 1s ease;
+  }
 }
 
-.first-enter-from {
-  opacity: 0;
-}
-.first-enter-to {
-  opacity: 1;
-}
-.first-enter-active {
-  transition: all 1s ease;
-}
-.first-leave-from {
-  opacity: 1;
-}
-.first-leave-to {
-  opacity: 0;
-}
-.first-leave-active {
-  transition: all 1s ease;
+/* Styles for iPads */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .second-scene {
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100%;
+    background-image: url("../../assets/images/night2.jpg");
+    color: #ffffff;
+    font-size: 18.5px;
+    font-family: korFont2;
+    position: relative;
+    line-height: 1.5;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+  }
+  .second-text {
+    display: inline-block;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 10px;
+    top: 50%;
+    right: 0;
+    text-align: left;
+    color: #fff;
+    font-size: 35px;
+    font-family: korFont3;
+  }
+  .touch-text {
+    color: #dededeb9;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 10%;
+    font-size: 17px;
+  }
+  .fade-enter-from {
+    opacity: 0;
+  }
+  .fade-enter-to {
+    opacity: 1;
+  }
+  .fade-enter-active {
+    transition: all 1.5s ease;
+  }
+
+  .first-enter-from {
+    opacity: 0;
+  }
+  .first-enter-to {
+    opacity: 1;
+  }
+  .first-enter-active {
+    transition: all 1s ease;
+  }
+  .first-leave-from {
+    opacity: 1;
+  }
+  .first-leave-to {
+    opacity: 0;
+  }
+  .first-leave-active {
+    transition: all 1s ease;
+  }
 }
 </style>

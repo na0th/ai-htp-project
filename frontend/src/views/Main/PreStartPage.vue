@@ -96,112 +96,226 @@ export default {
 </script>
 
 <style>
-.prepage {
-  background-color: #151515;
-  height: calc(var(--vh, 1vh) * 100);
-  overflow: hidden;
-}
-.text1 {
-  text-align: left;
-  display: inline-block;
-  font-size: 16px;
-  font-family: korFont3;
-  margin-top: 30px;
-  color: #ddd;
-  line-height: 1.5;
-}
-.next-btn {
-  font-family: korFont1;
-  font-size: 25px;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  text-align: center;
-  bottom: 8%;
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  outline: inherit;
-}
-.sound-btn {
-  color: #ffffff;
-  border: none;
-  padding: 0;
-  display: inline-block;
-  background: none;
-  position: absolute;
-  top: 3%;
-  right: 5%;
-}
-.sound-btn1 {
-  color: #ffffff;
-  border: none;
-  padding: 0;
-  display: inline-block;
-  background: none;
-  position: absolute;
-  top: 2.3%;
-  right: 5%;
-}
-.icon-sound1 {
-  height: 40px;
-  color: #fff;
-}
+/* mobile screen */
+@media only screen and (max-width: 767px) {
+  .prepage {
+    background-color: #151515;
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+  }
+  .text1 {
+    text-align: left;
+    display: inline-block;
+    font-size: 16px;
+    font-family: korFont3;
+    margin-top: 30px;
+    color: #ddd;
+    line-height: 1.5;
+  }
+  .next-btn {
+    font-family: korFont1;
+    font-size: 25px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 8%;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: inherit;
+  }
+  .sound-btn {
+    color: #ffffff;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    background: none;
+    position: absolute;
+    top: 3%;
+    right: 5%;
+  }
+  .sound-btn1 {
+    color: #ffffff;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    background: none;
+    position: absolute;
+    top: 2.3%;
+    right: 5%;
+  }
+  .icon-sound1 {
+    height: 40px;
+    color: #fff;
+  }
 
-.icon-sound {
-  height: 30px;
-  color: #fff;
+  .icon-sound {
+    height: 30px;
+    color: #fff;
+  }
+  .name-form {
+    width: 280px;
+    margin: auto;
+    background: transparent;
+    text-align: left;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 50px;
+  }
+  .name-label {
+    color: #fff;
+    display: inline-block;
+    margin: 25px 0 15px;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-family: korFont3;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .name-input {
+    display: inline-block;
+    padding: 6px 6px;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    color: #fafafa;
+    font-family: korFont2;
+    background: transparent;
+    font-size: 20px;
+  }
+  .prestart-image {
+    width: 45px;
+    display: inline-block;
+    margin-top: 30px;
+  }
+  .prestart-img-box {
+    text-align: center;
+    display: block;
+  }
+  .prestart-text {
+    margin-top: 30px;
+    font-size: 17px;
+    line-height: 2;
+    font-family: korFont3;
+  }
 }
-.name-form {
-  width: 280px;
-  margin: auto;
-  background: transparent;
-  text-align: left;
-  border-radius: 10px;
-  display: inline-block;
-  margin-top: 50px;
-}
-.name-label {
-  color: #fff;
-  display: inline-block;
-  margin: 25px 0 15px;
-  font-size: 0.6em;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-  font-family: korFont3;
-  font-size: 18px;
-  line-height: 1.5;
-}
-.name-input {
-  display: inline-block;
-  padding: 6px 6px;
-  width: 100%;
-  box-sizing: border-box;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  color: #fafafa;
-  font-family: korFont2;
-  background: transparent;
-  font-size: 20px;
-}
-.prestart-image {
-  width: 45px;
-  display: inline-block;
-  margin-top: 30px;
-}
-.prestart-img-box {
-  text-align: center;
-  display: block;
-}
-.prestart-text {
-  margin-top: 30px;
-  font-size: 17px;
-  line-height: 2;
-  font-family: korFont3;
+/* for iPads and tabs */
+@media only screen and (min-width: 768px) and (max-width: 1400px) {
+  .prepage {
+    background-color: #151515;
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
+  }
+  .text1 {
+    text-align: left;
+    display: inline-block;
+    font-size: 25px;
+    font-family: korFont3;
+    margin-top: 30px;
+    color: #ddd;
+    line-height: 1.5;
+  }
+  .next-btn {
+    font-family: korFont1;
+    font-size: 35px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 8%;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: inherit;
+  }
+  .sound-btn {
+    color: #ffffff;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    background: none;
+    position: absolute;
+    top: 3%;
+    right: 5%;
+  }
+  .sound-btn1 {
+    color: #ffffff;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    background: none;
+    position: absolute;
+    top: 2.3%;
+    right: 5%;
+  }
+  .icon-sound1 {
+    height: 70px;
+    color: #fff;
+  }
+
+  .icon-sound {
+    height: 52px;
+    color: #fff;
+  }
+  .name-form {
+    width: 500px;
+    margin: auto;
+    background: transparent;
+    text-align: left;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 50px;
+  }
+  .name-label {
+    color: #fff;
+    display: inline-block;
+    margin: 25px 0 15px;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-family: korFont3;
+    font-size: 30px;
+    line-height: 1.5;
+  }
+  .name-input {
+    display: inline-block;
+    padding: 6px 6px;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    color: #fafafa;
+    font-family: korFont2;
+    background: transparent;
+    font-size: 35px;
+  }
+  .prestart-image {
+    width: 75px;
+    display: inline-block;
+    margin-top: 30px;
+  }
+  .prestart-img-box {
+    text-align: center;
+    display: block;
+  }
+  .prestart-text {
+    margin-top: 30px;
+    font-size: 30px;
+    line-height: 2;
+    font-family: korFont3;
+  }
 }
 </style>

@@ -698,7 +698,7 @@ html {
   font-size: 13px;
 }
 /* 핸드폰 사이즈*/
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 767px) {
   body {
     align-items: center;
     background-color: #333333;

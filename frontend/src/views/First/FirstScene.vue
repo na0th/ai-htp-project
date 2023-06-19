@@ -135,89 +135,181 @@ export default {
 </script>
 
 <style>
-.first-scene {
-  height: calc(var(--vh, 1vh) * 100);
-  width: 100%;
-  background-image: url("../../assets/images/fireplace.jpg");
-  color: #000;
-  font-size: 18.5px;
-  font-family: korFont2;
-  position: relative;
-  line-height: 1.5;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  /* opacity: 1; */
-}
-.first-text {
-  display: inline-block;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 10px;
-  top: 55%;
-  right: 0;
-  text-align: left;
-  color: #fff;
-  font-size: 19px;
-  font-family: korFont3;
-}
-.touch-text {
-  color: #dededeb9;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  text-align: center;
-  top: 50%;
-  font-size: 17px;
-  animation: blinker 3s linear infinite;
-}
-@keyframes blinker {
-  50% {
+/* Styles for phones */
+@media only screen and (max-width: 767px) {
+  .first-scene {
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100%;
+    background-image: url("../../assets/images/fireplace.jpg");
+    color: #000;
+    font-size: 18.5px;
+    font-family: korFont2;
+    position: relative;
+    line-height: 1.5;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    /* opacity: 1; */
+  }
+  .first-text {
+    display: inline-block;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 10px;
+    top: 55%;
+    right: 0;
+    text-align: left;
+    color: #fff;
+    font-size: 19px;
+    font-family: korFont3;
+  }
+  .touch-text {
+    color: #dededeb9;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 50%;
+    font-size: 17px;
+    animation: blinker 3s linear infinite;
+  }
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .touch-screen {
+    position: absolute;
+    height: 50px;
+    right: 20px;
+    bottom: 20px;
+  }
+  .texts {
+    margin-top: 20px;
+  }
+  .fade-enter-from {
     opacity: 0;
+  }
+  .fade-enter-to {
+    opacity: 1;
+  }
+  .fade-enter-active {
+    transition: all 1.5s ease;
+  }
+  .first-enter-from {
+    opacity: 0;
+  }
+  .first-enter-to {
+    opacity: 1;
+  }
+  .first-enter-active {
+    transition: all 1s ease;
+  }
+  .first-leave-from {
+    opacity: 1;
+  }
+  .first-leave-to {
+    opacity: 0;
+  }
+  .first-leave-active {
+    transition: all 1s ease;
   }
 }
 
-.touch-screen {
-  position: absolute;
-  height: 50px;
-  right: 20px;
-  bottom: 20px;
-}
-.texts {
-  margin-top: 20px;
-}
-.fade-enter-from {
-  opacity: 0;
-}
-.fade-enter-to {
-  opacity: 1;
-}
-.fade-enter-active {
-  transition: all 1.5s ease;
-}
-.first-enter-from {
-  opacity: 0;
-}
-.first-enter-to {
-  opacity: 1;
-}
-.first-enter-active {
-  transition: all 1s ease;
-}
-.first-leave-from {
-  opacity: 1;
-}
-.first-leave-to {
-  opacity: 0;
-}
-.first-leave-active {
-  transition: all 1s ease;
+/* Styles for iPads */
+@media only screen and (min-width: 768px) and (max-width: 1400px) {
+  .first-scene {
+    height: calc(var(--vh, 1vh) * 100);
+    width: 100%;
+    background-image: url("../../assets/images/fireplace.jpg");
+    color: #000;
+    font-size: 35px;
+    font-family: korFont2;
+    position: relative;
+    line-height: 1.5;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    /* opacity: 1; */
+  }
+  .first-text {
+    display: inline-block;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 10px;
+    top: 60%;
+    right: 0;
+    text-align: left;
+    color: #fff;
+    font-size: 35px;
+    font-family: korFont3;
+  }
+  .touch-text {
+    color: #dededeb9;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 50%;
+    font-size: 17px;
+    animation: blinker 3s linear infinite;
+  }
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .touch-screen {
+    position: absolute;
+    height: 100px;
+    right: 40px;
+    bottom: 50px;
+  }
+  .texts {
+    margin-top: 20px;
+  }
+  .fade-enter-from {
+    opacity: 0;
+  }
+  .fade-enter-to {
+    opacity: 1;
+  }
+  .fade-enter-active {
+    transition: all 1.5s ease;
+  }
+  .first-enter-from {
+    opacity: 0;
+  }
+  .first-enter-to {
+    opacity: 1;
+  }
+  .first-enter-active {
+    transition: all 1s ease;
+  }
+  .first-leave-from {
+    opacity: 1;
+  }
+  .first-leave-to {
+    opacity: 0;
+  }
+  .first-leave-active {
+    transition: all 1s ease;
+  }
 }
 </style>

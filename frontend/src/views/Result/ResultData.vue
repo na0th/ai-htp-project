@@ -44,7 +44,12 @@
         </div>
         <div class="second-result">
           <h1 class="first-result-title">{{ username }}님의 집 그림</h1>
-          <img width="200" height="300" :src="newData.house_image" alt="image" />
+          <img
+            width="200"
+            height="300"
+            :src="newData.house_image"
+            alt="image"
+          />
           <div class="result-texts">
             <div v-for="(homeAttributes, key1) in home" :key="key1">
               <br />
@@ -72,23 +77,31 @@
     </transition>
 
     <br />
-    <div class="share-btns">
-      <a id="kakaotalk-sharing-btn" href="javascript:;">
-        <img
-          src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-          alt="카카오톡 공유 보내기 버튼"
-          class="kakaotalk-btn"
-          @click="kakaoLink"
-        />
-      </a>
-      <div class="clipboard-copy">
-        <img
-          class="clipboard-img"
-          @click="urlCopy"
-          src="../../assets/images/sharelink.png"
-        />
+    <footer class="footer">
+      <div class="share-btns">
+        <p class="title-text-result">
+          <span style="color: #eba090">마음</span>스케치
+        </p>
+        <a id="kakaotalk-sharing-btn" href="javascript:;">
+          <img
+            src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+            alt="카카오톡 공유 보내기 버튼"
+            class="kakaotalk-btn"
+            @click="kakaoLink"
+          />
+        </a>
+        <!-- <div class="clipboard-copy">
+          <img
+            class="clipboard-img"
+            @click="urlCopy"
+            src="../../assets/images/sharelink.png"
+          />
+        </div> -->
+        <button class="shareBtn" @click="urlCopy">링크 공유</button>
       </div>
-    </div>
+      <p class="result-contact">yoonyoung.lee1218@gmail.com</p>
+      <p class="result-copyright">©2023 마음스케치 | All rights reserved.</p>
+    </footer>
   </div>
 </template>
 
@@ -245,129 +258,337 @@ export default {
 </script>
 
 <style>
-.results-data {
-  display: inline-block;
-  font-family: korFont2;
-  background-color: #ffffff;
+/* Styles for phones */
+@media only screen and (max-width: 767px) {
+  .results-data {
+    display: inline-block;
+    font-family: korFont2;
+    background-color: #ffffff;
 
-  background-size: cover;
-  /* background-repeat: no-repeat; */
-  background-position: center center;
-  color: black;
-  font-family: korFont1;
-  width: 100%;
-  height: auto !important;
-}
-.userName {
-  font-size: 20px;
-  margin-top: 10%;
-  font-family: korFont3;
-  color: #0000008a;
-}
-.first-result {
-  margin-top: 50px;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 20px;
+    background-size: cover;
+    /* background-repeat: no-repeat; */
+    background-position: center center;
+    color: black;
+    font-family: korFont1;
+    width: 100%;
+    height: auto !important;
+  }
+  .userName {
+    font-size: 20px;
+    margin-top: 10%;
+    font-family: korFont3;
+    color: #0000008a;
+  }
+  .first-result {
+    margin-top: 50px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .first-result-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-family: korFont3;
+  }
+  .first-image {
+    margin-top: 25px;
+    width: 250px;
+  }
+  .first-result-text {
+    width: 80%;
+    margin: 50px auto;
+  }
+  .result-texts {
+    text-align: left;
+    font-family: korFont2;
+    width: 80%;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .treeAttributes {
+    font-weight: 1000;
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  .treefeatures {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .treevalues {
+    font-size: 18px;
+    margin-bottom: 15px;
+    line-height: 1.2;
+  }
+  .share-btn {
+    font-family: korFont2;
+    margin-bottom: 10px;
+    font-size: 20px;
+    background-color: #fdd5cc;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 1000;
+    cursor: pointer;
+    border-radius: 15px;
+  }
+  .share-btns {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  .kakaotalk-btn {
+    height: 30px;
+  }
+  .copylink-btn {
+    height: 30px;
+  }
+  .clipboard-copy {
+    display: inline-block;
+  }
+  .clipboard-img {
+    width: 25px;
+  }
+  .characterImage {
+    width: 160px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+  }
+  #myChart {
+    width: 200px;
+  }
+  .showDetailBtn {
+    background-color: #424242;
+    padding: 10px 20px;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-bottom: 35px;
+    font-family: korFont2;
+    font-size: 16px;
+  }
+  .characterName {
+    font-size: 19px;
+    font-family: korFont2;
+    font-weight: 1000;
+    margin-top: 50px;
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 340px;
+    word-wrap: break-word;
+  }
+  .footer {
+    background-color: #424242;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-family: korFont2;
+  }
+  .title-text-result {
+    font-family: korFont1;
+    font-size: 25px;
+  }
+  .result-contact {
+    font-family: korFont2;
+  }
+  .result-copyright {
+    font-family: korFont2;
+    margin-top: 8px;
+  }
+  .second-result {
+    margin-bottom: 100px;
+  }
+  .shareBtn {
+    background-color: #fdd5cc;
+    padding: 7px 14px;
+    color: #424242;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    font-family: korFont2;
+    font-size: 14px;
+    font-weight: 1000;
+  }
 }
 
-.first-result-title {
-  font-size: 20px;
-  margin-bottom: 10px;
-  font-family: korFont3;
-}
-.first-image {
-  margin-top: 25px;
-  width: 250px;
-}
-.first-result-text {
-  width: 80%;
-  margin: 50px auto;
-}
-.result-texts {
-  text-align: left;
-  font-family: korFont2;
-  width: 80%;
-  display: inline-block;
-  margin-bottom: 20px;
-}
-.treeAttributes {
-  font-weight: 1000;
-  font-size: 22px;
-  margin-bottom: 15px;
-}
-.treefeatures {
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-.treevalues {
-  font-size: 18px;
-  margin-bottom: 15px;
-  line-height: 1.2;
-}
-.share-btn {
-  font-family: korFont2;
-  margin-bottom: 10px;
-  font-size: 20px;
-  background-color: #fdd5cc;
-  color: black;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 17px;
-  font-weight: 1000;
-  cursor: pointer;
-  border-radius: 15px;
-}
-.share-btns {
-  margin-bottom: 25px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-}
-.kakaotalk-btn {
-  height: 40px;
-}
-.copylink-btn {
-  height: 30px;
-}
-.clipboard-copy {
-  display: inline-block;
-}
-.clipboard-img {
-  width: 40px;
-}
-.characterImage {
-  width: 160px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-}
-#myChart {
-  width: 250px;
-}
-.showDetailBtn {
-  background-color: #424242;
-  padding: 10px 20px;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  border-radius: 25px;
-  margin-bottom: 35px;
-  font-family: korFont2;
-  font-size: 16px;
-}
-.characterName {
-  font-size: 19px;
-  font-family: korFont2;
-  font-weight: 1000;
-  margin-top: 50px;
-  border-radius: 10px;
-  display: inline-block;
-  max-width: 340px;
-  word-wrap: break-word;
+/* Styles for iPads */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .results-data {
+    display: inline-block;
+    font-family: korFont2;
+    background-color: #ffffff;
+
+    background-size: cover;
+    /* background-repeat: no-repeat; */
+    background-position: center center;
+    color: black;
+    font-family: korFont1;
+    width: 100%;
+    height: auto !important;
+  }
+  .userName {
+    font-size: 40px;
+    margin-top: 10%;
+    font-family: korFont3;
+    color: #0000008a;
+  }
+  .first-result {
+    margin-top: 50px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .first-result-title {
+    font-size: 30px;
+    margin-bottom: 10px;
+    font-family: korFont3;
+  }
+  .first-image {
+    margin-top: 25px;
+    width: 350px;
+  }
+  .first-result-text {
+    width: 80%;
+    margin: 50px auto;
+  }
+  .result-texts {
+    text-align: left;
+    font-family: korFont2;
+    width: 80%;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .treeAttributes {
+    font-weight: 1000;
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+  .treefeatures {
+    font-size: 25px;
+    margin-bottom: 8px;
+  }
+  .treevalues {
+    font-size: 25px;
+    margin-bottom: 15px;
+    line-height: 1.2;
+  }
+  .share-btn {
+    font-family: korFont2;
+    margin-bottom: 10px;
+    font-size: 20px;
+    background-color: #fff2ee;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 1000;
+    cursor: pointer;
+    border-radius: 15px;
+  }
+  .share-btns {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+  }
+  .kakaotalk-btn {
+    height: 40px;
+  }
+  .copylink-btn {
+    height: 70px;
+  }
+  .clipboard-copy {
+    display: inline-block;
+  }
+  .clipboard-img {
+    width: 70px;
+  }
+  .characterImage {
+    width: 270px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+  }
+  #myChart {
+    width: 320px;
+  }
+  .showDetailBtn {
+    background-color: #424242;
+    padding: 10px 20px;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-bottom: 35px;
+    font-family: korFont2;
+    font-size: 25px;
+  }
+  .characterName {
+    font-size: 30px;
+    font-family: korFont2;
+    font-weight: 1000;
+    margin-top: 50px;
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 800px;
+    word-wrap: break-word;
+  }
+  .footer {
+    background-color: #424242;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-family: korFont2;
+  }
+  .title-text-result {
+    font-family: korFont1;
+    font-size: 35px;
+  }
+  .result-contact {
+    font-family: korFont2;
+    font-size: 20px;
+  }
+  .result-copyright {
+    font-family: korFont2;
+    margin-top: 10px;
+    font-size: 20px;
+  }
+  .second-result {
+    margin-bottom: 120px;
+  }
+  .shareBtn {
+    background-color: #fbebe7;
+    padding: 10px 17px;
+    color: #424242;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    font-family: korFont2;
+    font-size: 18px;
+    font-weight: 1000;
+  }
 }
 </style>
