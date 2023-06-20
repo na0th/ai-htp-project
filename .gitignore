@@ -1,0 +1,9 @@
+backend/app/ml_models/classification/*.h5
+
+backend/app/ml_models/detection/saved_model/*.pb
+backend/app/ml_models/detection/saved_model/variables/variables.data-00000-of-00001
+backend/app/ml_models/detection/saved_model/variables/*.index
+
+backend/app/ml_models/detection/saved_model2/variables/variables.data-00000-of-00001
+backend/app/ml_models/detection/saved_model2/variables/*.index
+backend/app/ml_models/detection/saved_model2/*.pb

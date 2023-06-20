@@ -7,7 +7,10 @@ import botocore
 import os
 
 # AWS S3 클라이언트 생성
-s3 = boto3.client('s3')
+s3 = boto3.client('s3',
+                  aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+                  aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+                  )
 
 # S3에서 모델 파일을 로컬로 다운로드하는 함수
 def download_s3_model(bucket_name, s3_key, local_path):
@@ -76,7 +79,8 @@ for model_name, model_info in model_files.items():
     try:
         s3_key = model_info['s3_key']
         local_path = model_info['local_path']
-        download_s3_model(bucket_name, s3_key, local_path)
+        if os.path.isfile(local_path) == False:
+            download_s3_model(bucket_name, s3_key, local_path)
                 
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == '404':

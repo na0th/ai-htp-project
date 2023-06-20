@@ -1,6 +1,6 @@
 # backend
 ### Model ###
-ml_models/clssification/*.h5
+ml_models/classification/*.h5
 
 ml_models/detection/saved_model/*.pb
 ml_models/detection/saved_model/variables/variables.data-00000-of-00001
@@ -15,6 +15,10 @@ instance/*
 !instance/.gitignore
 .webassets-cache
 .env
+
+# 보안
+env.sh
+prod.env
 
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
