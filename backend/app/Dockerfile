@@ -4,8 +4,6 @@ FROM python:3.7.12
 COPY main/ /app/main/
 COPY ml_models/ /app/ml_models/
 COPY app.py /app/
-COPY env.sh /app/
-COPY prod.env /app/
 COPY requirements.txt /app/
 
 # 작업 디렉토리 설정
@@ -25,11 +23,9 @@ RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 # Nvidia Docker 설치
 RUN apt-get install -y nvidia-docker2
 
-# 환경변수 설정
-RUN chmod +x /app/env.sh
-RUN /app/env.sh
-
+# # 환경변수 설정
+# RUN chmod +x /app/env.sh
+# RUN /app/env.sh
 
 EXPOSE 5000
 CMD ["python", "app.py"]
-
