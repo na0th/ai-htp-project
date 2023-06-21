@@ -21,6 +21,6 @@ jobs:
 
     - name : Build Docker Image & Push to Docker Hub
       run: |
-        docker build ./fronted -t ai-drawing-test/frontend
+        docker build ./frontend -t ai-drawing-test/frontend
         docker tag ai-drawing-test/frontend chaeeerish/frontend
         docker push chaeeerish/frontend
