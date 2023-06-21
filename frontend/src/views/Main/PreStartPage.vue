@@ -47,7 +47,7 @@ export default {
 
             var file = JSON.stringify({ name: name });
 
-            fetch("15.165.123.193/main", {
+            fetch("http://15.165.123.193/main", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
