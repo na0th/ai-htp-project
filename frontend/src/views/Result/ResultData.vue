@@ -412,12 +412,12 @@ export default {
     margin-bottom: 100px;
   }
   .shareBtn {
-    background-color: #fdd5cc;
+    background-color: #fff;
     padding: 7px 14px;
     color: #424242;
     border: none;
     cursor: pointer;
-    border-radius: 25px;
+    border-radius: 20px;
     font-family: korFont2;
     font-size: 14px;
     font-weight: 1000;
@@ -580,12 +580,12 @@ export default {
     margin-bottom: 120px;
   }
   .shareBtn {
-    background-color: #fbebe7;
+    background-color: #fff;
     padding: 10px 17px;
     color: #424242;
     border: none;
     cursor: pointer;
-    border-radius: 25px;
+    border-radius: 20px;
     font-family: korFont2;
     font-size: 18px;
     font-weight: 1000;
