@@ -1,4 +1,4 @@
-name: docker build and push to hub - backend
+name: docker build and push to hub - frontend
 
 on:
   push:
@@ -21,6 +21,6 @@ jobs:
 
     - name : Build Docker Image & Push to Docker Hub
       run: |
-        docker build ./backend/app -t ai-drawing-test/backend
-        docker tag ai-drawing-test/backend chaeeerish/backend
-        docker push chaeeerish/backend
+        docker build ./fronted -t ai-drawing-test/frontend
+        docker tag ai-drawing-test/frontend chaeeerish/frontend
+        docker push chaeeerish/frontend

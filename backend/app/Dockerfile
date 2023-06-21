@@ -28,4 +28,4 @@ RUN apt-get install -y nvidia-docker2
 # RUN /app/env.sh
 
 EXPOSE 5000
-CMD ["python", "app.py"]
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
