@@ -1,16 +1,3 @@
-# FROM node:18.16
-
-# # 필요한 파일을 이미지로 복사
-# COPY package.json .
-
-# WORKDIR .
-
-# ADD . .
-# RUN npm install
-
-# EXPOSE 8080
-# CMD ["npm", "run", "serve"]
-
 FROM node:18.16
 
 # install simple http server for serving static content
@@ -31,5 +18,5 @@ COPY . .
 # build app for production with minification
 RUN npm run build
 
-EXPOSE 8080
+EXPOSE 3000
 CMD [ "http-server", "dist" ]
