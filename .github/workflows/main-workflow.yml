@@ -1,0 +1,14 @@
+name: main workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  call-workflow-frontend-docker:
+    uses: ./.github/workflows/frontend-docker.yml
+  call-workflow-backend-docker:
+    uses: ./.github/workflows/backend-docker.yml
+  call-workflow-jenkins-build-trigger:
+    uses: ./.github/workflows/jenkins-build-trigger.yml  
