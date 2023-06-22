@@ -6,26 +6,20 @@ on:
       - main
 
 jobs:
-  main:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      - name: Call frontend-docker workflow
-        uses: ./.github/workflows/frontend-docker.yml
-        with:
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Call backend-docker workflow
-        uses: ./.github/workflows/backend-docker.yml
-        with:
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Call jenkins-build-trigger workflow
-        uses: ./.github/workflows/jenkins-build-trigger.yml
-        with:
-          webhook-url: ${{ secrets.WEBHOOK_URL }}
-          jenkins-api-token: ${{ secrets.JENKINS_API_TOKEN }}
+  call-workflow-frontend-docker:
+    uses: ./.github/workflows/frontend-docker.yml
+    secrets:
+      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+  call-workflow-backend-docker:
+    needs: call-workflow-frontend-docker
+    uses: ./.github/workflows/backend-docker.yml
+    secrets:
+      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+  call-workflow-jenkins-build-trigger:
+    needs: [call-workflow-frontend-docker, call-workflow-backend-docker]
+    uses: ./.github/workflows/jenkins-build-trigger.yml  
+    secrets:
+      webhook-url: ${{ secrets.WEBHOOK_URL }}
+      jenkins-api-token: ${{ secrets.JENKINS_API_TOKEN }}
