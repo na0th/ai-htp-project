@@ -6,18 +6,23 @@ on:
       - main
 
 jobs:
-  call-workflow-frontend-docker:
-    uses: ./.github/workflows/frontend-docker.yml
-    secrets:
-      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
-  call-workflow-backend-docker:
-    uses: ./.github/workflows/backend-docker.yml
-    secrets:
-      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
-  call-workflow-jenkins-build-trigger:
-    uses: ./.github/workflows/jenkins-build-trigger.yml  
-    secrets:
-      webhook-url: ${{ secrets.WEBHOOK_URL }}
-      jenkins-api-token: ${{ secrets.JENKINS_API_TOKEN }}
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call frontend-docker workflow
+        uses: ./.github/workflows/frontend-docker.yml
+        with:
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Call backend-docker workflow
+        uses: ./.github/workflows/backend-docker.yml
+        with:
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Call jenkins-build-trigger workflow
+        uses: ./.github/workflows/jenkins-build-trigger.yml
+        with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          jenkins-api-token: ${{ secrets.JENKINS_API_TOKEN }}
