@@ -1,15 +1,16 @@
 <template>
   <div class="results-data">
-    <h1 class="userName">{{ username }}님의 결과</h1>
-    <div class="characterName">
-      {{ character_name[character_id - 1] }}
-    </div>
+    <h1 class="userName">&lt;{{ username }}님의 결과&gt;</h1>
+
     <div>
       <img
         class="characterImage"
         :src="getImageUrl(character_id)"
         alt="Character Image"
       />
+    </div>
+    <div class="characterName">
+      {{ character_name[character_id - 1] }}
     </div>
     <div>
       <canvas id="myChart" :width="15" :height="15"></canvas>
@@ -289,6 +290,7 @@ export default {
     font-size: 20px;
     margin-bottom: 10px;
     font-family: korFont3;
+    color: #0000008a;
   }
   .first-image {
     margin-top: 25px;
@@ -308,16 +310,16 @@ export default {
   .treeAttributes {
     font-weight: 1000;
     font-size: 22px;
-    margin-bottom: 15px;
+    margin-bottom: 22px;
   }
   .treefeatures {
     font-size: 18px;
-    margin-bottom: 8px;
+    margin-bottom: 13px;
   }
   .treevalues {
-    font-size: 18px;
+    font-size: 15px;
     margin-bottom: 15px;
-    line-height: 1.2;
+    line-height: 1.8;
   }
   .share-btn {
     font-family: korFont2;
@@ -359,10 +361,10 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
+    margin-top: 80px;
   }
   #myChart {
-    width: 200px;
+    width: 180px;
   }
   .showDetailBtn {
     background-color: #424242;
@@ -372,6 +374,7 @@ export default {
     cursor: pointer;
     border-radius: 25px;
     margin-bottom: 35px;
+    margin-top: 20px;
     font-family: korFont2;
     font-size: 16px;
   }
@@ -379,7 +382,8 @@ export default {
     font-size: 19px;
     font-family: korFont2;
     font-weight: 1000;
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-bottom: 40px;
     border-radius: 10px;
     display: inline-block;
     max-width: 340px;
@@ -412,10 +416,10 @@ export default {
     margin-bottom: 100px;
   }
   .shareBtn {
-    background-color: #fff;
+    background-color: transparent;
     padding: 7px 14px;
-    color: #424242;
-    border: none;
+    color: #fdfdfd;
+    border: 1px solid #fff;
     cursor: pointer;
     border-radius: 20px;
     font-family: korFont2;
@@ -580,10 +584,10 @@ export default {
     margin-bottom: 120px;
   }
   .shareBtn {
-    background-color: #fff;
+    background-color: transparent;
     padding: 10px 17px;
     color: #424242;
-    border: none;
+    border: 1px solid #fff;
     cursor: pointer;
     border-radius: 20px;
     font-family: korFont2;

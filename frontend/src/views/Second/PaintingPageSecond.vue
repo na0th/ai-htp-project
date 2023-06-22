@@ -199,17 +199,17 @@ export default {
           delete this.data.tree_result[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
         }
       }
-      for (let Attr in this.data.house) {
+      for (let Attr in this.data.house_result) {
         let attrCount = 0;
         let nullCount = 0;
-        for (let Val in this.data.house[Attr]) {
-          if (this.data.house[Attr][Val] === null) {
+        for (let Val in this.data.house_result[Attr]) {
+          if (this.data.house_result[Attr][Val] === null) {
             nullCount++; //null이 나오는 key 수 카운트
           }
           attrCount++; //속성 수 카운트
         }
         if (nullCount === attrCount) {
-          delete this.data.house[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
+          delete this.data.house_result[Attr]; //총 속성 수와 총 null수가 같다면 해당 상위키 삭제
         }
       }
     }, //클릭시 다음 페이지로 넘어가는 버튼
