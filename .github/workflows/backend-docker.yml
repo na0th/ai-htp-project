@@ -22,5 +22,5 @@ jobs:
     - name : Build Docker Image & Push to Docker Hub
       run: |
         docker build ./backend/app -t ai-drawing-test/backend
-        docker tag ai-drawing-test/backend chaeeerish/backend
-        docker push chaeeerish/backend
+        docker tag ai-drawing-test/backend chaeeerish/ai-drawing-test-backend
+        docker push chaeeerish/ai-drawing-test-backend
