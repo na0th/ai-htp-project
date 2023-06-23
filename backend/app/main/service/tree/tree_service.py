@@ -157,7 +157,6 @@ def detection_tree(img_binary, userid):
 
     for i in range(min(result['detection_scores'][0].shape[0], OBJECT_DEFAULT_COUNT)):
         score = result['detection_scores'][0,i]
-        # print(i)
         if score < SCORE_THRESHOLD: #임계값보다 작을 경우 break
             break
         box = result['detection_boxes'][0,i]
@@ -180,7 +179,6 @@ def detection_tree(img_binary, userid):
             tree_width = right-left
             # tree_size, location = tree_size_loc(height, width, top, bottom, left, right)
             result_list.extend(tree_size_loc(height, width, top, bottom, left, right))
-            # print('location',location)
         elif labels_to_names[class_id] == '1002':
             stem_height = bottom-top
             stem_width = right-left
@@ -195,10 +193,7 @@ def detection_tree(img_binary, userid):
         update_user_tree_crop(class_id, userid ,img_byte_arr)
         # cv2.imwrite('./image/'+labels_to_names[class_id]+'.png',cv2.cvtColor(crop_img, cv2.COLOR_RGB2BGR)) #크롭하여 로컬에 저장 (저장 안 하는 방식으로 수정?)
 
-        print('class_id', class_id)
-
         caption = "{}: {:.4f}".format(labels_to_names[class_id], score)
-        print(caption)  #score 콘솔에서 확인
     
     ################
     # 줄기 사이즈

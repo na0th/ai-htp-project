@@ -23,9 +23,5 @@ RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 # Nvidia Docker 설치
 RUN apt-get install -y nvidia-docker2
 
-# # 환경변수 설정
-# RUN chmod +x /app/env.sh
-# RUN /app/env.sh
-
 EXPOSE 5000
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]

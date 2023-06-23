@@ -18,7 +18,6 @@ def result_index_to_json(matched_list, matching_list): # db테이블과 찾고�
         result = row.result
         result_json[title]=result
     
-    print(json)    
     return result_json    
 
 def calculate_figures(matched_list, matching_list, score):
@@ -83,6 +82,6 @@ def classification_multi(model_file_name, binary_img, class_li, SIZE, COUNT):
     for i in range(COUNT):
         if proba[0][sorted_categories[i]] > SCORE_THRESHOLD:
             result_list.append(class_li[sorted_categories[i]])
-            print(class_li[sorted_categories[i]])
-            print('score:', proba[0][sorted_categories[i]])
+            # print(class_li[sorted_categories[i]])
+            # print('score:', proba[0][sorted_categories[i]])
     return result_list

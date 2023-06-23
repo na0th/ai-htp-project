@@ -25,8 +25,6 @@ def house_process(id):
     result = UserHouseResult()
 
     total_result_dict = detection_house(img_binary)
-    print("##########")
-    print(total_result_dict)
 
     type_result_list = []
     type_result_list.append(classification('house', img_binary, 150))
@@ -36,10 +34,6 @@ def house_process(id):
     result.door = ''.join(map(str, total_result_dict["door_result"]))
     result.window = ''.join(map(str, total_result_dict["window_result"]))
     result.type = ''.join(map(str, type_result_list))
-
-    print(result.type)
-    print("##########")
-
     save_user_house_result(id=id, result_cls=result)
 
 def detection_house(binaryimg):
@@ -96,7 +90,6 @@ def detection_house(binaryimg):
 
     for i in range(min(result['detection_scores'][0].shape[0], OBJECT_DEFAULT_COUNT)):
         score = result['detection_scores'][0,i]
-        print(i)
         if score < SCORE_THRESHOLD: #임계값보다 작을 경우 break
             break
         box = result['detection_boxes'][0,i]
@@ -137,25 +130,7 @@ def detection_house(binaryimg):
         
         detection_list.append(labels_to_names[class_id]) ##########추가. 모든 탐지 오브젝트를 담는다.
 
-        print('class_id', class_id)
-
         caption = "{}: {:.4f}".format(labels_to_names[class_id], score)
-        print(caption)  #score 콘솔에서 확인    
-
-    print("[start] width, height list - roof, wall, window, door")
-    print(roof_width_list)
-    
-    print(wall_width_list)
-    print(wall_height_list)
-
-    print(window_list)
-    print(window_width_list)
-    print(window_height_list)
-
-    print(door_list)
-    print(door_width_list)
-    print(door_height_list)
-    print("[end] width, height list")
 
     # 1001: 지붕 Roof
     # 지붕 크기
@@ -195,18 +170,6 @@ def detection_house(binaryimg):
         door_edge_result = door_edge(door_width, wall_width, door_left, door_right, wall_left, wall_right)
         if door_edge_result == 1 or door_edge_result == 2:
             door_result_list.append(5) # 가장자리 함수
-    
-    # 문 크기
-    # 문이 한 개고 벽이 한 개이면
-    # if detection_list.count('1004') == 1 and detection_list.count('1002') == 1:
-    #     door_size_result = door_size(door_height, door_width, wall_height, wall_width)
-    #     if door_size_result != 0:
-    #         door_result_list.append(door_size_result)
-    # # 문이 두 개 이상이고 벽이 한 개 이상이면
-    # elif detection_list.count('1004') >= 2 and detection_list.count('1002') >= 1:
-    #     door_size_result = door_size(max(door_height_list), max(door_width_list), max(wall_height_list), max(wall_width_list))
-    #     if door_size_result != 0:
-    #         door_result_list.append(door_size_result)
 
     # 넓이로 해보기
     # 문이 한 개고 벽이 한 개이면
@@ -222,21 +185,21 @@ def detection_house(binaryimg):
       elif max(door_height_list) < max(wall_height_list) * 0.4:
          door_result_list.append(3)
 
-    print("[start] detection_list.count")
-    print("지붕 개수: ", detection_list.count('1001'))
-    print("벽 개수: ", detection_list.count('1002'))
-    print("창문 개수: ", detection_list.count('1003'))
-    print("문 개수: ", detection_list.count('1004'))
-    print("[end] detection_list.count")
-    print()
+    # print("[start] detection_list.count")
+    # print("지붕 개수: ", detection_list.count('1001'))
+    # print("벽 개수: ", detection_list.count('1002'))
+    # print("창문 개수: ", detection_list.count('1003'))
+    # print("문 개수: ", detection_list.count('1004'))
+    # print("[end] detection_list.count")
+    # print()
 
-    print("[start] detection_list")
-    print(detection_list)
-    print(roof_result_list)
-    print(door_result_list)
-    print(window_result_list)
-    print("[end] detection_list")
-    print()
+    # print("[start] detection_list")
+    # print(detection_list)
+    # print(roof_result_list)
+    # print(door_result_list)
+    # print(window_result_list)
+    # print("[end] detection_list")
+    # print()
 
     return {
         "roof_result": roof_result_list,
