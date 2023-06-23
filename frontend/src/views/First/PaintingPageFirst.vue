@@ -168,7 +168,7 @@ export default {
         image: canvasContents,
         id: cookie_userid,
       });
-      fetch("https://15.165.123.193:5000/tree", {
+      fetch("http://15.165.123.193:5000/tree", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
