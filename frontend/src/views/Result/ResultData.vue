@@ -361,7 +361,7 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 80px;
+    margin-top: 30px;
   }
   #myChart {
     width: 180px;
@@ -374,16 +374,15 @@ export default {
     cursor: pointer;
     border-radius: 25px;
     margin-bottom: 35px;
-    margin-top: 20px;
+    margin-top: 10px;
     font-family: korFont2;
     font-size: 16px;
   }
   .characterName {
     font-size: 19px;
     font-family: korFont2;
-    font-weight: 1000;
     margin-top: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     border-radius: 10px;
     display: inline-block;
     max-width: 340px;
