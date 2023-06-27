@@ -6,3 +6,17 @@ module.exports = defineConfig({
     port: process.env.VUE_APP_FLASK_PORT,
   },
 })
+
+module.exports = {
+
+  devServer: {
+
+    client: {
+
+      overlay: false
+
+    }
+
+}
+
+}

@@ -4,6 +4,8 @@ services:
     image: chaeeerish/ai-drawing-test-frontend
     ports:
       - "3002:3000"
+    environment:
+      - VUE_APP_FLASK_PORT=5002
 
   backend:
     image: chaeeerish/ai-drawing-test-backend
