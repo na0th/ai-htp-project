@@ -169,7 +169,7 @@ export default {
         image: canvasContents,
         id: cookie_userid,
       });
-      fetch("http://15.165.123.193:5000/house", {
+      fetch("http://15.165.123.193:" + process.env.VUE_APP_FLASK_PORT + "/house", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
