@@ -129,7 +129,7 @@
       </div>
     </div>
   </transition>
-  <loading-page v-if="showLoading" v-bind:newData="newData"></loading-page>
+  <loading-page v-if="showLoading" v-bind:newData="newData" v-bind:doneLoading="doneLoading"></loading-page>
 </template>
 
 <script>
@@ -150,6 +150,7 @@ export default {
       data: "",
       showPaint: true,
       showLoading: false,
+      doneLoading: false,
       mode: null,
       newData: "",
     };
@@ -181,6 +182,10 @@ export default {
           this.data = response_json;
           this.removeNull();
           this.newData = this.data;
+          // response 마무리 후 로딩페이지에서 버튼을 만들기위해서
+          this.doneLoading = true;
+
+          //
         });
 
       //결과를 받으면 result를 보여주고 그이전까지는 로딩페이지를 보여준다
