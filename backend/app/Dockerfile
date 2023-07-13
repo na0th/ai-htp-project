@@ -25,4 +25,4 @@ RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 RUN apt-get install -y nvidia-docker2
 
 EXPOSE 5000
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
